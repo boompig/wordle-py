@@ -6,10 +6,12 @@ from typing import List, Optional
 from datetime import datetime
 import pandas as pd
 import pickle
+import os.path
 
 
-DEFAULT_PARSED_ANSWERS_FILE = "data-parsed/wordle-answers.parquet"
-DEFAULT_PARSED_WORDS_FILE = "data-parsed/wordle-words.pickle"
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DEFAULT_PARSED_ANSWERS_FILE = os.path.join(BASE_DIR, "data-parsed/wordle-answers.parquet")
+DEFAULT_PARSED_WORDS_FILE = os.path.join(BASE_DIR, "data-parsed/wordle-words.pickle")
 
 
 def read_wordle_answers_raw(fname: str):
