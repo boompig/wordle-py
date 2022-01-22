@@ -10,7 +10,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from parse_data import read_parsed_words, read_past_answers
-from play import RIGHT_PLACE, eval_guess
+from play import RIGHT_PLACE, eval_guess, WRONG_PLACE, LETTER_ABSENT
 from possibilities_table import array_to_integer
 
 FIRST_GUESS_WORD = "serai"
@@ -103,6 +103,7 @@ def solver(answer: str, words: List[str], verbose: Optional[bool] = True) -> Tup
 
 
 def eval_solver(words: List[str]):
+    # NOTE to self: for the future blog post, it took about 5 minutes to run this for all answers
     past_answers = read_past_answers()
     d = {}
     for answer in tqdm(past_answers):
@@ -121,6 +122,57 @@ def eval_solver(words: List[str]):
     pprint(d)
 
 
+def get_interactive_guess_result(guess: str) -> List[int]:
+    valid_vals = [LETTER_ABSENT, WRONG_PLACE, RIGHT_PLACE]
+
+    while True:
+        print("")
+        print(f"Please enter the wordle result for the guess {guess}.")
+        print(f"Enter 5 numbers with spaces between them.")
+        print(f"Use {LETTER_ABSENT} if the letter isn't present, {WRONG_PLACE} if the letter is present but in the wrong place, and {RIGHT_PLACE} if the letter is in the right place.")
+        uin = input("> ")
+        items = uin.strip().split(" ")
+        if len(items) == 5 and all([item.isdigit() for item in items]):
+            items = [int(item) for item in items]
+            if all([item in valid_vals for item in items]):
+                return items
+
+
+def play_with_solver(words: List[str]):
+    """Play interactively with the solver when you don't know the answer"""
+
+    table = load_possibilities_table(words)
+    guesses = []
+    guess = FIRST_GUESS_WORD
+    is_solved = False
+
+    while len(guesses) < 6 and not is_solved:
+        if guesses == []:
+            guess = FIRST_GUESS_WORD
+        else:
+            guess = get_next_guess(table)
+
+        guesses.append(guess)
+
+        print(f"{len(guesses)}. Guessed {guess}")
+        guess_result = get_interactive_guess_result(guess)
+        # print(f"Guess result: {guess_result}")
+
+        if guess_result == [RIGHT_PLACE, RIGHT_PLACE, RIGHT_PLACE, RIGHT_PLACE, RIGHT_PLACE]:
+            is_solved = True
+            break
+        else:
+            table = prune_table(table, guess, guess_result)
+            # print(table)
+            print(f"There are now {table.shape[0]} possibilities")
+
+    if is_solved:
+        print(f"We solved it after {len(guesses)} guesses! The word was {guesses[-1]}.")
+    else:
+        print(f"Failed to guess the word after {len(guesses)}.")
+    return is_solved, len(guesses), guesses
+
+
 if __name__ == "__main__":
     from argparse import ArgumentParser
     parser = ArgumentParser()
@@ -133,7 +185,8 @@ if __name__ == "__main__":
         random.seed(args.seed)
 
     words = read_parsed_words()
-    action = "eval_solver"
+    # action = "eval_solver"
+    action = "solver_interactive"
 
     if action == "play":
         answer = random.choice(words)
@@ -141,5 +194,9 @@ if __name__ == "__main__":
         solver(answer, words)
     elif action == "eval_solver":
         eval_solver(words)
+    elif action == "solver_interactive":
+        answer = random.choice(words)
+        print(f"Chose random word for answer: {answer}")
+        play_with_solver(words)
     else:
         raise NotImplementedError
