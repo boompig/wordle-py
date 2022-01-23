@@ -1,6 +1,7 @@
 # Wordle
 
 This project provides datasets from the word game Wordle, a command-line implementation of Wordle, and a Wordle solver assistant.
+It also computes the optimal first word to use.
 
 ## Datasets
 
