@@ -39,11 +39,11 @@ If we want to have the smallest expected number of guesses, then we would use me
 
 ### Best Worst Partitions
 
-![best worst partitions](./assets/worst_partition.png)
+<img alt="best worst partitions" src="./assets/worst_partition.png" height="500px" />
 
 ### Best Mean Partitions
 
-![best mean partitions](./assets/mean_partition.png)
+<img alt="best mean partitions" src="./assets/mean_partition.png" height="500px" />
 
 ### Using Adieu as a First Word
 
