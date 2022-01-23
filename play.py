@@ -1,8 +1,7 @@
 """
-Attempt to play Wordle
+This file contains all the code to play Wordle
 """
 
-from tkinter import RIGHT
 from parse_data import read_parsed_answers, read_parsed_words
 from datetime import datetime
 from typing import List
@@ -52,36 +51,42 @@ def UNSAFE_eval_guess(guess: str, answer: str) -> List[int]:
     return scores
 
 
-# def eval_guess_fast(guess: np.array, answer: np.array) -> np.array:
-#     # assert isinstance(guess, np.array)
-#     # assert isinstance(answer, np.array)
-#     scores = []
-#     for i, letter in enumerate(np.nditer(guess)):
-#         if letter == answer[i]:
-#             scores.append(RIGHT_PLACE)
-#         elif letter in answer:
-#             scores.append(WRONG_PLACE)
-#         else:
-#             scores.append(LETTER_ABSENT)
-#     return scores
+def get_user_guess(words: List[str]) -> str:
+    num_tries = 0
+    user_guess = ""
+    while len(user_guess) != 5 or user_guess not in words:
+        if num_tries > 0:
+            if len(user_guess) != 5:
+                print("Guesses must be 5 characters long")
+            elif user_guess not in words:
+                print("That is not a valid word")
+        user_guess = input("Please enter a 5-letter guess (ctrl-C to quit): ")
+        user_guess = user_guess.lower()
+        num_tries += 1
+    return user_guess
 
 
 if __name__ == "__main__":
+    words = read_parsed_words()
+    guesses = []  # type: List[str]
+    is_solved = False
+    answer = get_todays_answer().lower()
     try:
-        user_guess = ""
-        num_tries = 0
-        while len(user_guess) != 5:
-            if num_tries > 0:
-                print("Guesses must be 5 characters long")
-            user_guess = input("Please enter a 5-letter guess (ctrl-C to quit): ")
-            num_tries += 1
+        while len(guesses) < 6 and not is_solved:
+            guess = get_user_guess(words)
+            guesses.append(guess)
+            guess_result = eval_guess(guess, answer)
 
-        todays_answer = get_todays_answer()
-        eval = eval_guess(user_guess, todays_answer)
+            print(f"Guess #{len(guesses)}")
+            print(f"You guessed: {guess}")
+            print(f"Guess result: {guess_result}")
+            if guess == answer:
+                is_solved = True
 
-        print(f"guess: {user_guess}")
-        print(f"answer: {todays_answer}")
-        print(f"eval: {eval}")
+        if is_solved:
+            print(f"You solved it after {len(guesses)} guesses! The word was {answer}")
+        else:
+            print(f"You failed to guess the word. The word was {answer}")
     except KeyboardInterrupt:
         print("")
         print("ok see you")

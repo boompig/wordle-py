@@ -1,5 +1,5 @@
 """
-Read some the source data and parse it for faster and easier future reading
+This file reads the raw data and parses it for faster and easier future reading
 """
 
 from typing import List, Optional
@@ -14,11 +14,10 @@ DEFAULT_PARSED_ANSWERS_FILE = os.path.join(BASE_DIR, "data-parsed/wordle-answers
 DEFAULT_PARSED_WORDS_FILE = os.path.join(BASE_DIR, "data-parsed/wordle-words.pickle")
 
 
-def read_wordle_answers_raw(fname: str):
+def read_wordle_answers_raw(fname: str) -> pd.DataFrame:
     """
     Read the wordle answers in the format that I found them.
     Return a dataframe of all the information.
-    Return a list of all the answers.
     """
 
     # line format: (Month) (MonthDay) (Year) ("Day") (DayNum) (Word)
@@ -27,7 +26,7 @@ def read_wordle_answers_raw(fname: str):
     # MonthDay: 0-padded 2-digit number
     # DayNum: 0-padded 3-digit number
 
-    answers = []  # type: List[str]
+    answers = []  # type: List[dict]
 
     with open(fname) as fp:
         for line in fp:
@@ -55,7 +54,7 @@ def read_wordle_answers_raw(fname: str):
 
 def read_past_answers(fname: Optional[str] = None) -> List[str]:
     """
-    Read all the worlde answers on or before today's date
+    Read all the Wordle answers on or before today's date
     """
     all_answers = read_parsed_answers(fname)
     now = datetime.now()
@@ -93,8 +92,11 @@ def read_parsed_answers(fname: Optional[str] = None) -> pd.DataFrame:
     return pd.read_parquet(fname)
 
 
-def read_parsed_words(fname: Optional[str] = None):
-    """Should be a pickle file"""
+def read_parsed_words(fname: Optional[str] = None) -> List[str]:
+    """
+    Read the parsed words file
+    :param fname: Should be a pickle file
+    """
     if fname is None:
         fname = DEFAULT_PARSED_WORDS_FILE
     with open(fname, "rb") as fp:
@@ -103,10 +105,11 @@ def read_parsed_words(fname: Optional[str] = None):
 
 if __name__ == "__main__":
     # parses answers
-    read_write_answers = False
+    read_write_answers = True
     if read_write_answers:
+        print("Reading Wordle answers...")
         answers = read_wordle_answers_raw("data-raw/wordle-answers.txt")
-        print(answers)
+        print(f"Read {len(answers)} answers")
         answers.to_parquet(DEFAULT_PARSED_ANSWERS_FILE)
         print("saved to file")
 
@@ -120,7 +123,3 @@ if __name__ == "__main__":
         with open(DEFAULT_PARSED_WORDS_FILE, "wb") as fp:
             pickle.dump(words, fp)
         print("saved to file")
-
-    # answers = read_past_answers()
-    # print(f"Read {len(answers)} answers")
-    # print(f"Most recent answer was: {answers[-1]}")

@@ -52,7 +52,7 @@ def get_next_guess(table: pd.DataFrame):
     return i
 
 
-def solver(answer: str, words: List[str], verbose: Optional[bool] = True, table: Optional[pd.DataFrame] = None) -> Tuple[bool, int, List[str]]:
+def solver(answer: str, words: List[str], verbose: Optional[bool] = True) -> Tuple[bool, int, List[str]]:
     """
     :param verbose: Control whether we are actually outputing or not
     :param table: Optionally supply the possibilities table.
@@ -62,13 +62,9 @@ def solver(answer: str, words: List[str], verbose: Optional[bool] = True, table:
         if verbose:
             print(text)
 
-    if table is None:
-        table = load_possibilities_table(words)
-    else:
-        # here we are copying the given possibilities table as a new object
-        table = table.copy()
+    table = load_possibilities_table(words)
 
-    guesses = []
+    guesses = []  # type: List[str]
     guess = FIRST_GUESS_WORD
     is_solved = False
 
@@ -95,7 +91,7 @@ def solver(answer: str, words: List[str], verbose: Optional[bool] = True, table:
     if is_solved:
         solver_print(f"You solved it after {len(guesses)} guesses! The word was {answer}")
     else:
-        solver_print(f"failed to guess the word. The word was {answer}")
+        solver_print(f"You failed to guess the word. The word was {answer}")
     return is_solved, len(guesses), guesses
 
 
@@ -144,16 +140,16 @@ def get_interactive_guess_result(guess: str) -> List[int]:
         uin = input("> ")
         items = uin.strip().split(" ")
         if len(items) == 5 and all([item.isdigit() for item in items]):
-            items = [int(item) for item in items]
-            if all([item in valid_vals for item in items]):
-                return items
+            arr = [int(item) for item in items]
+            if all([v in valid_vals for v in arr]):
+                return arr
 
 
 def play_with_solver(words: List[str]):
     """Play interactively with the solver when you don't know the answer"""
 
     table = load_possibilities_table(words)
-    guesses = []
+    guesses = []  # type: List[str]
     guess = FIRST_GUESS_WORD
     is_solved = False
 
