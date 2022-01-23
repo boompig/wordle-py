@@ -533,6 +533,15 @@
         "is_solved": true,
         "num_guesses": 5
     },
+    "CRIMP": {
+        "guesses": [
+            "serai",
+            "print",
+            "crimp"
+        ],
+        "is_solved": true,
+        "num_guesses": 3
+    },
     "CROAK": {
         "guesses": [
             "serai",

@@ -1,31 +1,18 @@
 import json
 import logging
-import os.path
 import random
 from typing import List, Optional, Tuple
 
 import coloredlogs
-import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
 from parse_data import read_parsed_words, read_past_answers
 from play import RIGHT_PLACE, eval_guess, WRONG_PLACE, LETTER_ABSENT
-from possibilities_table import array_to_integer
+from possibilities_table import array_to_integer, load_possibilities_table
 
 FIRST_GUESS_WORD = "serai"
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-TABLE_PATH = os.path.join(BASE_DIR, 'data-parsed/possibilities-table.npy')
-
-
-def load_possibilities_table(words: List[str]) -> pd.DataFrame:
-    """
-    Return a dataframe
-    The index will represent guesses
-    The columns will represent answers
-    """
-    table = np.load(TABLE_PATH)  # type: np.ndarray
-    return pd.DataFrame(table, index=words, columns=words)
+# FIRST_GUESS_WORD = "tares"
 
 
 def prune_table(table: pd.DataFrame, last_guess: str, guess_result: List[int]):
@@ -65,12 +52,22 @@ def get_next_guess(table: pd.DataFrame):
     return i
 
 
-def solver(answer: str, words: List[str], verbose: Optional[bool] = True) -> Tuple[bool, int, List[str]]:
+def solver(answer: str, words: List[str], verbose: Optional[bool] = True, table: Optional[pd.DataFrame] = None) -> Tuple[bool, int, List[str]]:
+    """
+    :param verbose: Control whether we are actually outputing or not
+    :param table: Optionally supply the possibilities table.
+    The method *must not* modify the table.
+    """
     def solver_print(text: str):
         if verbose:
             print(text)
 
-    table = load_possibilities_table(words)
+    if table is None:
+        table = load_possibilities_table(words)
+    else:
+        # here we are copying the given possibilities table as a new object
+        table = table.copy()
+
     guesses = []
     guess = FIRST_GUESS_WORD
     is_solved = False
@@ -104,9 +101,10 @@ def solver(answer: str, words: List[str], verbose: Optional[bool] = True) -> Tup
 
 def eval_solver(words: List[str]):
     # NOTE to self: for the future blog post, it took about 5 minutes to run this for all answers
-    past_answers = read_past_answers()
+    possible_answers = read_past_answers()
+
     d = {}
-    for answer in tqdm(past_answers):
+    for answer in tqdm(possible_answers):
         is_solved, num_guesses, guesses = solver(answer, words, verbose=False)
         d[answer] = {
             "is_solved": is_solved,
@@ -116,10 +114,23 @@ def eval_solver(words: List[str]):
         if not is_solved:
             logging.error(f"failed to solve when answer was {answer}")
 
-    with open("data-parsed/solver-eval.json", "w") as fp:
+    out_fname = "data-parsed/solver-eval-past-answers.json"
+    with open(out_fname, "w") as fp:
         json.dump(d, fp, indent=4, sort_keys=True)
-    from pprint import pprint
-    pprint(d)
+    print("Eval done.")
+    rows = []
+    for answer, v in d.items():
+        rows.append({
+            "answer": answer,
+            "num_guesses": v["num_guesses"],
+            "is_solved": v["is_solved"],
+        })
+    df = pd.DataFrame(rows)
+    print(f"Mean # of guesses per puzzle: {df.num_guesses.mean()}")
+    num_unsolved = df[df.is_solved == False].shape[0]
+    print(f"# puzzles unsolved: {num_unsolved}")
+    # from pprint import pprint
+    # pprint(d)
 
 
 def get_interactive_guess_result(guess: str) -> List[int]:
@@ -128,7 +139,7 @@ def get_interactive_guess_result(guess: str) -> List[int]:
     while True:
         print("")
         print(f"Please enter the wordle result for the guess {guess}.")
-        print(f"Enter 5 numbers with spaces between them.")
+        print("Enter 5 numbers with spaces between them.")
         print(f"Use {LETTER_ABSENT} if the letter isn't present, {WRONG_PLACE} if the letter is present but in the wrong place, and {RIGHT_PLACE} if the letter is in the right place.")
         uin = input("> ")
         items = uin.strip().split(" ")
@@ -178,6 +189,8 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-s", "--seed", type=int, default=-1,
                         help="Can specify a random seed to control randomness when choosing a word")
+    parser.add_argument("-a", "--action", type=str, choices=["play", "eval_solver", "interactive"],
+                        help="What do you want to do?", required=True)
     args = parser.parse_args()
     coloredlogs.install()
 
@@ -185,18 +198,17 @@ if __name__ == "__main__":
         random.seed(args.seed)
 
     words = read_parsed_words()
-    # action = "eval_solver"
-    action = "solver_interactive"
 
-    if action == "play":
+    if args.action == "play":
         answer = random.choice(words)
         print(f"Chose random word for answer: {answer}")
         solver(answer, words)
-    elif action == "eval_solver":
+    elif args.action == "eval_solver":
         eval_solver(words)
-    elif action == "solver_interactive":
-        answer = random.choice(words)
-        print(f"Chose random word for answer: {answer}")
+    elif args.action == "interactive":
+        # answer = random.choice(words)
+        # print(f"Chose random word for answer: {answer}")
         play_with_solver(words)
     else:
         raise NotImplementedError
+
