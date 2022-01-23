@@ -37,6 +37,18 @@ If we want to solve the most number of problems, then we should probably use met
 
 If we want to have the smallest expected number of guesses, then we would use metric #2, where our optimal word is "tares", which has a mean partition of 61.19.
 
+### Best Worst Partitions
+
+![best worst partitions](./assets/worst_partition.png)
+
+### Best Mean Partitions
+
+![best mean partitions](./assets/mean_partition.png)
+
+### Using Adieu as a First Word
+
+Don't. It has a worst partition of 1709 (2.45x worse than "serai") and a mean partition of 107.21 (1.75x worse than "tares").
+
 ## Solver
 
 To test my approach above, I implemented a solver based on the "worst" partition method.
