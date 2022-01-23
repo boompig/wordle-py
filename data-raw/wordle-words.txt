@@ -1,4 +1,3 @@
-# fetched from https://slc.is/data/wordles.txt
 aahed
 aalii
 aargh
