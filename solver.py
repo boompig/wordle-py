@@ -5,6 +5,7 @@ from typing import List, Optional, Tuple
 
 import coloredlogs
 import pandas as pd
+import numpy as np
 from tqdm import tqdm
 
 from parse_data import read_parsed_words, read_past_answers
@@ -29,7 +30,22 @@ def prune_table(table: pd.DataFrame, last_guess: str, guess_result: List[int]):
     return table
 
 
-def get_next_guess(table: pd.DataFrame):
+def get_next_guess_mean_partition(table: pd.DataFrame) -> str:
+    def get_mean_partition(row) -> int:
+        d = row.value_counts().to_dict()
+        arr = np.array([v for v in d.values()])
+        return np.mean(arr)
+
+    # for each remaining guess, compute the worst partition
+    part_series = table.apply(get_mean_partition, axis=1)
+    # re-index it with words so return value is easier
+    part_df = pd.DataFrame(part_series, columns=["mean_partition"], index=table.index)
+    # return the word with the smallest worst partition
+    i = part_df["mean_partition"].idxmin()
+    return i
+
+
+def get_next_guess_worst_partition(table: pd.DataFrame) -> str:
     """The table will only contain those words that remain"""
     # compute the max partitions
 
@@ -43,14 +59,23 @@ def get_next_guess(table: pd.DataFrame):
     part_df = pd.DataFrame(part_series, columns=["worst_partition"], index=table.index)
     # return the word with the smallest worst partition
     i = part_df["worst_partition"].idxmin()
-    # print(part_df)
-    # print(part_df.loc[i])
-    # print(i)
     return i
 
 
+def get_next_guess(table: pd.DataFrame, strategy: str) -> str:
+    if strategy == "mean_partition":
+        return get_next_guess_mean_partition(table)
+    elif strategy == "worst_partition":
+        return get_next_guess_worst_partition(table)
+    else:
+        raise NotImplementedError(strategy)
+
+
 def solver(
-    answer: str, words: List[str], first_word: str,
+    answer: str,
+    words: List[str],
+    first_word: str,
+    strategy: str,
     verbose: Optional[bool] = True,
 ) -> Tuple[bool, int, List[str]]:
     """
@@ -73,7 +98,7 @@ def solver(
         if guesses == []:
             guess = first_word
         else:
-            guess = get_next_guess(table)
+            guess = get_next_guess(table, strategy=strategy)
 
         guesses.append(guess)
 
@@ -104,14 +129,21 @@ def solver(
     return is_solved, len(guesses), guesses
 
 
-def eval_solver(words: List[str], first_word: str):
+def eval_solver(words: List[str], num_answers: int, first_word: str, strategy: str):
     # NOTE to self: for the future blog post, it took about 5 minutes to run this for all answers
     possible_answers = read_past_answers()
+    if num_answers >= 0:
+        print(f"Limiting testing to first {num_answers} answers")
+        possible_answers = possible_answers[:num_answers]
 
     d = {}
-    print(f"Solving {len(possible_answers)} puzzles with first word {first_word}...")
+    print(
+        f"Solving {len(possible_answers)} puzzles with first word {first_word} and strategy {strategy}..."
+    )
     for answer in tqdm(possible_answers):
-        is_solved, num_guesses, guesses = solver(answer, words, first_word=first_word, verbose=False)
+        is_solved, num_guesses, guesses = solver(
+            answer, words, first_word=first_word, strategy=strategy, verbose=False
+        )
         d[answer] = {
             "is_solved": is_solved,
             "num_guesses": num_guesses,
@@ -120,11 +152,12 @@ def eval_solver(words: List[str], first_word: str):
         if not is_solved:
             logging.error(f"failed to solve when answer was {answer}")
 
-    out_fname = f"data-parsed/solver-eval-past-answers-{len(possible_answers)}-{first_word}.json"
+    out_fname = f"data-parsed/solver-eval-strat-{strategy}-past-answers-{len(possible_answers)}-{first_word}.json"
     out = {
         "per_word_results": d,
         "first_word": first_word,
         "num_answers_tested": len(possible_answers),
+        "strategy": "mean_partition",
     }
     with open(out_fname, "w") as fp:
         json.dump(out, fp, indent=4, sort_keys=True)
@@ -164,7 +197,9 @@ def get_interactive_guess_result(guess: str) -> List[int]:
                 return arr
 
 
-def play_with_solver(words: List[str], first_word: str):
+def play_with_solver(
+    words: List[str], first_word: str, strategy: str
+) -> Tuple[bool, int, List[str]]:
     """Play interactively with the solver when you don't know the answer"""
 
     table = load_possibilities_table(words)
@@ -176,7 +211,7 @@ def play_with_solver(words: List[str], first_word: str):
         if guesses == []:
             guess = first_word
         else:
-            guess = get_next_guess(table)
+            guess = get_next_guess(table, strategy)
 
         guesses.append(guess)
 
@@ -228,11 +263,26 @@ interactive -> have the solver help you solve a puzzle with an unknown answer in
         required=True,
     )
     parser.add_argument(
+        "-n",
+        "--num-answers",
+        type=int,
+        help="At most how many answers to process (for eval_solver). -1 means process up to today.",
+        default=-1,
+    )
+    parser.add_argument(
         "-f",
         "--first-word",
         type=str,
         help="The first word to guess",
         default=FIRST_GUESS_WORD,
+    )
+    parser.add_argument(
+        "-t",
+        "--strategy",
+        choices=["mean_partition", "worst_partition"],
+        type=str,
+        default="worst_partition",
+        help="The strategy to use when selecting the next guess",
     )
     args = parser.parse_args()
     coloredlogs.install()
@@ -245,12 +295,12 @@ interactive -> have the solver help you solve a puzzle with an unknown answer in
     if args.action == "play":
         answer = random.choice(words)
         print(f"Chose random word for answer: {answer}")
-        solver(answer, words, first_word=args.first_word)
+        solver(answer, words, first_word=args.first_word, strategy=args.strategy)
     elif args.action == "eval_solver":
-        eval_solver(words, first_word=args.first_word)
+        eval_solver(words, num_answers=args.num_answers, first_word=args.first_word, strategy=args.strategy)
     elif args.action == "interactive":
         # answer = random.choice(words)
         # print(f"Chose random word for answer: {answer}")
-        play_with_solver(words, first_word=args.first_word)
+        play_with_solver(words, first_word=args.first_word, strategy=args.strategy)
     else:
         raise NotImplementedError

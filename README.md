@@ -49,16 +49,17 @@ Don't. It has a worst partition of 1709 (2.45x worse than "serai") and a mean pa
 
 ## Solver
 
-To test my approach above, I implemented a solver based on the "worst" partition method.
+To test my approach above, I implemented a solver based on the "worst" and "mean" partition methods.
 I evaluated the solver on the *known* solutions to see its hypothetical historical performance.
-Using the first word "serai", out of the 219 solutions, the solver was able to solve all but 7 in 6 guesses, with an average of 4.2 guesses per puzzle.
-On the same 219 solutions, when using the first word "tares", the solver was able to solve all but 6 in 6 guesses, with an average of 4.3 guesses per puzzle.
+I tried several first words with both strategies and include the results below.
 
-Here are the words that each was not able to find (serai on the left, tares on the right):
+first word & strategy | serai (worst partition)  | tares (worst partition) | tares (mean partition)
+:--------------------:|:-----------------------:|:-----------------------:|:-----------------------:
+successful solves | 212 | 213 | 208
+missed words | <img alt="serai failed" src="./assets/serai_failed.png" height="223px" /> | <img alt="tares worst partition failed" src="./assets/tares_failed.png" height="195px" /> | <img alt="tares mean partition failed" src="./assets/tares_mean_failed.png" height="322px" />
+average # of guesses (when successful) | 4.20 | 4.25 | 4.02
 
-serai | tares
-:--------------------:|:---------------------:
-<img alt="serai failed" src="./assets/serai_failed.png" height="223px" /> | <img alt="tares failed" src="./assets/tares_failed.png" height="195px" />
+The discrepancy can likely be explained by differences between the set of all words and the smaller set of solutions.
 
 ### Implementation
 
