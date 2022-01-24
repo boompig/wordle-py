@@ -167,9 +167,14 @@ def eval_solver(words: List[str], num_answers: int, first_word: str, strategy: s
             }
         )
     df = pd.DataFrame(rows)
-    print(f"Mean # of guesses per puzzle: {df.num_guesses.mean()}")
+    print(f"Mean # of guesses per puzzle: {df.num_guesses.mean():.2f}")
     num_unsolved = df[df.is_solved == False].shape[0]
-    print(f"# puzzles unsolved: {num_unsolved}")
+    num_solved = df[df.is_solved].shape[0]
+    num_puzzles = len(df)
+    print(f"# puzzles solved: {num_solved} ({num_solved / num_puzzles * 100:.1f}%)")
+    print(
+        f"# puzzles unsolved: {num_unsolved} ({num_unsolved / num_puzzles * 100:.1f})%"
+    )
 
 
 def get_interactive_guess_result(guess: str) -> List[int]:
@@ -284,12 +289,25 @@ interactive -> have the solver help you solve a puzzle with an unknown answer in
 
     words = read_parsed_words()
 
+    # check the input word
+    if len(args.first_word) != 5:
+        print("ERROR: first word must be 5 characters long")
+        exit(1)
+    elif args.first_word not in words:
+        print("ERROR: first word a valid 5-letter word")
+        exit(1)
+
     if args.action == "play":
         answer = random.choice(words)
         print(f"Chose random word for answer: {answer}")
         solver(answer, words, first_word=args.first_word, strategy=args.strategy)
     elif args.action == "eval_solver":
-        eval_solver(words, num_answers=args.num_answers, first_word=args.first_word, strategy=args.strategy)
+        eval_solver(
+            words,
+            num_answers=args.num_answers,
+            first_word=args.first_word,
+            strategy=args.strategy,
+        )
     elif args.action == "interactive":
         # answer = random.choice(words)
         # print(f"Chose random word for answer: {answer}")
