@@ -13,7 +13,6 @@ from play import RIGHT_PLACE, eval_guess, WRONG_PLACE, LETTER_ABSENT
 from possibilities_table import array_to_integer, load_possibilities_table
 
 FIRST_GUESS_WORD = "serai"
-# FIRST_GUESS_WORD = "tares"
 
 
 def prune_table(table: pd.DataFrame, last_guess: str, guess_result: List[int]):
@@ -36,11 +35,8 @@ def get_next_guess_mean_partition(table: pd.DataFrame) -> str:
         arr = np.array([v for v in d.values()])
         return np.mean(arr)
 
-    # for each remaining guess, compute the worst partition
     part_series = table.apply(get_mean_partition, axis=1)
-    # re-index it with words so return value is easier
     part_df = pd.DataFrame(part_series, columns=["mean_partition"], index=table.index)
-    # return the word with the smallest worst partition
     i = part_df["mean_partition"].idxmin()
     return i
 
@@ -117,7 +113,6 @@ def solver(
             break
         else:
             table = prune_table(table, guess, guess_result)
-            # print(table)
             solver_print(f"There are now {table.shape[0]} possibilities")
 
     if is_solved:
@@ -152,7 +147,7 @@ def eval_solver(words: List[str], num_answers: int, first_word: str, strategy: s
         if not is_solved:
             logging.error(f"failed to solve when answer was {answer}")
 
-    out_fname = f"data-parsed/solver-eval-strat-{strategy}-past-answers-{len(possible_answers)}-{first_word}.json"
+    out_fname = f"data-parsed/solver-eval/solver-eval-strat-{strategy}-past-answers-{len(possible_answers)}-{first_word}.json"
     out = {
         "per_word_results": d,
         "first_word": first_word,
@@ -161,7 +156,7 @@ def eval_solver(words: List[str], num_answers: int, first_word: str, strategy: s
     }
     with open(out_fname, "w") as fp:
         json.dump(out, fp, indent=4, sort_keys=True)
-    print("Eval done.")
+    print(f"Eval done. Wrote to {out_fname}")
     rows = []
     for answer, v in d.items():
         rows.append(
@@ -175,8 +170,6 @@ def eval_solver(words: List[str], num_answers: int, first_word: str, strategy: s
     print(f"Mean # of guesses per puzzle: {df.num_guesses.mean()}")
     num_unsolved = df[df.is_solved == False].shape[0]
     print(f"# puzzles unsolved: {num_unsolved}")
-    # from pprint import pprint
-    # pprint(d)
 
 
 def get_interactive_guess_result(guess: str) -> List[int]:
@@ -230,7 +223,6 @@ def play_with_solver(
             break
         else:
             table = prune_table(table, guess, guess_result)
-            # print(table)
             print(f"There are now {table.shape[0]} possibilities")
 
     if is_solved:

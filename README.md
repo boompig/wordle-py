@@ -51,15 +51,15 @@ Don't. It has a worst partition of 1709 (2.45x worse than "serai") and a mean pa
 
 To test my approach above, I implemented a solver based on the "worst" and "mean" partition methods.
 I evaluated the solver on the *known* solutions to see its hypothetical historical performance.
-I tried several first words with both strategies and include the results below.
+I tried several first words with both strategies and include some results below. More can be found in the `data-parsed/solver_eval` directory.
 
-first word & strategy | serai (worst partition)  | tares (worst partition) | tares (mean partition)
-:--------------------:|:-----------------------:|:-----------------------:|:-----------------------:
-successful solves | 212 | 213 | 208
-missed words | <img alt="serai failed" src="./assets/serai_failed.png" height="223px" /> | <img alt="tares worst partition failed" src="./assets/tares_failed.png" height="195px" /> | <img alt="tares mean partition failed" src="./assets/tares_mean_failed.png" height="322px" />
-average # of guesses (when successful) | 4.20 | 4.25 | 4.02
+first word & strategy | serai (worst partition)  | tares (worst partition) | tares (mean partition) | adieu (worst partition)
+:--------------------:|:-----------------------:|:-----------------------:|:-----------------------:|:-----------------------:
+successful solves | 212 | 213 | 208 | 204
+missed words | <img alt="serai failed" src="./assets/serai_failed.png" height="223px" /> | <img alt="tares worst partition failed" src="./assets/tares_failed.png" height="195px" /> | <img alt="tares mean partition failed" src="./assets/tares_mean_failed.png" height="322px" /> | <img alt="adieu worst partition failed" src="./assets/adieu_worst_failed.png" height="431px" />
+average # of guesses (when successful) | 4.20 | 4.25 | 4.02 | 4.26
 
-The discrepancy can likely be explained by differences between the set of all words and the smaller set of solutions.
+The fact that "tares" does slightly better than "serai" under the "worst_partition" strategy can likely be explained by differences between the set of all words and the smaller set of solutions.
 
 ### Implementation
 

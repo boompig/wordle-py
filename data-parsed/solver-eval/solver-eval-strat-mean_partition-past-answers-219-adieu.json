@@ -1,31 +1,31 @@
 {
-    "first_word": "tares",
-    "num_answers_tested": 220,
+    "first_word": "adieu",
+    "num_answers_tested": 219,
     "per_word_results": {
         "ABACK": {
             "guesses": [
-                "tares",
-                "aloin",
-                "abaya",
+                "adieu",
+                "altos",
+                "abray",
+                "abaca",
                 "aback"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "ABASE": {
             "guesses": [
-                "tares",
-                "selah",
-                "abuse",
+                "adieu",
+                "abers",
                 "abase"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "ABATE": {
             "guesses": [
-                "tares",
-                "alate",
+                "adieu",
+                "abers",
                 "abate"
             ],
             "is_solved": true,
@@ -33,8 +33,8 @@
         },
         "ABBEY": {
             "guesses": [
-                "tares",
-                "ailed",
+                "adieu",
+                "arles",
                 "apnea",
                 "abbey"
             ],
@@ -43,87 +43,86 @@
         },
         "ABYSS": {
             "guesses": [
-                "tares",
-                "solas",
-                "ankhs",
-                "adays",
+                "adieu",
+                "altos",
+                "angas",
                 "abyss"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "ACUTE": {
             "guesses": [
-                "tares",
-                "alate",
+                "adieu",
+                "abuse",
+                "alure",
                 "acute"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "ADOBE": {
             "guesses": [
-                "tares",
-                "blade",
+                "adieu",
                 "adobe"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 2
         },
         "AGATE": {
             "guesses": [
-                "tares",
-                "alate",
-                "abate",
+                "adieu",
+                "abers",
+                "alone",
+                "agave",
+                "agape",
                 "agate"
+            ],
+            "is_solved": true,
+            "num_guesses": 6
+        },
+        "AGREE": {
+            "guesses": [
+                "adieu",
+                "arles",
+                "anger",
+                "agree"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
-        "AGREE": {
+        "ALONE": {
             "guesses": [
-                "tares",
-                "aired",
-                "agree"
+                "adieu",
+                "abers",
+                "alone"
             ],
             "is_solved": true,
             "num_guesses": 3
         },
-        "ALONE": {
-            "guesses": [
-                "tares",
-                "blade",
-                "aline",
-                "alone"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
         "ALTAR": {
             "guesses": [
-                "tares",
-                "brant",
-                "attar",
+                "adieu",
+                "altos",
                 "altar"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "ARGUE": {
             "guesses": [
-                "tares",
-                "deare",
-                "rugae",
+                "adieu",
+                "abuse",
                 "argue"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "ASIDE": {
             "guesses": [
-                "tares",
-                "selah",
-                "abuse",
+                "adieu",
+                "abide",
+                "amide",
                 "aside"
             ],
             "is_solved": true,
@@ -131,31 +130,30 @@
         },
         "AUDIT": {
             "guesses": [
-                "tares",
-                "ayont",
-                "admit",
+                "adieu",
+                "audio",
                 "audit"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "AWAKE": {
             "guesses": [
-                "tares",
-                "blade",
-                "peace",
+                "adieu",
+                "abers",
+                "alone",
                 "agave",
-                "amaze",
-                "awake"
+                "amate",
+                "apace"
             ],
-            "is_solved": true,
+            "is_solved": false,
             "num_guesses": 6
         },
         "BADLY": {
             "guesses": [
-                "tares",
-                "manly",
-                "dally",
+                "adieu",
+                "roads",
+                "madly",
                 "badly"
             ],
             "is_solved": true,
@@ -163,27 +161,30 @@
         },
         "BANAL": {
             "guesses": [
-                "tares",
-                "manly",
+                "adieu",
+                "toras",
+                "pygal",
+                "canal",
                 "banal"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "BASIC": {
             "guesses": [
-                "tares",
-                "salmi",
+                "adieu",
+                "katis",
+                "basin",
                 "basic"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "BATON": {
             "guesses": [
-                "tares",
-                "natch",
-                "matin",
+                "adieu",
+                "toras",
+                "cagot",
                 "baton"
             ],
             "is_solved": true,
@@ -191,9 +192,9 @@
         },
         "BATTY": {
             "guesses": [
-                "tares",
-                "natch",
-                "datto",
+                "adieu",
+                "toras",
+                "panty",
                 "batty"
             ],
             "is_solved": true,
@@ -201,77 +202,81 @@
         },
         "BELCH": {
             "guesses": [
-                "tares",
-                "oldie",
-                "kelly",
+                "adieu",
+                "terns",
                 "belch"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "BELLY": {
             "guesses": [
-                "tares",
-                "oldie",
-                "kelly",
+                "adieu",
+                "terns",
+                "belch",
+                "belle",
                 "belly"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
-        "BENCH": {
-            "guesses": [
-                "tares",
-                "oldie",
-                "enemy",
-                "begun",
-                "bench"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
-        "BIOME": {
+        "BENCH": {
             "guesses": [
-                "tares",
-                "oldie",
-                "biome"
-            ],
-            "is_solved": true,
-            "num_guesses": 3
-        },
-        "BLEED": {
-            "guesses": [
-                "tares",
-                "oiled",
-                "blued",
-                "bleed"
+                "adieu",
+                "terns",
+                "belon",
+                "bench"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
+        "BIOME": {
+            "guesses": [
+                "adieu",
+                "sient",
+                "birle",
+                "bikie",
+                "biome"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
+        "BLEED": {
+            "guesses": [
+                "adieu",
+                "dores",
+                "tewed",
+                "byked",
+                "bleed"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
         "BLURT": {
             "guesses": [
-                "tares",
-                "griot",
+                "adieu",
+                "torus",
+                "brunt",
                 "blurt"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "BLUSH": {
             "guesses": [
-                "tares",
-                "spoil",
+                "adieu",
+                "torus",
+                "plush",
                 "blush"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "BOOBY": {
             "guesses": [
-                "tares",
-                "piony",
-                "blowy",
+                "adieu",
+                "pyots",
+                "globy",
                 "booby"
             ],
             "is_solved": true,
@@ -279,50 +284,52 @@
         },
         "BOOST": {
             "guesses": [
-                "tares",
-                "stoun",
+                "adieu",
+                "pyots",
+                "crost",
+                "ghost",
                 "boost"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "BOOZY": {
             "guesses": [
-                "tares",
-                "piony",
-                "blowy",
-                "booby",
-                "boody",
-                "boofy"
+                "adieu",
+                "pyots",
+                "globy",
+                "boofy",
+                "booky",
+                "boomy"
             ],
             "is_solved": false,
             "num_guesses": 6
         },
         "BRAKE": {
             "guesses": [
-                "tares",
-                "deare",
-                "brace",
+                "adieu",
+                "teras",
+                "chare",
+                "brame",
                 "brake"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "BREAK": {
             "guesses": [
-                "tares",
-                "deare",
-                "abear",
+                "adieu",
+                "teras",
                 "break"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "BRIAR": {
             "guesses": [
-                "tares",
-                "inarm",
-                "argil",
+                "adieu",
+                "laics",
+                "mbira",
                 "briar"
             ],
             "is_solved": true,
@@ -330,10 +337,10 @@
         },
         "BRIBE": {
             "guesses": [
-                "tares",
-                "moire",
-                "drice",
-                "brize",
+                "adieu",
+                "reins",
+                "cripe",
+                "tribe",
                 "bribe"
             ],
             "is_solved": true,
@@ -341,38 +348,40 @@
         },
         "BRING": {
             "guesses": [
-                "tares",
-                "bruin",
+                "adieu",
+                "trips",
+                "brink",
                 "bring"
-            ],
-            "is_solved": true,
-            "num_guesses": 3
-        },
-        "CHAMP": {
-            "guesses": [
-                "tares",
-                "aloin",
-                "champ"
-            ],
-            "is_solved": true,
-            "num_guesses": 3
-        },
-        "CHEAT": {
-            "guesses": [
-                "tares",
-                "alate",
-                "bepat",
-                "cheat"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
+        "CHAMP": {
+            "guesses": [
+                "adieu",
+                "toras",
+                "wanly",
+                "khaph",
+                "champ"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
+        "CHEAT": {
+            "guesses": [
+                "adieu",
+                "teras",
+                "cheat"
+            ],
+            "is_solved": true,
+            "num_guesses": 3
+        },
         "CHILL": {
             "guesses": [
-                "tares",
-                "piony",
+                "adieu",
+                "trips",
+                "clink",
                 "chili",
-                "child",
                 "chill"
             ],
             "is_solved": true,
@@ -380,19 +389,20 @@
         },
         "CIGAR": {
             "guesses": [
-                "tares",
-                "inarm",
-                "argil",
+                "adieu",
+                "katis",
+                "binal",
+                "cimar",
                 "cigar"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "CIVIC": {
             "guesses": [
-                "tares",
-                "piony",
-                "filmi",
+                "adieu",
+                "rotis",
+                "kylin",
                 "civic"
             ],
             "is_solved": true,
@@ -400,9 +410,9 @@
         },
         "CLICK": {
             "guesses": [
-                "tares",
-                "piony",
-                "chili",
+                "adieu",
+                "trips",
+                "clink",
                 "click"
             ],
             "is_solved": true,
@@ -410,9 +420,9 @@
         },
         "CLOCK": {
             "guesses": [
-                "tares",
-                "piony",
-                "block",
+                "adieu",
+                "pyots",
+                "clonk",
                 "clock"
             ],
             "is_solved": true,
@@ -420,50 +430,50 @@
         },
         "CLUCK": {
             "guesses": [
-                "tares",
-                "piony",
-                "chuck",
+                "adieu",
+                "torus",
+                "gulph",
+                "blunk",
                 "cluck"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
+        "COAST": {
+            "guesses": [
+                "adieu",
+                "toras",
+                "costa",
+                "coast"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
-        "COAST": {
-            "guesses": [
-                "tares",
-                "slant",
-                "hoast",
-                "boast",
-                "coast"
-            ],
-            "is_solved": true,
-            "num_guesses": 5
-        },
         "COLON": {
             "guesses": [
-                "tares",
-                "piony",
-                "mungo",
-                "codon",
+                "adieu",
+                "pyots",
+                "congo",
                 "colon"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "COMET": {
             "guesses": [
-                "tares",
-                "botel",
+                "adieu",
+                "soler",
+                "moten",
                 "comet"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "CONIC": {
             "guesses": [
-                "tares",
-                "piony",
-                "coign",
+                "adieu",
+                "rotis",
+                "colin",
                 "conic"
             ],
             "is_solved": true,
@@ -471,9 +481,9 @@
         },
         "CORNY": {
             "guesses": [
-                "tares",
-                "curdy",
-                "corby",
+                "adieu",
+                "pyots",
+                "colby",
                 "corky",
                 "corny"
             ],
@@ -482,31 +492,30 @@
         },
         "CRANK": {
             "guesses": [
-                "tares",
-                "inarm",
-                "krang",
-                "brank",
+                "adieu",
+                "toras",
+                "glary",
                 "crank"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "CRASS": {
             "guesses": [
-                "tares",
+                "adieu",
+                "toras",
+                "knars",
                 "brags",
                 "craps",
-                "crams",
-                "crans",
-                "crass"
+                "crams"
             ],
-            "is_solved": true,
+            "is_solved": false,
             "num_guesses": 6
         },
         "CRATE": {
             "guesses": [
-                "tares",
-                "grate",
+                "adieu",
+                "teras",
                 "crate"
             ],
             "is_solved": true,
@@ -514,9 +523,9 @@
         },
         "CRAZE": {
             "guesses": [
-                "tares",
-                "deare",
-                "brace",
+                "adieu",
+                "teras",
+                "chare",
                 "crake",
                 "crame",
                 "crane"
@@ -526,10 +535,10 @@
         },
         "CRAZY": {
             "guesses": [
-                "tares",
-                "inarm",
-                "brach",
-                "craal",
+                "adieu",
+                "toras",
+                "glary",
+                "braky",
                 "crapy",
                 "crazy"
             ],
@@ -538,9 +547,9 @@
         },
         "CRIMP": {
             "guesses": [
-                "tares",
-                "bruin",
-                "pricy",
+                "adieu",
+                "trips",
+                "prion",
                 "crimp"
             ],
             "is_solved": true,
@@ -548,9 +557,9 @@
         },
         "CROAK": {
             "guesses": [
-                "tares",
-                "inarm",
-                "bolar",
+                "adieu",
+                "toras",
+                "groan",
                 "croak"
             ],
             "is_solved": true,
@@ -558,8 +567,8 @@
         },
         "CRUST": {
             "guesses": [
-                "tares",
-                "roust",
+                "adieu",
+                "torus",
                 "brust",
                 "crust"
             ],
@@ -568,9 +577,9 @@
         },
         "DEATH": {
             "guesses": [
-                "tares",
-                "alate",
-                "beath",
+                "adieu",
+                "deals",
+                "deare",
                 "death"
             ],
             "is_solved": true,
@@ -578,51 +587,48 @@
         },
         "DELTA": {
             "guesses": [
-                "tares",
-                "alate",
+                "adieu",
+                "deals",
+                "decal",
                 "delta"
-            ],
-            "is_solved": true,
-            "num_guesses": 3
-        },
-        "DIGIT": {
-            "guesses": [
-                "tares",
-                "couth",
-                "dixit",
-                "digit"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
+        "DIGIT": {
+            "guesses": [
+                "adieu",
+                "doris",
+                "digit"
+            ],
+            "is_solved": true,
+            "num_guesses": 3
+        },
         "DOWRY": {
             "guesses": [
-                "tares",
-                "bruin",
-                "moory",
-                "cowry",
+                "adieu",
+                "words",
                 "dowry"
+            ],
+            "is_solved": true,
+            "num_guesses": 3
+        },
+        "DOZEN": {
+            "guesses": [
+                "adieu",
+                "dores",
+                "dopey",
+                "doven",
+                "dozen"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
-        "DOZEN": {
-            "guesses": [
-                "tares",
-                "oiled",
-                "coden",
-                "doven",
-                "doyen",
-                "dozen"
-            ],
-            "is_solved": true,
-            "num_guesses": 6
-        },
         "DRAIN": {
             "guesses": [
-                "tares",
-                "inarm",
-                "brain",
+                "adieu",
+                "daris",
+                "drail",
                 "drain"
             ],
             "is_solved": true,
@@ -630,18 +636,19 @@
         },
         "DRINK": {
             "guesses": [
-                "tares",
-                "bruin",
+                "adieu",
+                "doilt",
+                "dribs",
                 "drink"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "DUCHY": {
             "guesses": [
-                "tares",
-                "piony",
-                "bludy",
+                "adieu",
+                "durns",
+                "dumpy",
                 "duchy"
             ],
             "is_solved": true,
@@ -649,30 +656,30 @@
         },
         "DUTCH": {
             "guesses": [
-                "tares",
-                "couth",
-                "butch",
+                "adieu",
+                "durns",
+                "dumpy",
+                "dubbo",
                 "dutch"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
-        "DWARF": {
-            "guesses": [
-                "tares",
-                "inarm",
-                "hoary",
-                "award",
-                "dwarf"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
+        "DWARF": {
+            "guesses": [
+                "adieu",
+                "roads",
+                "drank",
+                "dwarf"
+            ],
+            "is_solved": true,
+            "num_guesses": 4
+        },
         "ENEMA": {
             "guesses": [
-                "tares",
-                "blade",
-                "genua",
+                "adieu",
+                "teras",
+                "caple",
                 "enema"
             ],
             "is_solved": true,
@@ -680,9 +687,9 @@
         },
         "EPOCH": {
             "guesses": [
-                "tares",
-                "oldie",
-                "genom",
+                "adieu",
+                "terns",
+                "coble",
                 "epoch"
             ],
             "is_solved": true,
@@ -690,31 +697,28 @@
         },
         "ERODE": {
             "guesses": [
-                "tares",
-                "moire",
-                "proke",
-                "drone",
+                "adieu",
+                "derns",
                 "erode"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 3
         },
         "ERROR": {
             "guesses": [
-                "tares",
-                "germy",
-                "curie",
-                "enrol",
+                "adieu",
+                "terns",
+                "force",
                 "error"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "ESSAY": {
             "guesses": [
-                "tares",
-                "selah",
-                "ansae",
+                "adieu",
+                "teras",
+                "sneap",
                 "essay"
             ],
             "is_solved": true,
@@ -722,18 +726,19 @@
         },
         "EVADE": {
             "guesses": [
-                "tares",
-                "blade",
+                "adieu",
+                "deals",
+                "grade",
                 "evade"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "EXULT": {
             "guesses": [
-                "tares",
-                "lenti",
-                "ettle",
+                "adieu",
+                "sucre",
+                "begum",
                 "exult"
             ],
             "is_solved": true,
@@ -741,41 +746,42 @@
         },
         "FAVOR": {
             "guesses": [
-                "tares",
-                "radio",
+                "adieu",
+                "toras",
+                "claro",
                 "manor",
-                "valor",
+                "vapor",
                 "favor"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "FEIGN": {
             "guesses": [
-                "tares",
-                "oldie",
-                "ehing",
+                "adieu",
+                "reins",
                 "feign"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "FERRY": {
             "guesses": [
-                "tares",
-                "germy",
-                "derry",
+                "adieu",
+                "terns",
+                "mercy",
+                "jerky",
                 "berry",
                 "ferry"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "FINER": {
             "guesses": [
-                "tares",
-                "oiler",
-                "diver",
+                "adieu",
+                "riles",
+                "timer",
                 "biner",
                 "finer"
             ],
@@ -784,31 +790,30 @@
         },
         "FIRST": {
             "guesses": [
-                "tares",
-                "horst",
-                "burst",
+                "adieu",
+                "rotis",
                 "first"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "FIXER": {
             "guesses": [
-                "tares",
-                "oiler",
-                "diver",
+                "adieu",
+                "riles",
+                "timer",
                 "biner",
-                "riper",
-                "fixer"
+                "viper",
+                "firer"
             ],
-            "is_solved": true,
+            "is_solved": false,
             "num_guesses": 6
         },
         "FJORD": {
             "guesses": [
-                "tares",
-                "bruin",
-                "moory",
+                "adieu",
+                "words",
+                "brond",
                 "chord",
                 "fjord"
             ],
@@ -817,9 +822,9 @@
         },
         "FLESH": {
             "guesses": [
-                "tares",
-                "poise",
-                "eensy",
+                "adieu",
+                "terns",
+                "slope",
                 "flesh"
             ],
             "is_solved": true,
@@ -827,9 +832,9 @@
         },
         "FLICK": {
             "guesses": [
-                "tares",
-                "piony",
-                "chili",
+                "adieu",
+                "trips",
+                "clink",
                 "flick"
             ],
             "is_solved": true,
@@ -837,9 +842,9 @@
         },
         "FLING": {
             "guesses": [
-                "tares",
-                "piony",
-                "cling",
+                "adieu",
+                "trips",
+                "clink",
                 "bling",
                 "fling"
             ],
@@ -848,30 +853,32 @@
         },
         "FLOSS": {
             "guesses": [
-                "tares",
-                "clous",
-                "glops",
-                "blows",
+                "adieu",
+                "pyots",
+                "blogs",
+                "clows",
+                "flors",
                 "floss"
+            ],
+            "is_solved": true,
+            "num_guesses": 6
+        },
+        "FLUME": {
+            "guesses": [
+                "adieu",
+                "sucre",
+                "boule",
+                "glume",
+                "flume"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
-        "FLUME": {
-            "guesses": [
-                "tares",
-                "oldie",
-                "blume",
-                "flume"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
         "FOCAL": {
             "guesses": [
-                "tares",
-                "aloin",
-                "coala",
+                "adieu",
+                "toras",
+                "copal",
                 "focal"
             ],
             "is_solved": true,
@@ -879,9 +886,9 @@
         },
         "FORGE": {
             "guesses": [
-                "tares",
-                "germy",
-                "porge",
+                "adieu",
+                "terns",
+                "force",
                 "forge"
             ],
             "is_solved": true,
@@ -889,27 +896,29 @@
         },
         "FORTH": {
             "guesses": [
-                "tares",
-                "birth",
+                "adieu",
+                "pyots",
+                "north",
                 "forth"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "FRESH": {
             "guesses": [
-                "tares",
+                "adieu",
+                "terns",
                 "prose",
                 "fresh"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "FRONT": {
             "guesses": [
-                "tares",
-                "griot",
-                "croft",
+                "adieu",
+                "pyots",
+                "tronc",
                 "front"
             ],
             "is_solved": true,
@@ -917,10 +926,10 @@
         },
         "GAMMA": {
             "guesses": [
-                "tares",
-                "manly",
-                "zamia",
-                "gamba",
+                "adieu",
+                "toras",
+                "wanly",
+                "hamba",
                 "gamma"
             ],
             "is_solved": true,
@@ -928,9 +937,9 @@
         },
         "GAUDY": {
             "guesses": [
-                "tares",
-                "manly",
-                "cadgy",
+                "adieu",
+                "duars",
+                "cauld",
                 "gaudy"
             ],
             "is_solved": true,
@@ -938,8 +947,8 @@
         },
         "GOLEM": {
             "guesses": [
-                "tares",
-                "oiled",
+                "adieu",
+                "soler",
                 "coley",
                 "golem"
             ],
@@ -948,40 +957,38 @@
         },
         "GONER": {
             "guesses": [
-                "tares",
-                "oiler",
-                "mower",
-                "coder",
-                "roker",
-                "honer"
+                "adieu",
+                "soler",
+                "mover",
+                "goner"
             ],
-            "is_solved": false,
-            "num_guesses": 6
+            "is_solved": true,
+            "num_guesses": 4
         },
         "GORGE": {
             "guesses": [
-                "tares",
-                "germy",
+                "adieu",
+                "terns",
+                "force",
                 "gorge"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "GOUGE": {
             "guesses": [
-                "tares",
-                "oldie",
-                "phone",
-                "bogue",
+                "adieu",
+                "sucre",
+                "boule",
                 "gouge"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "GRADE": {
             "guesses": [
-                "tares",
-                "deare",
+                "adieu",
+                "deals",
                 "grade"
             ],
             "is_solved": true,
@@ -989,8 +996,8 @@
         },
         "GREAT": {
             "guesses": [
-                "tares",
-                "grate",
+                "adieu",
+                "teras",
                 "great"
             ],
             "is_solved": true,
@@ -998,9 +1005,9 @@
         },
         "GREET": {
             "guesses": [
-                "tares",
-                "outer",
-                "relet",
+                "adieu",
+                "soler",
+                "beret",
                 "freet",
                 "greet"
             ],
@@ -1009,30 +1016,30 @@
         },
         "GRIME": {
             "guesses": [
-                "tares",
-                "moire",
-                "crime",
-                "grime"
+                "adieu",
+                "reins",
+                "cripe",
+                "tribe",
+                "frize",
+                "grike"
+            ],
+            "is_solved": false,
+            "num_guesses": 6
+        },
+        "GRIPE": {
+            "guesses": [
+                "adieu",
+                "reins",
+                "cripe",
+                "gripe"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
-        "GRIPE": {
-            "guesses": [
-                "tares",
-                "moire",
-                "drice",
-                "brize",
-                "grike",
-                "gripe"
-            ],
-            "is_solved": true,
-            "num_guesses": 6
-        },
         "GROIN": {
             "guesses": [
-                "tares",
-                "bruin",
+                "adieu",
+                "rotis",
                 "orpin",
                 "groin"
             ],
@@ -1041,19 +1048,20 @@
         },
         "GROUP": {
             "guesses": [
-                "tares",
-                "bruin",
+                "adieu",
+                "torus",
+                "croup",
                 "group"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "GROWL": {
             "guesses": [
-                "tares",
-                "bruin",
-                "droop",
-                "frowy",
+                "adieu",
+                "pyots",
+                "clonk",
+                "brool",
                 "growl"
             ],
             "is_solved": true,
@@ -1061,33 +1069,31 @@
         },
         "GUILD": {
             "guesses": [
-                "tares",
-                "piony",
-                "chili",
-                "build",
+                "adieu",
+                "guids",
                 "guild"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 3
         },
         "HATCH": {
             "guesses": [
-                "tares",
-                "natch",
+                "adieu",
+                "toras",
+                "panty",
+                "match",
                 "batch",
-                "catch",
-                "gatch",
-                "hatch"
+                "catch"
             ],
-            "is_solved": true,
+            "is_solved": false,
             "num_guesses": 6
         },
         "HEATH": {
             "guesses": [
-                "tares",
-                "alate",
+                "adieu",
+                "teras",
+                "meaty",
                 "beath",
-                "death",
                 "heath"
             ],
             "is_solved": true,
@@ -1095,19 +1101,20 @@
         },
         "HELIX": {
             "guesses": [
-                "tares",
-                "oldie",
-                "kevil",
+                "adieu",
+                "sient",
+                "meril",
+                "helio",
                 "helix"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "HERON": {
             "guesses": [
-                "tares",
-                "germy",
-                "cerne",
+                "adieu",
+                "terns",
+                "nerve",
                 "heron"
             ],
             "is_solved": true,
@@ -1115,40 +1122,38 @@
         },
         "HUMPH": {
             "guesses": [
-                "tares",
-                "piony",
+                "adieu",
+                "torus",
+                "gulph",
                 "bumph",
                 "humph"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "HYPER": {
             "guesses": [
-                "tares",
-                "oiler",
-                "ceder",
-                "buyer",
+                "adieu",
+                "soler",
                 "hyper"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 3
         },
         "ISLET": {
             "guesses": [
-                "tares",
-                "steen",
-                "muset",
+                "adieu",
+                "riles",
                 "islet"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "IVORY": {
             "guesses": [
-                "tares",
-                "bruin",
-                "livor",
+                "adieu",
+                "rotis",
+                "inorb",
                 "ivory"
             ],
             "is_solved": true,
@@ -1156,9 +1161,9 @@
         },
         "JAUNT": {
             "guesses": [
-                "tares",
-                "natch",
-                "daynt",
+                "adieu",
+                "muras",
+                "hault",
                 "gaunt",
                 "jaunt"
             ],
@@ -1167,9 +1172,9 @@
         },
         "KARMA": {
             "guesses": [
-                "tares",
-                "yarco",
-                "maria",
+                "adieu",
+                "toras",
+                "parky",
                 "karma"
             ],
             "is_solved": true,
@@ -1177,50 +1182,40 @@
         },
         "KEBAB": {
             "guesses": [
-                "tares",
-                "blade",
-                "abeam",
-                "hejab",
+                "adieu",
+                "teras",
+                "genal",
+                "bekah",
                 "kebab"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
-        "KNOLL": {
+        "LABOR": {
             "guesses": [
-                "tares",
-                "piony",
-                "blown",
-                "knoll"
+                "adieu",
+                "toras",
+                "claro",
+                "labor"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
-        "LABOR": {
-            "guesses": [
-                "tares",
-                "radio",
-                "manor",
-                "valor",
-                "labor"
-            ],
-            "is_solved": true,
-            "num_guesses": 5
-        },
         "LAPEL": {
             "guesses": [
-                "tares",
-                "lawed",
+                "adieu",
+                "laser",
+                "lacet",
                 "label",
                 "lapel"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "LINEN": {
             "guesses": [
-                "tares",
-                "oiled",
+                "adieu",
+                "riles",
                 "limen",
                 "liken",
                 "linen"
@@ -1230,8 +1225,8 @@
         },
         "LOOPY": {
             "guesses": [
-                "tares",
-                "piony",
+                "adieu",
+                "pyots",
                 "goopy",
                 "loopy"
             ],
@@ -1240,43 +1235,41 @@
         },
         "LUSTY": {
             "guesses": [
-                "tares",
-                "stoun",
-                "busty",
-                "dusty",
-                "fusty",
-                "gusty"
-            ],
-            "is_solved": false,
-            "num_guesses": 6
-        },
-        "LYING": {
-            "guesses": [
-                "tares",
-                "piony",
-                "dying",
-                "hying",
-                "lying"
-            ],
-            "is_solved": true,
-            "num_guesses": 5
-        },
-        "MAJOR": {
-            "guesses": [
-                "tares",
-                "radio",
-                "manor",
-                "major"
+                "adieu",
+                "torus",
+                "stulm",
+                "lusty"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
+        "LYING": {
+            "guesses": [
+                "adieu",
+                "trips",
+                "clink",
+                "lying"
+            ],
+            "is_solved": true,
+            "num_guesses": 4
+        },
+        "MAJOR": {
+            "guesses": [
+                "adieu",
+                "toras",
+                "claro",
+                "manor",
+                "major"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
         "MARRY": {
             "guesses": [
-                "tares",
-                "yarco",
-                "bardy",
+                "adieu",
+                "toras",
                 "parky",
+                "carby",
                 "harry",
                 "marry"
             ],
@@ -1285,40 +1278,42 @@
         },
         "MASSE": {
             "guesses": [
-                "tares",
-                "halse",
+                "adieu",
+                "teras",
+                "scale",
+                "manse",
                 "masse"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "MAXIM": {
             "guesses": [
-                "tares",
-                "manly",
+                "adieu",
+                "katis",
+                "manic",
                 "mafia",
-                "madid",
-                "magic",
                 "maxim"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 5
         },
         "MIMIC": {
             "guesses": [
-                "tares",
-                "piony",
-                "filmi",
+                "adieu",
+                "rotis",
+                "kylin",
+                "civic",
                 "mimic"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "MODEL": {
             "guesses": [
-                "tares",
-                "oiled",
-                "jodel",
+                "adieu",
+                "dores",
+                "lomed",
                 "model"
             ],
             "is_solved": true,
@@ -1326,39 +1321,40 @@
         },
         "MOTOR": {
             "guesses": [
-                "tares",
-                "griot",
+                "adieu",
+                "pyots",
+                "robot",
                 "motor"
-            ],
-            "is_solved": true,
-            "num_guesses": 3
-        },
-        "MOULT": {
-            "guesses": [
-                "tares",
-                "couth",
-                "boult",
-                "moult"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
+        "MOULT": {
+            "guesses": [
+                "adieu",
+                "torus",
+                "moult"
+            ],
+            "is_solved": true,
+            "num_guesses": 3
+        },
         "NAVAL": {
             "guesses": [
-                "tares",
-                "manly",
-                "lakin",
+                "adieu",
+                "toras",
+                "pygal",
+                "canal",
                 "nahal",
                 "naval"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "OFFAL": {
             "guesses": [
-                "tares",
-                "aloin",
-                "coala",
+                "adieu",
+                "toras",
+                "gloam",
                 "offal"
             ],
             "is_solved": true,
@@ -1366,18 +1362,19 @@
         },
         "OUGHT": {
             "guesses": [
-                "tares",
-                "couth",
+                "adieu",
+                "torus",
+                "outgo",
                 "ought"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "OUTDO": {
             "guesses": [
-                "tares",
-                "couth",
-                "bitou",
+                "adieu",
+                "durns",
+                "fuddy",
                 "outdo"
             ],
             "is_solved": true,
@@ -1385,34 +1382,33 @@
         },
         "PANEL": {
             "guesses": [
-                "tares",
-                "lawed",
-                "cavel",
+                "adieu",
+                "laser",
+                "gavel",
                 "babel",
-                "hazel",
-                "panel"
+                "camel",
+                "hazel"
             ],
-            "is_solved": true,
+            "is_solved": false,
             "num_guesses": 6
         },
         "PANIC": {
             "guesses": [
-                "tares",
-                "manly",
-                "bania",
-                "canid",
+                "adieu",
+                "katis",
+                "manic",
                 "panic"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "PAPER": {
             "guesses": [
-                "tares",
-                "ravel",
-                "cager",
-                "waker",
-                "payer",
+                "adieu",
+                "laser",
+                "caper",
+                "gaper",
+                "japer",
                 "paper"
             ],
             "is_solved": true,
@@ -1420,41 +1416,42 @@
         },
         "PARRY": {
             "guesses": [
-                "tares",
-                "yarco",
-                "bardy",
+                "adieu",
+                "toras",
                 "parky",
                 "parly",
                 "parry"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 5
         },
         "PEACH": {
             "guesses": [
-                "tares",
-                "blade",
-                "peavy",
+                "adieu",
+                "teras",
+                "mealy",
+                "beach",
                 "peach"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "PERCH": {
             "guesses": [
-                "tares",
-                "germy",
-                "cerne",
+                "adieu",
+                "terns",
+                "mercy",
+                "perce",
                 "perch"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "PICKY": {
             "guesses": [
-                "tares",
-                "piony",
-                "piccy",
+                "adieu",
+                "rotis",
+                "gilpy",
                 "picky"
             ],
             "is_solved": true,
@@ -1462,117 +1459,116 @@
         },
         "PILOT": {
             "guesses": [
-                "tares",
-                "couth",
-                "pivot",
+                "adieu",
+                "rotis",
+                "bigot",
+                "picot",
                 "pilot"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "PITHY": {
             "guesses": [
-                "tares",
-                "couth",
-                "whift",
-                "mythi",
+                "adieu",
+                "rotis",
+                "witch",
                 "pithy"
-            ],
-            "is_solved": true,
-            "num_guesses": 5
-        },
-        "PLUCK": {
-            "guesses": [
-                "tares",
-                "piony",
-                "plumb",
-                "pluck"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
-        "POINT": {
+        "PLUCK": {
             "guesses": [
-                "tares",
-                "couth",
-                "joint",
-                "noint",
-                "point"
+                "adieu",
+                "torus",
+                "gulph",
+                "clump",
+                "pluck"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
-        "POUND": {
+        "POINT": {
             "guesses": [
-                "tares",
-                "piony",
-                "pound"
+                "adieu",
+                "trips",
+                "point"
             ],
             "is_solved": true,
             "num_guesses": 3
         },
+        "POUND": {
+            "guesses": [
+                "adieu",
+                "durns",
+                "bound",
+                "found",
+                "hound",
+                "lound"
+            ],
+            "is_solved": false,
+            "num_guesses": 6
+        },
         "PRICK": {
             "guesses": [
-                "tares",
-                "bruin",
+                "adieu",
+                "trips",
+                "prion",
                 "pricy",
                 "prick"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "PRIDE": {
             "guesses": [
-                "tares",
-                "moire",
-                "drice",
+                "adieu",
+                "deils",
                 "bride",
                 "gride",
                 "pride"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 5
         },
         "PRINT": {
             "guesses": [
-                "tares",
-                "griot",
-                "drift",
-                "britt",
+                "adieu",
+                "trips",
                 "print"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 3
         },
         "PROVE": {
             "guesses": [
-                "tares",
-                "moire",
-                "proke",
+                "adieu",
+                "terns",
+                "crome",
                 "probe",
-                "prole",
-                "prone"
+                "proke",
+                "prole"
             ],
             "is_solved": false,
             "num_guesses": 6
         },
         "PROXY": {
             "guesses": [
-                "tares",
-                "bruin",
-                "droop",
-                "proll",
-                "promo",
+                "adieu",
+                "pyots",
+                "poofy",
+                "phony",
                 "proxy"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 5
         },
         "PULPY": {
             "guesses": [
-                "tares",
-                "piony",
-                "pudgy",
+                "adieu",
+                "torus",
+                "gulph",
                 "pulpy"
             ],
             "is_solved": true,
@@ -1580,39 +1576,37 @@
         },
         "QUERY": {
             "guesses": [
-                "tares",
-                "moire",
-                "beery",
-                "every",
+                "adieu",
+                "sucre",
+                "quern",
                 "query"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "QUIET": {
             "guesses": [
-                "tares",
-                "botel",
-                "unget",
-                "duvet",
-                "fumet",
+                "adieu",
                 "quiet"
-            ],
-            "is_solved": true,
-            "num_guesses": 6
-        },
-        "RADIO": {
-            "guesses": [
-                "tares",
-                "radio"
             ],
             "is_solved": true,
             "num_guesses": 2
         },
+        "RADIO": {
+            "guesses": [
+                "adieu",
+                "daris",
+                "nadir",
+                "radii",
+                "radio"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
         "REACT": {
             "guesses": [
-                "tares",
-                "grate",
+                "adieu",
+                "teras",
                 "feart",
                 "react"
             ],
@@ -1621,20 +1615,18 @@
         },
         "REBUS": {
             "guesses": [
-                "tares",
-                "weirs",
-                "reeds",
-                "repos",
+                "adieu",
+                "sucre",
                 "rebus"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 3
         },
         "REBUT": {
             "guesses": [
-                "tares",
-                "inert",
-                "eruct",
+                "adieu",
+                "sucre",
+                "gebur",
                 "rebut"
             ],
             "is_solved": true,
@@ -1642,8 +1634,8 @@
         },
         "REPAY": {
             "guesses": [
-                "tares",
-                "deare",
+                "adieu",
+                "teras",
                 "belar",
                 "reman",
                 "recap",
@@ -1654,9 +1646,9 @@
         },
         "RETCH": {
             "guesses": [
-                "tares",
-                "inert",
-                "retox",
+                "adieu",
+                "terns",
+                "retro",
                 "retch"
             ],
             "is_solved": true,
@@ -1664,9 +1656,9 @@
         },
         "RHINO": {
             "guesses": [
-                "tares",
-                "bruin",
-                "minor",
+                "adieu",
+                "trips",
+                "chirl",
                 "rhino"
             ],
             "is_solved": true,
@@ -1674,8 +1666,8 @@
         },
         "ROBOT": {
             "guesses": [
-                "tares",
-                "griot",
+                "adieu",
+                "pyots",
                 "robot"
             ],
             "is_solved": true,
@@ -1683,9 +1675,9 @@
         },
         "ROGUE": {
             "guesses": [
-                "tares",
-                "moire",
-                "roule",
+                "adieu",
+                "sucre",
+                "grume",
                 "rogue"
             ],
             "is_solved": true,
@@ -1693,9 +1685,9 @@
         },
         "ROUGE": {
             "guesses": [
-                "tares",
-                "moire",
-                "roule",
+                "adieu",
+                "sucre",
+                "grume",
                 "rouge"
             ],
             "is_solved": true,
@@ -1703,9 +1695,9 @@
         },
         "ROUND": {
             "guesses": [
-                "tares",
-                "bruin",
-                "knurl",
+                "adieu",
+                "durns",
+                "grund",
                 "round"
             ],
             "is_solved": true,
@@ -1713,51 +1705,48 @@
         },
         "SALAD": {
             "guesses": [
-                "tares",
-                "salmi",
-                "salol",
-                "salpa",
+                "adieu",
+                "roads",
+                "sadly",
                 "salad"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "SEEDY": {
             "guesses": [
-                "tares",
-                "poise",
-                "shell",
-                "scend",
+                "adieu",
+                "derns",
+                "sedgy",
                 "seedy"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "SERVE": {
             "guesses": [
-                "tares",
-                "seron",
-                "serre",
-                "serge",
+                "adieu",
+                "terns",
                 "serve"
-            ],
-            "is_solved": true,
-            "num_guesses": 5
-        },
-        "SHIRE": {
-            "guesses": [
-                "tares",
-                "prose",
-                "shire"
             ],
             "is_solved": true,
             "num_guesses": 3
         },
+        "SHIRE": {
+            "guesses": [
+                "adieu",
+                "reins",
+                "prise",
+                "shire"
+            ],
+            "is_solved": true,
+            "num_guesses": 4
+        },
         "SHRUB": {
             "guesses": [
-                "tares",
-                "cursi",
-                "shrug",
+                "adieu",
+                "torus",
+                "scrub",
                 "shrub"
             ],
             "is_solved": true,
@@ -1765,29 +1754,30 @@
         },
         "SIEGE": {
             "guesses": [
-                "tares",
-                "poise",
-                "singe",
+                "adieu",
+                "sient",
                 "siege"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "SISSY": {
             "guesses": [
-                "tares",
-                "spoil",
-                "snick",
-                "sissy"
+                "adieu",
+                "rotis",
+                "pissy",
+                "cissy",
+                "hissy",
+                "kissy"
             ],
-            "is_solved": true,
-            "num_guesses": 4
+            "is_solved": false,
+            "num_guesses": 6
         },
         "SLUMP": {
             "guesses": [
-                "tares",
-                "spoil",
-                "sculp",
+                "adieu",
+                "torus",
+                "plush",
                 "slump"
             ],
             "is_solved": true,
@@ -1795,32 +1785,32 @@
         },
         "SMART": {
             "guesses": [
-                "tares",
-                "stark",
+                "adieu",
+                "toras",
+                "skart",
                 "scart",
                 "slart",
                 "smart"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "SOLAR": {
             "guesses": [
-                "tares",
-                "sharn",
-                "simar",
+                "adieu",
+                "toras",
                 "sofar",
                 "solar"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "SOLVE": {
             "guesses": [
-                "tares",
-                "poise",
+                "adieu",
+                "terns",
+                "slope",
                 "socle",
-                "solde",
                 "solve"
             ],
             "is_solved": true,
@@ -1828,41 +1818,41 @@
         },
         "SONIC": {
             "guesses": [
-                "tares",
-                "spoil",
-                "sodic",
+                "adieu",
+                "rotis",
                 "sonic"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "SOWER": {
             "guesses": [
-                "tares",
-                "osier",
-                "doser",
+                "adieu",
+                "soler",
                 "sober",
                 "soger",
-                "soler"
+                "sorer",
+                "sower"
             ],
-            "is_solved": false,
+            "is_solved": true,
             "num_guesses": 6
         },
         "SPEND": {
             "guesses": [
-                "tares",
-                "poise",
-                "speld",
+                "adieu",
+                "derns",
+                "scend",
+                "shend",
                 "spend"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "SPICY": {
             "guesses": [
-                "tares",
-                "spoil",
-                "spick",
+                "adieu",
+                "trips",
+                "spink",
                 "spicy"
             ],
             "is_solved": true,
@@ -1870,72 +1860,76 @@
         },
         "SPIKE": {
             "guesses": [
-                "tares",
-                "poise",
+                "adieu",
+                "reins",
                 "slipe",
                 "spice",
-                "spide",
                 "spike"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
+        "SPRAY": {
+            "guesses": [
+                "adieu",
+                "toras",
+                "spray"
+            ],
+            "is_solved": true,
+            "num_guesses": 3
+        },
+        "STAFF": {
+            "guesses": [
+                "adieu",
+                "toras",
+                "plast",
+                "stang",
+                "stack",
+                "staff"
             ],
             "is_solved": true,
             "num_guesses": 6
         },
-        "SPRAY": {
-            "guesses": [
-                "tares",
-                "scrap",
-                "sprad",
-                "sprag",
-                "spray"
-            ],
-            "is_solved": true,
-            "num_guesses": 5
-        },
-        "STAFF": {
-            "guesses": [
-                "tares",
-                "slant",
-                "scath",
-                "staig",
-                "staff"
-            ],
-            "is_solved": true,
-            "num_guesses": 5
-        },
         "STAND": {
             "guesses": [
-                "tares",
-                "slant",
+                "adieu",
+                "roads",
+                "scald",
+                "shand",
                 "stand"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "START": {
             "guesses": [
-                "tares",
-                "stark",
-                "starn",
-                "starr",
-                "start"
+                "adieu",
+                "toras",
+                "skart",
+                "scart",
+                "slart",
+                "smart"
             ],
-            "is_solved": true,
-            "num_guesses": 5
+            "is_solved": false,
+            "num_guesses": 6
         },
         "STEED": {
             "guesses": [
-                "tares",
-                "steen",
-                "steed"
+                "adieu",
+                "dores",
+                "skyed",
+                "sewed",
+                "sneed",
+                "speed"
             ],
-            "is_solved": true,
-            "num_guesses": 3
+            "is_solved": false,
+            "num_guesses": 6
         },
         "STINK": {
             "guesses": [
-                "tares",
-                "stoun",
-                "sting",
+                "adieu",
+                "trips",
+                "shift",
                 "stink"
             ],
             "is_solved": true,
@@ -1943,82 +1937,85 @@
         },
         "STOOL": {
             "guesses": [
-                "tares",
-                "stoun",
-                "stoop",
-                "stood",
-                "stook",
+                "adieu",
+                "pyots",
+                "crost",
+                "stoln",
                 "stool"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 5
         },
         "STORE": {
             "guesses": [
-                "tares",
-                "reest",
+                "adieu",
+                "terns",
+                "crest",
                 "estro",
                 "store"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "STOUT": {
             "guesses": [
-                "tares",
-                "stoun",
-                "stoup",
-                "stout"
+                "adieu",
+                "torus",
+                "snout",
+                "scout",
+                "shout",
+                "smout"
             ],
-            "is_solved": true,
-            "num_guesses": 4
+            "is_solved": false,
+            "num_guesses": 6
         },
         "SURER": {
             "guesses": [
-                "tares",
-                "sored",
-                "scree",
-                "serer",
+                "adieu",
+                "suber",
+                "super",
                 "surer"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "SWIRL": {
             "guesses": [
-                "tares",
-                "shiur",
-                "skirl",
+                "adieu",
+                "trips",
+                "shirk",
+                "smirr",
                 "swirl"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
-        "TANGY": {
-            "guesses": [
-                "tares",
-                "talon",
-                "tanga",
-                "tangi",
-                "tangy"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
-        "TAPIR": {
+        "TANGY": {
             "guesses": [
-                "tares",
-                "tabor",
-                "talar",
-                "tapir"
+                "adieu",
+                "toras",
+                "tanga",
+                "tangy"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
+        "TAPIR": {
+            "guesses": [
+                "adieu",
+                "katis",
+                "habit",
+                "tafia",
+                "tamin",
+                "tapir"
+            ],
+            "is_solved": true,
+            "num_guesses": 6
+        },
         "THUMB": {
             "guesses": [
-                "tares",
-                "think",
+                "adieu",
+                "torus",
                 "thumb"
             ],
             "is_solved": true,
@@ -2026,17 +2023,18 @@
         },
         "TIGER": {
             "guesses": [
-                "tares",
-                "toyer",
+                "adieu",
+                "riles",
+                "timer",
                 "tiger"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "TILDE": {
             "guesses": [
-                "tares",
-                "thine",
+                "adieu",
+                "delis",
                 "tilde"
             ],
             "is_solved": true,
@@ -2044,9 +2042,9 @@
         },
         "TOTEM": {
             "guesses": [
-                "tares",
-                "toned",
-                "topee",
+                "adieu",
+                "soler",
+                "moten",
                 "totem"
             ],
             "is_solved": true,
@@ -2054,8 +2052,8 @@
         },
         "TRACE": {
             "guesses": [
-                "tares",
-                "trade",
+                "adieu",
+                "teras",
                 "trace"
             ],
             "is_solved": true,
@@ -2063,38 +2061,39 @@
         },
         "TRAWL": {
             "guesses": [
-                "tares",
-                "trait",
-                "trank",
+                "adieu",
+                "toras",
+                "track",
+                "trant",
                 "tramp",
                 "trawl"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "TRIAD": {
             "guesses": [
-                "tares",
-                "trait",
-                "triac",
+                "adieu",
+                "laird",
                 "triad"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
-        "TROLL": {
-            "guesses": [
-                "tares",
-                "triol",
-                "troll"
             ],
             "is_solved": true,
             "num_guesses": 3
         },
+        "TROLL": {
+            "guesses": [
+                "adieu",
+                "pyots",
+                "tronc",
+                "troll"
+            ],
+            "is_solved": true,
+            "num_guesses": 4
+        },
         "TRUSS": {
             "guesses": [
-                "tares",
-                "trios",
+                "adieu",
+                "torus",
                 "trugs",
                 "truss"
             ],
@@ -2103,9 +2102,9 @@
         },
         "TWEED": {
             "guesses": [
-                "tares",
-                "toned",
-                "timed",
+                "adieu",
+                "dores",
+                "tewed",
                 "tweed"
             ],
             "is_solved": true,
@@ -2113,9 +2112,9 @@
         },
         "UNFED": {
             "guesses": [
-                "tares",
-                "oiled",
-                "feued",
+                "adieu",
+                "runed",
+                "unbed",
                 "unfed"
             ],
             "is_solved": true,
@@ -2123,8 +2122,8 @@
         },
         "UNIFY": {
             "guesses": [
-                "tares",
-                "piony",
+                "adieu",
+                "muirs",
                 "unify"
             ],
             "is_solved": true,
@@ -2132,41 +2131,40 @@
         },
         "UNMET": {
             "guesses": [
-                "tares",
-                "botel",
+                "adieu",
+                "suber",
                 "unget",
                 "unket",
+                "unlet",
                 "unmet"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "USHER": {
             "guesses": [
-                "tares",
-                "osier",
-                "esker",
+                "adieu",
+                "suber",
                 "usher"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "USING": {
             "guesses": [
-                "tares",
-                "spoil",
-                "cissy",
+                "adieu",
+                "muirs",
                 "using"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "VIRAL": {
             "guesses": [
-                "tares",
-                "moral",
-                "aural",
-                "gyral",
+                "adieu",
+                "katis",
+                "binal",
+                "rival",
                 "viral"
             ],
             "is_solved": true,
@@ -2174,31 +2172,28 @@
         },
         "VITAL": {
             "guesses": [
-                "tares",
-                "ayont",
-                "cital",
-                "dital",
+                "adieu",
+                "katis",
                 "vital"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 3
         },
         "VODKA": {
             "guesses": [
-                "tares",
-                "aloin",
-                "copay",
-                "dogma",
+                "adieu",
+                "roads",
+                "domal",
                 "hodja",
                 "vodka"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 5
         },
         "WEARY": {
             "guesses": [
-                "tares",
-                "deare",
+                "adieu",
+                "teras",
                 "leary",
                 "weary"
             ],
@@ -2207,52 +2202,52 @@
         },
         "WHELP": {
             "guesses": [
-                "tares",
-                "oldie",
-                "kelly",
-                "chelp",
+                "adieu",
+                "terns",
+                "coble",
+                "kvell",
+                "whelm",
                 "whelp"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "WINCE": {
             "guesses": [
-                "tares",
-                "oldie",
-                "hinge",
+                "adieu",
+                "sient",
                 "mince",
                 "wince"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "WOOER": {
             "guesses": [
-                "tares",
-                "oiler",
-                "mower",
-                "woker",
-                "wooer"
+                "adieu",
+                "soler",
+                "mover",
+                "goner",
+                "power",
+                "woker"
             ],
-            "is_solved": true,
-            "num_guesses": 5
+            "is_solved": false,
+            "num_guesses": 6
         },
         "WORLD": {
             "guesses": [
-                "tares",
-                "curdy",
-                "mirid",
+                "adieu",
+                "words",
                 "world"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "WROTE": {
             "guesses": [
-                "tares",
-                "inert",
-                "retox",
+                "adieu",
+                "terns",
+                "erect",
                 "wrote"
             ],
             "is_solved": true,
@@ -2260,13 +2255,14 @@
         },
         "YEARN": {
             "guesses": [
-                "tares",
-                "deare",
+                "adieu",
+                "teras",
                 "leary",
                 "yearn"
             ],
             "is_solved": true,
             "num_guesses": 4
         }
-    }
+    },
+    "strategy": "mean_partition"
 }
