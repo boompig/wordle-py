@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 import os.path
 import numpy as np
 import pandas as pd
@@ -8,6 +8,9 @@ from tqdm import tqdm
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 TABLE_PATH = os.path.join(BASE_DIR, "data-parsed/possibilities-table-base-3.npy")
+TABLE_DF_PATH = os.path.join(
+    BASE_DIR, "data-parsed/possibilities-table-base-3.parquet.gzip"
+)
 
 
 from play import UNSAFE_eval_guess
@@ -55,9 +58,18 @@ def load_possibilities_table(words: List[str]) -> pd.DataFrame:
     return pd.DataFrame(table, index=words, columns=words)
 
 
+def load_possibilities_table_df(path: Optional[str] = None) -> pd.DataFrame:
+    """Same as above but will load the dataframe directly
+    :param path: May optionally specify a path
+    """
+    if path is None:
+        path = TABLE_DF_PATH
+    return pd.read_parquet(path)
+
+
 def compute_possibilities_table(words: List[str]) -> np.ndarray:
     num_words = len(words)
-    # table = np.empty(shape=(num_words, num_words), dtype='uint16')
+    print(f"computing {num_words}x{num_words} possibilities matrix...")
     table = np.empty(shape=(num_words, num_words), dtype="uint8")
 
     def f_eval_guess(guess_i: int, answer_i: int) -> int:

@@ -41,7 +41,7 @@ def read_wordle_answers_raw(fname: str) -> pd.DataFrame:
             year = int(year)
             day_of_month = int(day_of_month)
             assert len(month) == 3
-            assert len(answer) == 5
+            assert len(answer) == 5, answer
             answer_date = datetime.strptime(
                 f"{year} {month} {day_of_month}", "%Y %b %d"
             )
@@ -63,6 +63,11 @@ def read_past_answers(fname: Optional[str] = None) -> List[str]:
     print(f"Reading all answers on or before {todays_date_pretty}...")
     past_answers = all_answers[all_answers["date"] <= todays_date]
     return past_answers["answer"].tolist()
+
+
+def read_all_answers(fname: Optional[str] = None) -> List[str]:
+    all_answers = read_parsed_answers(fname)
+    return all_answers["answer"].tolist()
 
 
 def read_wordle_words_raw(fname: str) -> List[str]:
@@ -108,7 +113,7 @@ if __name__ == "__main__":
     read_write_answers = True
     if read_write_answers:
         print("Reading Wordle answers...")
-        answers = read_wordle_answers_raw("data-raw/wordle-answers.txt")
+        answers = read_wordle_answers_raw("data-raw/wordle-answers-future.txt")
         print(f"Read {len(answers)} answers")
         answers.to_parquet(DEFAULT_PARSED_ANSWERS_FILE)
         print("saved to file")

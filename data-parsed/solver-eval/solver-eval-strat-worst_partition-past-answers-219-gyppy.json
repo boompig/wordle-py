@@ -1,32 +1,34 @@
 {
-    "first_word": "serai",
+    "first_word": "gyppy",
     "num_answers_tested": 219,
     "per_word_results": {
         "ABACK": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "banya",
-                "about",
+                "halon",
+                "abaca",
                 "aback"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "ABASE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "mased",
                 "alecs",
                 "abase"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "ABATE": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "lawed",
-                "agent",
+                "laden",
                 "abate"
             ],
             "is_solved": true,
@@ -34,19 +36,20 @@
         },
         "ABBEY": {
             "guesses": [
-                "serai",
-                "lawed",
-                "abcee",
+                "gyppy",
+                "otary",
+                "manly",
+                "absey",
                 "abbey"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "ABYSS": {
             "guesses": [
-                "serai",
-                "lants",
-                "odahs",
+                "gyppy",
+                "sayer",
+                "abysm",
                 "abyss"
             ],
             "is_solved": true,
@@ -54,9 +57,9 @@
         },
         "ACUTE": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "lawed",
-                "agent",
+                "laden",
                 "abate",
                 "acute"
             ],
@@ -65,19 +68,20 @@
         },
         "ADOBE": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "lawed",
+                "laden",
                 "abode",
                 "adobe"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "AGATE": {
             "guesses": [
-                "serai",
-                "lawed",
-                "agent",
+                "gyppy",
+                "aegis",
+                "adage",
                 "agate"
             ],
             "is_solved": true,
@@ -85,29 +89,31 @@
         },
         "AGREE": {
             "guesses": [
-                "serai",
-                "barde",
+                "gyppy",
+                "aegis",
+                "adage",
+                "agene",
+                "aglee",
                 "agree"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 6
         },
         "ALONE": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "lawed",
-                "ample",
-                "alane",
+                "laden",
                 "alone"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "ALTAR": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "bolar",
-                "lunar",
+                "talar",
                 "altar"
             ],
             "is_solved": true,
@@ -115,28 +121,30 @@
         },
         "ARGUE": {
             "guesses": [
-                "serai",
-                "alter",
-                "adore",
+                "gyppy",
+                "aegis",
+                "agger",
+                "argle",
                 "argue"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "ASIDE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "maise",
                 "aside"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "AUDIT": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "bania",
-                "alcid",
                 "admit",
                 "audit"
             ],
@@ -145,55 +153,62 @@
         },
         "AWAKE": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "lawed",
+                "laden",
+                "abate",
                 "awake"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "BADLY": {
             "guesses": [
-                "serai",
-                "banya",
+                "gyppy",
+                "otary",
+                "manly",
+                "dally",
                 "badly"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "BANAL": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "tolan",
+                "monal",
                 "banal"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "BASIC": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "kalis",
                 "basic"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "BATON": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "banya",
+                "halon",
                 "bacon",
                 "baton"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "BATTY": {
             "guesses": [
-                "serai",
-                "banya",
-                "badly",
+                "gyppy",
+                "otary",
+                "natty",
                 "batty"
             ],
             "is_solved": true,
@@ -201,10 +216,10 @@
         },
         "BELCH": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "neeld",
-                "telex",
-                "welch",
+                "celeb",
                 "belch"
             ],
             "is_solved": true,
@@ -212,19 +227,21 @@
         },
         "BELLY": {
             "guesses": [
-                "serai",
-                "neeld",
+                "gyppy",
+                "otary",
+                "skiey",
+                "newly",
                 "belly"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "BENCH": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "neeld",
-                "tenne",
-                "venom",
+                "kente",
                 "bench"
             ],
             "is_solved": true,
@@ -232,11 +249,11 @@
         },
         "BIOME": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "lined",
                 "kithe",
-                "piece",
-                "fique",
+                "civie",
                 "biome"
             ],
             "is_solved": true,
@@ -244,9 +261,9 @@
         },
         "BLEED": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "dolce",
-                "blued",
                 "bleed"
             ],
             "is_solved": true,
@@ -254,27 +271,29 @@
         },
         "BLURT": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "brunt",
                 "blurt"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "BLUSH": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "clous",
                 "blush"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "BOOBY": {
             "guesses": [
-                "serai",
-                "phony",
-                "blowy",
+                "gyppy",
+                "otary",
+                "ebony",
                 "booby"
             ],
             "is_solved": true,
@@ -282,9 +301,9 @@
         },
         "BOOST": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "clous",
-                "ghost",
                 "boost"
             ],
             "is_solved": true,
@@ -292,9 +311,9 @@
         },
         "BOOZY": {
             "guesses": [
-                "serai",
-                "phony",
-                "blowy",
+                "gyppy",
+                "otary",
+                "ebony",
                 "booby",
                 "boody",
                 "boofy"
@@ -304,39 +323,42 @@
         },
         "BRAKE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "alter",
                 "cabre",
                 "brake"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "BREAK": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "aread",
                 "break"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "BRIAR": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "cimar",
                 "friar",
                 "briar"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "BRIBE": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "riven",
-                "tripe",
-                "grice",
+                "riled",
+                "tribe",
                 "bribe"
             ],
             "is_solved": true,
@@ -344,30 +366,29 @@
         },
         "BRING": {
             "guesses": [
-                "serai",
-                "print",
+                "gyppy",
+                "aegis",
+                "corgi",
                 "bring"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "CHAMP": {
             "guesses": [
-                "serai",
-                "banya",
-                "altho",
-                "chack",
-                "chaff",
+                "gyppy",
+                "paseo",
+                "apart",
                 "champ"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 4
         },
         "CHEAT": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "clean",
-                "cheap",
+                "bleat",
                 "cheat"
             ],
             "is_solved": true,
@@ -375,9 +396,9 @@
         },
         "CHILL": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "linty",
-                "fluid",
+                "nicol",
                 "chill"
             ],
             "is_solved": true,
@@ -385,69 +406,75 @@
         },
         "CIGAR": {
             "guesses": [
-                "serai",
-                "cimar",
+                "gyppy",
+                "aegis",
+                "ligan",
                 "cigar"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "CIVIC": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "linty",
-                "bipod",
+                "nicol",
+                "bitch",
                 "civic"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "CLICK": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "linty",
-                "fluid",
+                "nicol",
+                "cliff",
                 "click"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "CLOCK": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "phony",
-                "block",
+                "count",
+                "chook",
                 "clock"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "CLUCK": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "phony",
-                "bucku",
+                "count",
+                "chuck",
                 "cluck"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "COAST": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "lants",
+                "talks",
                 "ascot",
                 "coast"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "COLON": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "phony",
-                "mondo",
-                "cogon",
+                "count",
+                "condo",
                 "colon"
             ],
             "is_solved": true,
@@ -455,10 +482,10 @@
         },
         "COMET": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "dolce",
-                "coven",
-                "cooey",
+                "cohen",
                 "comet"
             ],
             "is_solved": true,
@@ -466,29 +493,31 @@
         },
         "CONIC": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "linty",
+                "nicol",
                 "conic"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "CORNY": {
             "guesses": [
-                "serai",
-                "curdy",
-                "corby",
+                "gyppy",
+                "otary",
                 "corky",
+                "corby",
+                "corey",
                 "corny"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "CRANK": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "orant",
-                "drank",
+                "trona",
                 "brank",
                 "crank"
             ],
@@ -497,59 +526,62 @@
         },
         "CRASS": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "brast",
+                "crash",
                 "crass"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "CRATE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "alter",
                 "crate"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "CRAZE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "alter",
                 "cabre",
                 "crake",
-                "crame",
-                "crane"
+                "crame"
             ],
             "is_solved": false,
             "num_guesses": 6
         },
         "CRAZY": {
             "guesses": [
-                "serai",
-                "orant",
-                "brach",
-                "crapy",
+                "gyppy",
+                "otary",
+                "braky",
                 "crazy"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "CRIMP": {
             "guesses": [
-                "serai",
-                "print",
+                "gyppy",
+                "paseo",
+                "thrip",
                 "crimp"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "CROAK": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "bolar",
-                "groat",
+                "talar",
                 "croak"
             ],
             "is_solved": true,
@@ -557,37 +589,41 @@
         },
         "CRUST": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "prost",
+                "frost",
                 "brust",
                 "crust"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "DEATH": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "beaty",
+                "leant",
+                "beath",
                 "death"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "DELTA": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "beaty",
+                "leant",
                 "delta"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "DIGIT": {
             "guesses": [
-                "serai",
-                "linty",
-                "dicht",
+                "gyppy",
+                "aegis",
+                "logic",
                 "digit"
             ],
             "is_solved": true,
@@ -595,9 +631,9 @@
         },
         "DOWRY": {
             "guesses": [
-                "serai",
-                "brunt",
-                "moory",
+                "gyppy",
+                "otary",
+                "lowry",
                 "cowry",
                 "dowry"
             ],
@@ -606,10 +642,10 @@
         },
         "DOZEN": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "dolce",
                 "domed",
-                "dogey",
                 "doven",
                 "dozen"
             ],
@@ -618,38 +654,41 @@
         },
         "DRAIN": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "drain"
             ],
             "is_solved": true,
-            "num_guesses": 2
+            "num_guesses": 3
         },
         "DRINK": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "print",
-                "bring",
+                "triol",
+                "brick",
                 "drink"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "DUCHY": {
             "guesses": [
-                "serai",
-                "phony",
-                "hulky",
+                "gyppy",
+                "otary",
+                "skiey",
+                "bludy",
                 "duchy"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "DUTCH": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "phony",
+                "count",
                 "butch",
-                "cutch",
                 "dutch"
             ],
             "is_solved": true,
@@ -657,39 +696,42 @@
         },
         "DWARF": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "orant",
+                "trona",
                 "chard",
                 "dwarf"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "ENEMA": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "lawed",
-                "agent",
+                "laden",
+                "ahent",
                 "enema"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
+        "EPOCH": {
+            "guesses": [
+                "gyppy",
+                "paseo",
+                "ephor",
+                "epoch"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
-        "EPOCH": {
-            "guesses": [
-                "serai",
-                "dolce",
-                "epoch"
-            ],
-            "is_solved": true,
-            "num_guesses": 3
-        },
         "ERODE": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "rouen",
-                "proke",
-                "drome",
+                "roted",
+                "droke",
                 "erode"
             ],
             "is_solved": true,
@@ -697,49 +739,54 @@
         },
         "ERROR": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "borde",
                 "enrol",
                 "error"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "ESSAY": {
             "guesses": [
-                "serai",
-                "ephas",
+                "gyppy",
+                "otary",
+                "manly",
+                "absey",
                 "essay"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "EVADE": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "lawed",
+                "laden",
                 "abode",
                 "evade"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "EXULT": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "dolce",
-                "kugel",
+                "fleek",
                 "exult"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "FAVOR": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "orant",
-                "amour",
-                "valor",
+                "trona",
+                "labor",
                 "favor"
             ],
             "is_solved": true,
@@ -747,19 +794,20 @@
         },
         "FEIGN": {
             "guesses": [
-                "serai",
-                "teind",
+                "gyppy",
+                "aegis",
+                "deign",
                 "feign"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "FERRY": {
             "guesses": [
-                "serai",
-                "herye",
-                "derry",
+                "gyppy",
+                "otary",
                 "berry",
+                "derry",
                 "ferry"
             ],
             "is_solved": true,
@@ -767,20 +815,21 @@
         },
         "FINER": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "riven",
+                "riled",
+                "niter",
                 "biner",
-                "diner",
                 "finer"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "FIRST": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "lirks",
-                "birsy",
                 "first"
             ],
             "is_solved": true,
@@ -788,22 +837,22 @@
         },
         "FIXER": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "riven",
-                "liter",
-                "bider",
-                "piker",
-                "fixer"
+                "riled",
+                "niter",
+                "fiver",
+                "fiber"
             ],
-            "is_solved": true,
+            "is_solved": false,
             "num_guesses": 6
         },
         "FJORD": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "brunt",
-                "moory",
-                "chord",
+                "color",
                 "fjord"
             ],
             "is_solved": true,
@@ -811,30 +860,32 @@
         },
         "FLESH": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "losen",
-                "bleys",
+                "clefs",
                 "flesh"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "FLICK": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "linty",
-                "fluid",
+                "nicol",
+                "cliff",
                 "flick"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "FLING": {
             "guesses": [
-                "serai",
-                "linty",
+                "gyppy",
+                "aegis",
+                "corgi",
                 "bling",
-                "cling",
                 "fling"
             ],
             "is_solved": true,
@@ -842,9 +893,9 @@
         },
         "FLOSS": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "clous",
-                "glops",
                 "blobs",
                 "floss"
             ],
@@ -853,39 +904,43 @@
         },
         "FLUME": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "dolce",
-                "fugle",
+                "butle",
                 "fluke",
                 "flume"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "FOCAL": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "tolan",
-                "comal",
+                "monal",
+                "cowal",
                 "focal"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "FORGE": {
             "guesses": [
-                "serai",
-                "borde",
+                "gyppy",
+                "aegis",
+                "mudge",
+                "conge",
                 "forge"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "FORTH": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "curdy",
-                "north",
+                "turbo",
                 "forth"
             ],
             "is_solved": true,
@@ -893,39 +948,42 @@
         },
         "FRESH": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "trees",
-                "grese",
+                "trues",
+                "brose",
                 "fresh"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "FRONT": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "brunt",
                 "front"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "GAMMA": {
             "guesses": [
-                "serai",
-                "banya",
-                "talma",
+                "gyppy",
+                "gares",
+                "gaita",
+                "gamba",
                 "gamma"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "GAUDY": {
             "guesses": [
-                "serai",
-                "banya",
-                "calmy",
-                "gappy",
+                "gyppy",
+                "goary",
+                "gaumy",
+                "gaucy",
                 "gaudy"
             ],
             "is_solved": true,
@@ -933,30 +991,32 @@
         },
         "GOLEM": {
             "guesses": [
-                "serai",
-                "dolce",
-                "foley",
+                "gyppy",
+                "gares",
+                "gilet",
+                "gelee",
                 "golem"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
-        "GONER": {
-            "guesses": [
-                "serai",
-                "rouen",
-                "boner",
-                "doner",
-                "goner"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
+        "GONER": {
+            "guesses": [
+                "gyppy",
+                "gares",
+                "giber",
+                "gofer",
+                "gomer",
+                "goner"
+            ],
+            "is_solved": true,
+            "num_guesses": 6
+        },
         "GORGE": {
             "guesses": [
-                "serai",
-                "borde",
-                "forge",
+                "gyppy",
+                "gares",
+                "gerbe",
                 "gorge"
             ],
             "is_solved": true,
@@ -964,10 +1024,10 @@
         },
         "GOUGE": {
             "guesses": [
-                "serai",
-                "dolce",
-                "pombe",
-                "togue",
+                "gyppy",
+                "gares",
+                "guide",
+                "glume",
                 "gouge"
             ],
             "is_solved": true,
@@ -975,20 +1035,19 @@
         },
         "GRADE": {
             "guesses": [
-                "serai",
-                "alter",
-                "cabre",
-                "drape",
+                "gyppy",
+                "gares",
+                "grace",
                 "grade"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "GREAT": {
             "guesses": [
-                "serai",
-                "aread",
-                "break",
+                "gyppy",
+                "gares",
+                "grace",
                 "great"
             ],
             "is_solved": true,
@@ -996,20 +1055,21 @@
         },
         "GREET": {
             "guesses": [
-                "serai",
-                "rouen",
-                "treed",
-                "freet",
-                "greet"
+                "gyppy",
+                "gares",
+                "giber",
+                "greed",
+                "greek",
+                "green"
             ],
-            "is_solved": true,
-            "num_guesses": 5
+            "is_solved": false,
+            "num_guesses": 6
         },
         "GRIME": {
             "guesses": [
-                "serai",
-                "riven",
-                "tripe",
+                "gyppy",
+                "gares",
+                "grein",
                 "grice",
                 "gride",
                 "grike"
@@ -1019,28 +1079,28 @@
         },
         "GRIPE": {
             "guesses": [
-                "serai",
-                "riven",
-                "tripe",
-                "cripe",
+                "gyppy",
+                "gompa",
+                "geeps",
                 "gripe"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "GROIN": {
             "guesses": [
-                "serai",
-                "print",
+                "gyppy",
+                "gares",
+                "griot",
                 "groin"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "GROUP": {
             "guesses": [
-                "serai",
-                "brunt",
+                "gyppy",
+                "graip",
                 "group"
             ],
             "is_solved": true,
@@ -1048,51 +1108,52 @@
         },
         "GROWL": {
             "guesses": [
-                "serai",
-                "brunt",
-                "droop",
-                "frowy",
+                "gyppy",
+                "gares",
+                "griot",
                 "growl"
-            ],
-            "is_solved": true,
-            "num_guesses": 5
-        },
-        "GUILD": {
-            "guesses": [
-                "serai",
-                "linty",
-                "fluid",
-                "build",
-                "guild"
-            ],
-            "is_solved": true,
-            "num_guesses": 5
-        },
-        "HATCH": {
-            "guesses": [
-                "serai",
-                "banya",
-                "cagot",
-                "hatch"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
+        "GUILD": {
+            "guesses": [
+                "gyppy",
+                "gares",
+                "glint",
+                "guild"
+            ],
+            "is_solved": true,
+            "num_guesses": 4
+        },
+        "HATCH": {
+            "guesses": [
+                "gyppy",
+                "serai",
+                "halon",
+                "hamba",
+                "hatch"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
         "HEATH": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "beaty",
+                "leant",
+                "beath",
                 "death",
                 "heath"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 6
         },
         "HELIX": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "teind",
-                "kelim",
+                "telic",
                 "helio",
                 "helix"
             ],
@@ -1101,79 +1162,84 @@
         },
         "HERON": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "herye",
+                "beret",
+                "cerne",
                 "heron"
-            ],
-            "is_solved": true,
-            "num_guesses": 3
-        },
-        "HUMPH": {
-            "guesses": [
-                "serai",
-                "phony",
-                "bumph",
-                "humph"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
-        "HYPER": {
-            "guesses": [
-                "serai",
-                "rouen",
-                "treed",
-                "cyber",
-                "hyper"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
+        "HUMPH": {
+            "guesses": [
+                "gyppy",
+                "scopa",
+                "dempt",
+                "bumph",
+                "humph"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
+        "HYPER": {
+            "guesses": [
+                "gyppy",
+                "hypes",
+                "hyped",
+                "hyper"
+            ],
+            "is_solved": true,
+            "num_guesses": 4
+        },
         "ISLET": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "nites",
                 "islet"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "IVORY": {
             "guesses": [
-                "serai",
-                "print",
+                "gyppy",
+                "otary",
+                "lowry",
+                "frory",
                 "ivory"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "JAUNT": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "banya",
-                "nacho",
+                "halon",
                 "daunt",
-                "gaunt",
                 "jaunt"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 5
         },
         "KARMA": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "barmy",
+                "carom",
                 "karma"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "KEBAB": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "decal",
-                "began",
-                "hejab",
+                "bekah",
                 "kebab"
             ],
             "is_solved": true,
@@ -1181,21 +1247,20 @@
         },
         "LABOR": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "orant",
-                "amour",
-                "valor",
+                "trona",
                 "labor"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 4
         },
         "LAPEL": {
             "guesses": [
-                "serai",
-                "lawed",
-                "lacet",
-                "label",
+                "gyppy",
+                "asper",
+                "caped",
+                "tapen",
                 "lapel"
             ],
             "is_solved": true,
@@ -1203,18 +1268,19 @@
         },
         "LINEN": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "lined",
                 "linen"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "LOOPY": {
             "guesses": [
-                "serai",
-                "phony",
-                "goopy",
+                "gyppy",
+                "rumpy",
+                "slopy",
                 "loopy"
             ],
             "is_solved": true,
@@ -1222,18 +1288,20 @@
         },
         "LUSTY": {
             "guesses": [
-                "serai",
-                "clous",
-                "lushy",
+                "gyppy",
+                "otary",
+                "fisty",
+                "busty",
+                "dusty",
                 "lusty"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 6
         },
         "LYING": {
             "guesses": [
-                "serai",
-                "linty",
+                "gyppy",
+                "hyleg",
                 "lying"
             ],
             "is_solved": true,
@@ -1241,58 +1309,65 @@
         },
         "MAJOR": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "orant",
-                "amour",
+                "trona",
+                "labor",
+                "favor",
                 "major"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 6
         },
         "MARRY": {
             "guesses": [
-                "serai",
-                "barmy",
-                "mardy",
-                "marly",
-                "marry"
+                "gyppy",
+                "otary",
+                "aiery",
+                "barry",
+                "carry",
+                "harry"
             ],
-            "is_solved": true,
-            "num_guesses": 5
+            "is_solved": false,
+            "num_guesses": 6
         },
         "MASSE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "mased",
                 "masse"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "MAXIM": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "bania",
-                "calid",
-                "hakim",
+                "malic",
+                "madid",
                 "maxim"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "MIMIC": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "linty",
-                "bipod",
+                "nicol",
+                "bitch",
                 "civic",
                 "mimic"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "MODEL": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "dolce",
                 "lobed",
@@ -1300,23 +1375,24 @@
                 "model"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "MOTOR": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "brunt",
                 "motor"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "MOULT": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "phony",
-                "dumbo",
-                "kokum",
+                "count",
+                "boult",
                 "moult"
             ],
             "is_solved": true,
@@ -1324,30 +1400,32 @@
         },
         "NAVAL": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "tolan",
-                "banal",
+                "monal",
                 "nahal",
+                "natal",
                 "naval"
+            ],
+            "is_solved": true,
+            "num_guesses": 6
+        },
+        "OFFAL": {
+            "guesses": [
+                "gyppy",
+                "serai",
+                "monal",
+                "octal",
+                "offal"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
-        "OFFAL": {
-            "guesses": [
-                "serai",
-                "tolan",
-                "cloak",
-                "offal"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
         "OUGHT": {
             "guesses": [
-                "serai",
-                "phony",
-                "couth",
+                "gyppy",
+                "aegis",
+                "cogon",
                 "ought"
             ],
             "is_solved": true,
@@ -1355,31 +1433,31 @@
         },
         "OUTDO": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "phony",
-                "dumbo",
+                "count",
+                "butoh",
                 "outdo"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "PANEL": {
             "guesses": [
-                "serai",
-                "lawed",
-                "cavel",
-                "babel",
-                "hazel",
+                "gyppy",
+                "paseo",
+                "pared",
+                "palet",
                 "panel"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 5
         },
         "PANIC": {
             "guesses": [
-                "serai",
-                "bania",
-                "manic",
+                "gyppy",
+                "paseo",
+                "panda",
                 "panic"
             ],
             "is_solved": true,
@@ -1387,20 +1465,19 @@
         },
         "PAPER": {
             "guesses": [
-                "serai",
-                "alter",
-                "gaper",
+                "gyppy",
+                "asper",
                 "caper",
                 "japer",
                 "paper"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 5
         },
         "PARRY": {
             "guesses": [
-                "serai",
-                "barmy",
+                "gyppy",
+                "porty",
                 "pardy",
                 "parky",
                 "parly",
@@ -1411,31 +1488,31 @@
         },
         "PEACH": {
             "guesses": [
-                "serai",
-                "beaty",
-                "leach",
+                "gyppy",
+                "paseo",
+                "pearl",
+                "peace",
                 "peach"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
-        "PERCH": {
-            "guesses": [
-                "serai",
-                "herye",
-                "berth",
-                "merch",
-                "perch"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
+        "PERCH": {
+            "guesses": [
+                "gyppy",
+                "paseo",
+                "penie",
+                "perch"
+            ],
+            "is_solved": true,
+            "num_guesses": 4
+        },
         "PICKY": {
             "guesses": [
-                "serai",
-                "linty",
-                "midgy",
-                "piccy",
+                "gyppy",
+                "porty",
+                "pansy",
+                "pukey",
                 "picky"
             ],
             "is_solved": true,
@@ -1443,19 +1520,20 @@
         },
         "PILOT": {
             "guesses": [
-                "serai",
-                "linty",
-                "kitul",
+                "gyppy",
+                "paseo",
+                "porin",
+                "picot",
                 "pilot"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "PITHY": {
             "guesses": [
-                "serai",
-                "linty",
-                "ditzy",
+                "gyppy",
+                "porty",
+                "patly",
                 "pithy"
             ],
             "is_solved": true,
@@ -1463,9 +1541,9 @@
         },
         "PLUCK": {
             "guesses": [
-                "serai",
-                "phony",
-                "plumb",
+                "gyppy",
+                "paseo",
+                "plunk",
                 "pluck"
             ],
             "is_solved": true,
@@ -1473,10 +1551,10 @@
         },
         "POINT": {
             "guesses": [
-                "serai",
-                "linty",
-                "nooit",
-                "joint",
+                "gyppy",
+                "paseo",
+                "porin",
+                "poind",
                 "point"
             ],
             "is_solved": true,
@@ -1484,18 +1562,20 @@
         },
         "POUND": {
             "guesses": [
-                "serai",
-                "phony",
+                "gyppy",
+                "paseo",
+                "porin",
+                "ponzu",
                 "pound"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "PRICK": {
             "guesses": [
-                "serai",
-                "print",
-                "primy",
+                "gyppy",
+                "paseo",
+                "plunk",
                 "prick"
             ],
             "is_solved": true,
@@ -1503,10 +1583,10 @@
         },
         "PRIDE": {
             "guesses": [
-                "serai",
-                "riven",
-                "tripe",
-                "price",
+                "gyppy",
+                "paseo",
+                "penie",
+                "piece",
                 "pride"
             ],
             "is_solved": true,
@@ -1514,41 +1594,41 @@
         },
         "PRINT": {
             "guesses": [
-                "serai",
+                "gyppy",
+                "paseo",
+                "plunk",
                 "print"
             ],
             "is_solved": true,
-            "num_guesses": 2
+            "num_guesses": 4
         },
         "PROVE": {
             "guesses": [
-                "serai",
-                "rouen",
+                "gyppy",
+                "paseo",
                 "proke",
                 "probe",
                 "prole",
-                "prore"
+                "prone"
             ],
             "is_solved": false,
             "num_guesses": 6
         },
         "PROXY": {
             "guesses": [
-                "serai",
-                "brunt",
-                "droop",
-                "proll",
-                "promo",
+                "gyppy",
+                "porty",
+                "prosy",
                 "proxy"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 4
         },
         "PULPY": {
             "guesses": [
-                "serai",
-                "phony",
-                "pudgy",
+                "gyppy",
+                "rumpy",
+                "cuspy",
                 "pulpy"
             ],
             "is_solved": true,
@@ -1556,29 +1636,32 @@
         },
         "QUERY": {
             "guesses": [
-                "serai",
-                "rouen",
-                "fleur",
+                "gyppy",
+                "otary",
+                "berry",
+                "emery",
+                "fiery",
                 "query"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 6
         },
         "QUIET": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "lined",
                 "chief",
                 "quiet"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "RADIO": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "drain",
-                "rabid",
                 "radio"
             ],
             "is_solved": true,
@@ -1586,20 +1669,21 @@
         },
         "REACT": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "deare",
                 "react"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "REBUS": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "redes",
-                "reens",
-                "repos",
-                "resus",
+                "deers",
+                "reses",
+                "renos",
                 "rebus"
             ],
             "is_solved": true,
@@ -1607,104 +1691,115 @@
         },
         "REBUT": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "reney",
+                "deter",
                 "recto",
                 "rebut"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "REPAY": {
             "guesses": [
-                "serai",
-                "renal",
-                "rebar",
-                "recap",
+                "gyppy",
+                "copay",
+                "appay",
                 "repay"
+            ],
+            "is_solved": true,
+            "num_guesses": 4
+        },
+        "RETCH": {
+            "guesses": [
+                "gyppy",
+                "serai",
+                "deter",
+                "metro",
+                "retch"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
-        "RETCH": {
-            "guesses": [
-                "serai",
-                "reney",
-                "recto",
-                "retch"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
         "RHINO": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "print",
+                "triol",
+                "chiro",
                 "rhino"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "ROBOT": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "brunt",
                 "robot"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "ROGUE": {
             "guesses": [
-                "serai",
-                "rouen",
+                "gyppy",
+                "aegis",
+                "huger",
+                "orgue",
                 "rogue"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "ROUGE": {
             "guesses": [
-                "serai",
-                "rouen",
+                "gyppy",
+                "aegis",
+                "mudge",
+                "bouge",
                 "rouge"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "ROUND": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "brunt",
                 "round"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "SALAD": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "solas",
+                "shoal",
                 "salad"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "SEEDY": {
             "guesses": [
-                "serai",
-                "sedes",
+                "gyppy",
+                "otary",
+                "skiey",
                 "seedy"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "SERVE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "seres",
-                "serre",
-                "serge",
+                "servo",
                 "serve"
             ],
             "is_solved": true,
@@ -1712,39 +1807,40 @@
         },
         "SHIRE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "sider",
                 "shire"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "SHRUB": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "stroy",
+                "sorbs",
                 "scrub",
                 "shrub"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "SIEGE": {
             "guesses": [
-                "serai",
-                "spiel",
-                "sient",
+                "gyppy",
+                "aegis",
                 "siege"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 3
         },
         "SISSY": {
             "guesses": [
-                "serai",
-                "skits",
-                "solid",
-                "sippy",
+                "gyppy",
+                "otary",
+                "skiey",
+                "silly",
                 "sissy"
             ],
             "is_solved": true,
@@ -1752,64 +1848,66 @@
         },
         "SLUMP": {
             "guesses": [
-                "serai",
-                "slots",
-                "slung",
-                "slubb",
-                "sluff",
+                "gyppy",
+                "paseo",
+                "spics",
+                "stump",
                 "slump"
             ],
             "is_solved": true,
-            "num_guesses": 6
+            "num_guesses": 5
         },
         "SMART": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "starn",
                 "scart",
                 "skart",
-                "slart",
-                "smart"
+                "slart"
             ],
-            "is_solved": true,
+            "is_solved": false,
             "num_guesses": 6
         },
         "SOLAR": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "sofar",
                 "solar"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "SOLVE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "sleet",
-                "swole",
+                "socle",
                 "solde",
                 "solve"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "SONIC": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "skits",
-                "solid",
+                "sloid",
                 "sonic"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "SOWER": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "shero",
                 "sober",
-                "soger",
                 "soler",
                 "sower"
             ],
@@ -1818,11 +1916,11 @@
         },
         "SPEND": {
             "guesses": [
-                "serai",
-                "sleet",
-                "skews",
-                "scend",
-                "shend",
+                "gyppy",
+                "paseo",
+                "spelt",
+                "specs",
+                "speir",
                 "spend"
             ],
             "is_solved": true,
@@ -1830,30 +1928,29 @@
         },
         "SPICY": {
             "guesses": [
-                "serai",
-                "skits",
-                "shiny",
-                "slily",
+                "gyppy",
+                "porty",
                 "spicy"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 3
         },
         "SPIKE": {
             "guesses": [
-                "serai",
-                "spiel",
+                "gyppy",
+                "paseo",
+                "spelt",
                 "spice",
                 "spide",
                 "spike"
             ],
             "is_solved": true,
-            "num_guesses": 5
+            "num_guesses": 6
         },
         "SPRAY": {
             "guesses": [
-                "serai",
-                "scrat",
+                "gyppy",
+                "porty",
                 "spray"
             ],
             "is_solved": true,
@@ -1861,10 +1958,10 @@
         },
         "STAFF": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "slats",
                 "scant",
-                "staph",
                 "staff"
             ],
             "is_solved": true,
@@ -1872,50 +1969,53 @@
         },
         "STAND": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "slats",
                 "scant",
                 "stand"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "START": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "starn",
                 "stark",
                 "starr",
-                "stars",
-                "start"
+                "stars"
             ],
-            "is_solved": true,
+            "is_solved": false,
             "num_guesses": 6
         },
         "STEED": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "sleet",
                 "steed"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "STINK": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "skits",
                 "stick",
                 "stink"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "STOOL": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "slots",
-                "smolt",
+                "stoln",
                 "stool"
             ],
             "is_solved": true,
@@ -1923,45 +2023,46 @@
         },
         "STORE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "shero",
                 "score",
                 "smore",
-                "snore",
-                "spore"
+                "snore"
             ],
             "is_solved": false,
             "num_guesses": 6
         },
         "STOUT": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "slots",
-                "snout",
-                "scout",
-                "shout",
-                "smout"
+                "stoln",
+                "stots",
+                "stook",
+                "stout"
             ],
-            "is_solved": false,
+            "is_solved": true,
             "num_guesses": 6
         },
         "SURER": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "sored",
-                "sprew",
+                "screw",
                 "surer"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "SWIRL": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "skirt",
-                "shirr",
+                "shirk",
                 "smirs",
-                "spiry",
+                "snirt",
                 "swirl"
             ],
             "is_solved": true,
@@ -1969,80 +2070,85 @@
         },
         "TANGY": {
             "guesses": [
-                "serai",
-                "banya",
-                "canty",
+                "gyppy",
+                "daggy",
+                "mangy",
+                "rangy",
                 "tangy"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
-        "TAPIR": {
-            "guesses": [
-                "serai",
-                "drain",
-                "fakir",
-                "jagir",
-                "tapir"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
+        "TAPIR": {
+            "guesses": [
+                "gyppy",
+                "asper",
+                "tapir"
+            ],
+            "is_solved": true,
+            "num_guesses": 3
+        },
         "THUMB": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "phony",
-                "chuck",
+                "count",
+                "klutz",
                 "thumb"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "TIGER": {
             "guesses": [
-                "serai",
-                "riven",
-                "liter",
+                "gyppy",
+                "aegis",
+                "eigne",
+                "liger",
                 "tiger"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "TILDE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "lined",
                 "tilde"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "TOTEM": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "dolce",
-                "money",
+                "bowet",
+                "hoten",
                 "totem"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 6
         },
         "TRACE": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "alter",
                 "crate",
                 "trace"
             ],
             "is_solved": true,
-            "num_guesses": 4
+            "num_guesses": 5
         },
         "TRAWL": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "orant",
-                "praty",
-                "track",
+                "trona",
+                "tract",
                 "trawl"
             ],
             "is_solved": true,
@@ -2050,9 +2156,9 @@
         },
         "TRIAD": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "cimar",
-                "prial",
                 "triad"
             ],
             "is_solved": true,
@@ -2060,10 +2166,10 @@
         },
         "TROLL": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "brunt",
-                "proto",
-                "trock",
+                "crwth",
                 "troll"
             ],
             "is_solved": true,
@@ -2071,20 +2177,21 @@
         },
         "TRUSS": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "prost",
+                "frost",
                 "truss"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "TWEED": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "dolce",
-                "yuked",
-                "ebbed",
-                "pwned",
+                "muted",
+                "theed",
                 "tweed"
             ],
             "is_solved": true,
@@ -2092,10 +2199,10 @@
         },
         "UNFED": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "dolce",
-                "yuked",
-                "umped",
+                "muted",
                 "unbed",
                 "unfed"
             ],
@@ -2104,19 +2211,21 @@
         },
         "UNIFY": {
             "guesses": [
-                "serai",
-                "linty",
+                "gyppy",
+                "otary",
+                "skiey",
+                "bliny",
                 "unify"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "UNMET": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "dolce",
-                "unget",
-                "unket",
+                "enmew",
                 "unmet"
             ],
             "is_solved": true,
@@ -2124,10 +2233,10 @@
         },
         "USHER": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "trees",
-                "doser",
-                "esker",
+                "trues",
+                "luser",
                 "usher"
             ],
             "is_solved": true,
@@ -2135,9 +2244,9 @@
         },
         "USING": {
             "guesses": [
-                "serai",
-                "lints",
-                "inspo",
+                "gyppy",
+                "aegis",
+                "sling",
                 "using"
             ],
             "is_solved": true,
@@ -2145,41 +2254,43 @@
         },
         "VIRAL": {
             "guesses": [
+                "gyppy",
                 "serai",
                 "diram",
                 "viral"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 4
         },
         "VITAL": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "nidal",
+                "liman",
                 "cital",
+                "dital",
                 "vital"
-            ],
-            "is_solved": true,
-            "num_guesses": 4
-        },
-        "VODKA": {
-            "guesses": [
-                "serai",
-                "banya",
-                "tulpa",
-                "dogma",
-                "hodja",
-                "vodka"
             ],
             "is_solved": true,
             "num_guesses": 6
         },
+        "VODKA": {
+            "guesses": [
+                "gyppy",
+                "serai",
+                "halon",
+                "couta",
+                "vodka"
+            ],
+            "is_solved": true,
+            "num_guesses": 5
+        },
         "WEARY": {
             "guesses": [
-                "serai",
-                "deare",
-                "teary",
-                "leary",
+                "gyppy",
+                "otary",
+                "clary",
+                "deary",
                 "weary"
             ],
             "is_solved": true,
@@ -2187,62 +2298,64 @@
         },
         "WHELP": {
             "guesses": [
-                "serai",
-                "dolce",
-                "kugel",
-                "whelm",
+                "gyppy",
+                "paseo",
+                "twerp",
                 "whelp"
-            ],
-            "is_solved": true,
-            "num_guesses": 5
-        },
-        "WINCE": {
-            "guesses": [
-                "serai",
-                "lined",
-                "minge",
-                "wince"
             ],
             "is_solved": true,
             "num_guesses": 4
         },
-        "WOOER": {
+        "WINCE": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "rouen",
-                "power",
-                "woker",
-                "wooer"
+                "lined",
+                "mince",
+                "wince"
             ],
             "is_solved": true,
             "num_guesses": 5
         },
+        "WOOER": {
+            "guesses": [
+                "gyppy",
+                "serai",
+                "roted",
+                "mower",
+                "woker",
+                "wooer"
+            ],
+            "is_solved": true,
+            "num_guesses": 6
+        },
         "WORLD": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "curdy",
+                "turbo",
+                "moron",
                 "world"
             ],
             "is_solved": true,
-            "num_guesses": 3
+            "num_guesses": 5
         },
         "WROTE": {
             "guesses": [
+                "gyppy",
                 "serai",
-                "rouen",
-                "proke",
-                "drome",
-                "crore",
-                "trove"
+                "roted",
+                "troke",
+                "wrote"
             ],
-            "is_solved": false,
-            "num_guesses": 6
+            "is_solved": true,
+            "num_guesses": 5
         },
         "YEARN": {
             "guesses": [
-                "serai",
-                "deare",
-                "teary",
+                "gyppy",
+                "sayer",
+                "yeard",
                 "yearn"
             ],
             "is_solved": true,

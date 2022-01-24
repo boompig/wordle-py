@@ -2252,5 +2252,5 @@
             "num_guesses": 5
         }
     },
-    "strategy": "mean_partition"
+    "strategy": "worst_partition"
 }

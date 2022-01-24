@@ -103,3 +103,24 @@ While I waited, I loaded the laundry machine.
 ## Running
 
 Please see `RUNNING.md` for instructions on how to run.
+
+## Cheating
+
+<details>
+    <summary>SPOILERS</summary>
+
+Because we have a complete list of all solutions into the future, we can instead find the optimal word (and strategy) to use based on this dataset.
+This is definitely cheating and goes against the spirit of the game, so I put this section at the end.
+
+The optimal first words to use are "raise" and "arise".
+I computed the possibilities matrix using just the known answers, where you can find it under `data-parsed/possibilities-table-cheating-base-3.parquet.gzip` in GitHub LFS.
+I then tested our "worst_partition" strategy using the first word "raises" on the entire 2315 known answers.
+Our strategy was able to successfully solve 2302/2315 (99.4% success rate) with an average of 3.65 guesses per puzzle. This is just a tiny bit better than the results that [Tom Lockwood](https://lockwood.dev/wordle/python/2022/01/23/wordle-solved-average-3-64.html) was able to achieve with their solver.
+
+The words that we missed can be found below:
+
+<img alt="cheating unsolved words" src="./assets/cheating_raise_unsolved.png" height="382px" />
+
+The evaluation is included under `data-parsed/solver-eval/solver-eval-strat-worst_partition-future-answers-2315-raise-custom-matrix.json`
+
+</details>

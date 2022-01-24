@@ -1,5 +1,6 @@
 import json
 import logging
+import os.path
 import random
 from typing import List, Optional, Tuple
 
@@ -8,9 +9,13 @@ import pandas as pd
 import numpy as np
 from tqdm import tqdm
 
-from parse_data import read_parsed_words, read_past_answers
+from parse_data import read_all_answers, read_parsed_words, read_past_answers
 from play import RIGHT_PLACE, eval_guess, WRONG_PLACE, LETTER_ABSENT
-from possibilities_table import array_to_integer, load_possibilities_table
+from possibilities_table import (
+    array_to_integer,
+    load_possibilities_table,
+    load_possibilities_table_df,
+)
 
 FIRST_GUESS_WORD = "serai"
 
@@ -72,6 +77,7 @@ def solver(
     words: List[str],
     first_word: str,
     strategy: str,
+    matrix_df_path: Optional[str] = None,
     verbose: Optional[bool] = True,
 ) -> Tuple[bool, int, List[str]]:
     """
@@ -84,7 +90,11 @@ def solver(
         if verbose:
             print(text)
 
-    table = load_possibilities_table(words)
+    if matrix_df_path and matrix_df_path.endswith(".npy"):
+        # NOTE: this doesn't use the path, just loads the standard npy file for speed
+        table = load_possibilities_table(words)
+    else:
+        table = load_possibilities_table_df(matrix_df_path)
 
     guesses = []  # type: List[str]
     guess = first_word
@@ -124,12 +134,43 @@ def solver(
     return is_solved, len(guesses), guesses
 
 
-def eval_solver(words: List[str], num_answers: int, first_word: str, strategy: str):
+def eval_solver(
+    words: List[str],
+    num_answers: int,
+    first_word: str,
+    strategy: str,
+    out_dir: str,
+    matrix_df_path: Optional[str] = None,
+):
+    """
+    Evaluate the solver on the first `num_answers` past answers
+    If `num_answers` is more than the number of past answers, will display a warning and will instead use *all* answers - past and future
+    """
+    if not os.path.exists(out_dir):
+        logging.critical("out_dir %s does not exist", out_dir)
+        exit(1)
+
     # NOTE to self: for the future blog post, it took about 5 minutes to run this for all answers
     possible_answers = read_past_answers()
+    # we use this variable as part of the filename
+    dataset = "past-answers"
     if num_answers >= 0:
         print(f"Limiting testing to first {num_answers} answers")
         possible_answers = possible_answers[:num_answers]
+    if num_answers > len(possible_answers):
+        logging.warning(
+            "Since num_answers is more than the number of past answers, going to use answers from the future"
+        )
+        possible_answers = read_all_answers()
+        # change the dataset
+        dataset = "future-answers"
+    if num_answers > len(possible_answers):
+        logging.warning(
+            "num_answers (%d) is more than the number of answers available (%d), using all answers",
+            num_answers,
+            len(possible_answers),
+        )
+        num_answers = len(possible_answers)
 
     d = {}
     print(
@@ -137,7 +178,12 @@ def eval_solver(words: List[str], num_answers: int, first_word: str, strategy: s
     )
     for answer in tqdm(possible_answers):
         is_solved, num_guesses, guesses = solver(
-            answer, words, first_word=first_word, strategy=strategy, verbose=False
+            answer,
+            words,
+            first_word=first_word,
+            strategy=strategy,
+            matrix_df_path=matrix_df_path,
+            verbose=False,
         )
         d[answer] = {
             "is_solved": is_solved,
@@ -147,16 +193,23 @@ def eval_solver(words: List[str], num_answers: int, first_word: str, strategy: s
         if not is_solved:
             logging.error(f"failed to solve when answer was {answer}")
 
-    out_fname = f"data-parsed/solver-eval/solver-eval-strat-{strategy}-past-answers-{len(possible_answers)}-{first_word}.json"
+    if matrix_df_path:
+        # we want to record that we used a custom matrix here
+        out_fname = f"data-parsed/solver-eval/solver-eval-strat-{strategy}-{dataset}-{len(possible_answers)}-{first_word}-custom-matrix.json"
+    else:
+        out_fname = f"data-parsed/solver-eval/solver-eval-strat-{strategy}-{dataset}-{len(possible_answers)}-{first_word}.json"
+    out_path = os.path.join(out_dir, out_fname)
+
     out = {
         "per_word_results": d,
         "first_word": first_word,
         "num_answers_tested": len(possible_answers),
-        "strategy": "mean_partition",
+        "strategy": strategy,
+        "dataset": dataset,
     }
-    with open(out_fname, "w") as fp:
+    with open(out_path, "w") as fp:
         json.dump(out, fp, indent=4, sort_keys=True)
-    print(f"Eval done. Wrote to {out_fname}")
+    print(f"Eval done. Wrote to {out_path}")
     rows = []
     for answer, v in d.items():
         rows.append(
@@ -196,11 +249,15 @@ def get_interactive_guess_result(guess: str) -> List[int]:
 
 
 def play_with_solver(
-    words: List[str], first_word: str, strategy: str
+    words: List[str],
+    first_word: str,
+    strategy: str,
+    matrix_df_path: Optional[str] = None,
 ) -> Tuple[bool, int, List[str]]:
     """Play interactively with the solver when you don't know the answer"""
 
-    table = load_possibilities_table(words)
+    # table = load_possibilities_table(words)
+    table = load_possibilities_table_df(matrix_df_path)
     guesses = []  # type: List[str]
     guess = first_word
     is_solved = False
@@ -281,6 +338,20 @@ interactive -> have the solver help you solve a puzzle with an unknown answer in
         default="worst_partition",
         help="The strategy to use when selecting the next guess",
     )
+    parser.add_argument(
+        "-m",
+        "--matrix-path",
+        type=str,
+        help="If specified, use this path to the matrix dataframe instead of the default",
+        default=None,
+    )
+    parser.add_argument(
+        "-o",
+        "--output-dir",
+        type=str,
+        help="Output directory where eval_solver will write files (must exist)",
+        default="data-parsed/solver-eval",
+    )
     args = parser.parse_args()
     coloredlogs.install()
 
@@ -300,17 +371,30 @@ interactive -> have the solver help you solve a puzzle with an unknown answer in
     if args.action == "play":
         answer = random.choice(words)
         print(f"Chose random word for answer: {answer}")
-        solver(answer, words, first_word=args.first_word, strategy=args.strategy)
+        solver(
+            answer,
+            words,
+            first_word=args.first_word,
+            strategy=args.strategy,
+            matrix_df_path=args.matrix_path,
+        )
     elif args.action == "eval_solver":
         eval_solver(
             words,
             num_answers=args.num_answers,
             first_word=args.first_word,
             strategy=args.strategy,
+            matrix_df_path=args.matrix_path,
+            out_dir=args.output_dir,
         )
     elif args.action == "interactive":
         # answer = random.choice(words)
         # print(f"Chose random word for answer: {answer}")
-        play_with_solver(words, first_word=args.first_word, strategy=args.strategy)
+        play_with_solver(
+            words,
+            first_word=args.first_word,
+            strategy=args.strategy,
+            matrix_df_path=args.matrix_path,
+        )
     else:
         raise NotImplementedError
