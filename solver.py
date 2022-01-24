@@ -50,11 +50,12 @@ def get_next_guess(table: pd.DataFrame):
 
 
 def solver(
-    answer: str, words: List[str], verbose: Optional[bool] = True
+    answer: str, words: List[str], first_word: str,
+    verbose: Optional[bool] = True,
 ) -> Tuple[bool, int, List[str]]:
     """
+    :param first_word: The first word to use
     :param verbose: Control whether we are actually outputing or not
-    :param table: Optionally supply the possibilities table.
     The method *must not* modify the table.
     """
 
@@ -65,12 +66,12 @@ def solver(
     table = load_possibilities_table(words)
 
     guesses = []  # type: List[str]
-    guess = FIRST_GUESS_WORD
+    guess = first_word
     is_solved = False
 
     while len(guesses) < 6 and not is_solved:
         if guesses == []:
-            guess = FIRST_GUESS_WORD
+            guess = first_word
         else:
             guess = get_next_guess(table)
 
@@ -103,13 +104,14 @@ def solver(
     return is_solved, len(guesses), guesses
 
 
-def eval_solver(words: List[str]):
+def eval_solver(words: List[str], first_word: str):
     # NOTE to self: for the future blog post, it took about 5 minutes to run this for all answers
     possible_answers = read_past_answers()
 
     d = {}
+    print(f"Solving {len(possible_answers)} puzzles with first word {first_word}...")
     for answer in tqdm(possible_answers):
-        is_solved, num_guesses, guesses = solver(answer, words, verbose=False)
+        is_solved, num_guesses, guesses = solver(answer, words, first_word=first_word, verbose=False)
         d[answer] = {
             "is_solved": is_solved,
             "num_guesses": num_guesses,
@@ -118,9 +120,14 @@ def eval_solver(words: List[str]):
         if not is_solved:
             logging.error(f"failed to solve when answer was {answer}")
 
-    out_fname = "data-parsed/solver-eval-past-answers.json"
+    out_fname = f"data-parsed/solver-eval-past-answers-{len(possible_answers)}-{first_word}.json"
+    out = {
+        "per_word_results": d,
+        "first_word": first_word,
+        "num_answers_tested": len(possible_answers),
+    }
     with open(out_fname, "w") as fp:
-        json.dump(d, fp, indent=4, sort_keys=True)
+        json.dump(out, fp, indent=4, sort_keys=True)
     print("Eval done.")
     rows = []
     for answer, v in d.items():
@@ -157,17 +164,17 @@ def get_interactive_guess_result(guess: str) -> List[int]:
                 return arr
 
 
-def play_with_solver(words: List[str]):
+def play_with_solver(words: List[str], first_word: str):
     """Play interactively with the solver when you don't know the answer"""
 
     table = load_possibilities_table(words)
     guesses = []  # type: List[str]
-    guess = FIRST_GUESS_WORD
+    guess = first_word
     is_solved = False
 
     while len(guesses) < 6 and not is_solved:
         if guesses == []:
-            guess = FIRST_GUESS_WORD
+            guess = first_word
         else:
             guess = get_next_guess(table)
 
@@ -214,8 +221,18 @@ if __name__ == "__main__":
         "--action",
         type=str,
         choices=["play", "eval_solver", "interactive"],
-        help="What do you want to do?",
+        help="""What do you want to do?
+play -> have the solver solve a random puzzle
+eval_solver -> evaluate the solver on all the past answers and write stats out to a file
+interactive -> have the solver help you solve a puzzle with an unknown answer interactively""",
         required=True,
+    )
+    parser.add_argument(
+        "-f",
+        "--first-word",
+        type=str,
+        help="The first word to guess",
+        default=FIRST_GUESS_WORD,
     )
     args = parser.parse_args()
     coloredlogs.install()
@@ -228,12 +245,12 @@ if __name__ == "__main__":
     if args.action == "play":
         answer = random.choice(words)
         print(f"Chose random word for answer: {answer}")
-        solver(answer, words)
+        solver(answer, words, first_word=args.first_word)
     elif args.action == "eval_solver":
-        eval_solver(words)
+        eval_solver(words, first_word=args.first_word)
     elif args.action == "interactive":
         # answer = random.choice(words)
         # print(f"Chose random word for answer: {answer}")
-        play_with_solver(words)
+        play_with_solver(words, first_word=args.first_word)
     else:
         raise NotImplementedError

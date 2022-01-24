@@ -37,13 +37,11 @@ If we want to solve the most number of problems, then we should probably use met
 
 If we want to have the smallest expected number of guesses, then we would use metric #2, where our optimal word is "tares", which has a mean partition of 61.19.
 
-### Best Worst Partitions
+### Partitions
 
-<img alt="best worst partitions" src="./assets/worst_partition.png" height="500px" />
-
-### Best Mean Partitions
-
-<img alt="best mean partitions" src="./assets/mean_partition.png" height="500px" />
+Best Worst Partitions | Best Mean Partitions
+:--------------------:|:---------------------:
+<img alt="best worst partitions" src="./assets/worst_partition.png" height="500px" /> | <img alt="best mean partitions" src="./assets/mean_partition.png" height="500px" />
 
 ### Using Adieu as a First Word
 
@@ -53,7 +51,14 @@ Don't. It has a worst partition of 1709 (2.45x worse than "serai") and a mean pa
 
 To test my approach above, I implemented a solver based on the "worst" partition method.
 I evaluated the solver on the *known* solutions to see its hypothetical historical performance.
-Out of the 219 solutions, the solver was able to solve all but 7 in 6 guesses, with an average of 4.20 guesses per puzzle.
+Using the first word "serai", out of the 219 solutions, the solver was able to solve all but 7 in 6 guesses, with an average of 4.2 guesses per puzzle.
+On the same 219 solutions, when using the first word "tares", the solver was able to solve all but 6 in 6 guesses, with an average of 4.3 guesses per puzzle.
+
+Here are the words that each was not able to find (serai on the left, tares on the right):
+
+serai | tares
+:--------------------:|:---------------------:
+<img alt="serai failed" src="./assets/serai_failed.png" height="223px" /> | <img alt="tares failed" src="./assets/tares_failed.png" height="195px" />
 
 ### Implementation
 
