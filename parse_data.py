@@ -10,7 +10,9 @@ import os.path
 
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-DEFAULT_PARSED_ANSWERS_FILE = os.path.join(BASE_DIR, "data-parsed/wordle-answers.parquet")
+DEFAULT_PARSED_ANSWERS_FILE = os.path.join(
+    BASE_DIR, "data-parsed/wordle-answers.parquet"
+)
 DEFAULT_PARSED_WORDS_FILE = os.path.join(BASE_DIR, "data-parsed/wordle-words.pickle")
 
 
@@ -40,13 +42,11 @@ def read_wordle_answers_raw(fname: str) -> pd.DataFrame:
             day_of_month = int(day_of_month)
             assert len(month) == 3
             assert len(answer) == 5
-            answer_date = datetime.strptime(f"{year} {month} {day_of_month}", "%Y %b %d")
+            answer_date = datetime.strptime(
+                f"{year} {month} {day_of_month}", "%Y %b %d"
+            )
             day_num = int(day_num)
-            row = {
-                "date": answer_date,
-                "day": day_num,
-                "answer": answer,
-            }
+            row = {"date": answer_date, "day": day_num, "answer": answer}
             answers.append(row)
 
     return pd.DataFrame(answers)

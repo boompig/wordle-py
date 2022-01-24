@@ -28,6 +28,7 @@ def prune_table(table: pd.DataFrame, last_guess: str, guess_result: List[int]):
     table = table[table.index.isin(columns_to_keep)]
     return table
 
+
 def get_next_guess(table: pd.DataFrame):
     """The table will only contain those words that remain"""
     # compute the max partitions
@@ -39,25 +40,24 @@ def get_next_guess(table: pd.DataFrame):
     # for each remaining guess, compute the worst partition
     part_series = table.apply(get_worst_partition, axis=1)
     # re-index it with words so return value is easier
-    part_df = pd.DataFrame(
-        part_series,
-        columns=['worst_partition'],
-        index=table.index
-    )
+    part_df = pd.DataFrame(part_series, columns=["worst_partition"], index=table.index)
     # return the word with the smallest worst partition
-    i = part_df['worst_partition'].idxmin()
+    i = part_df["worst_partition"].idxmin()
     # print(part_df)
     # print(part_df.loc[i])
     # print(i)
     return i
 
 
-def solver(answer: str, words: List[str], verbose: Optional[bool] = True) -> Tuple[bool, int, List[str]]:
+def solver(
+    answer: str, words: List[str], verbose: Optional[bool] = True
+) -> Tuple[bool, int, List[str]]:
     """
     :param verbose: Control whether we are actually outputing or not
     :param table: Optionally supply the possibilities table.
     The method *must not* modify the table.
     """
+
     def solver_print(text: str):
         if verbose:
             print(text)
@@ -80,7 +80,13 @@ def solver(answer: str, words: List[str], verbose: Optional[bool] = True) -> Tup
         guess_result = eval_guess(guess, answer)
         solver_print(f"Guess result: {guess_result}")
 
-        if guess_result == [RIGHT_PLACE, RIGHT_PLACE, RIGHT_PLACE, RIGHT_PLACE, RIGHT_PLACE]:
+        if guess_result == [
+            RIGHT_PLACE,
+            RIGHT_PLACE,
+            RIGHT_PLACE,
+            RIGHT_PLACE,
+            RIGHT_PLACE,
+        ]:
             is_solved = True
             break
         else:
@@ -89,7 +95,9 @@ def solver(answer: str, words: List[str], verbose: Optional[bool] = True) -> Tup
             solver_print(f"There are now {table.shape[0]} possibilities")
 
     if is_solved:
-        solver_print(f"You solved it after {len(guesses)} guesses! The word was {answer}")
+        solver_print(
+            f"You solved it after {len(guesses)} guesses! The word was {answer}"
+        )
     else:
         solver_print(f"You failed to guess the word. The word was {answer}")
     return is_solved, len(guesses), guesses
@@ -116,11 +124,13 @@ def eval_solver(words: List[str]):
     print("Eval done.")
     rows = []
     for answer, v in d.items():
-        rows.append({
-            "answer": answer,
-            "num_guesses": v["num_guesses"],
-            "is_solved": v["is_solved"],
-        })
+        rows.append(
+            {
+                "answer": answer,
+                "num_guesses": v["num_guesses"],
+                "is_solved": v["is_solved"],
+            }
+        )
     df = pd.DataFrame(rows)
     print(f"Mean # of guesses per puzzle: {df.num_guesses.mean()}")
     num_unsolved = df[df.is_solved == False].shape[0]
@@ -136,7 +146,9 @@ def get_interactive_guess_result(guess: str) -> List[int]:
         print("")
         print(f"Please enter the wordle result for the guess {guess}.")
         print("Enter 5 numbers with spaces between them.")
-        print(f"Use {LETTER_ABSENT} if the letter isn't present, {WRONG_PLACE} if the letter is present but in the wrong place, and {RIGHT_PLACE} if the letter is in the right place.")
+        print(
+            f"Use {LETTER_ABSENT} if the letter isn't present, {WRONG_PLACE} if the letter is present but in the wrong place, and {RIGHT_PLACE} if the letter is in the right place."
+        )
         uin = input("> ")
         items = uin.strip().split(" ")
         if len(items) == 5 and all([item.isdigit() for item in items]):
@@ -165,7 +177,13 @@ def play_with_solver(words: List[str]):
         guess_result = get_interactive_guess_result(guess)
         # print(f"Guess result: {guess_result}")
 
-        if guess_result == [RIGHT_PLACE, RIGHT_PLACE, RIGHT_PLACE, RIGHT_PLACE, RIGHT_PLACE]:
+        if guess_result == [
+            RIGHT_PLACE,
+            RIGHT_PLACE,
+            RIGHT_PLACE,
+            RIGHT_PLACE,
+            RIGHT_PLACE,
+        ]:
             is_solved = True
             break
         else:
@@ -182,11 +200,23 @@ def play_with_solver(words: List[str]):
 
 if __name__ == "__main__":
     from argparse import ArgumentParser
+
     parser = ArgumentParser()
-    parser.add_argument("-s", "--seed", type=int, default=-1,
-                        help="Can specify a random seed to control randomness when choosing a word")
-    parser.add_argument("-a", "--action", type=str, choices=["play", "eval_solver", "interactive"],
-                        help="What do you want to do?", required=True)
+    parser.add_argument(
+        "-s",
+        "--seed",
+        type=int,
+        default=-1,
+        help="Can specify a random seed to control randomness when choosing a word",
+    )
+    parser.add_argument(
+        "-a",
+        "--action",
+        type=str,
+        choices=["play", "eval_solver", "interactive"],
+        help="What do you want to do?",
+        required=True,
+    )
     args = parser.parse_args()
     coloredlogs.install()
 
@@ -207,4 +237,3 @@ if __name__ == "__main__":
         play_with_solver(words)
     else:
         raise NotImplementedError
-

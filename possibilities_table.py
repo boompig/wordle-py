@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-TABLE_PATH = os.path.join(BASE_DIR, 'data-parsed/possibilities-table-base-3.npy')
+TABLE_PATH = os.path.join(BASE_DIR, "data-parsed/possibilities-table-base-3.npy")
 
 
 from play import UNSAFE_eval_guess
@@ -58,7 +58,7 @@ def load_possibilities_table(words: List[str]) -> pd.DataFrame:
 def compute_possibilities_table(words: List[str]) -> np.ndarray:
     num_words = len(words)
     # table = np.empty(shape=(num_words, num_words), dtype='uint16')
-    table = np.empty(shape=(num_words, num_words), dtype='uint8')
+    table = np.empty(shape=(num_words, num_words), dtype="uint8")
 
     def f_eval_guess(guess_i: int, answer_i: int) -> int:
         """Return an integer"""
@@ -81,5 +81,4 @@ if __name__ == "__main__":
     words = read_parsed_words()
     print("computing possibilities...")
     table = compute_possibilities_table(words)
-    np.save('data-parsed/possibilities-table-base-3.npy', table)
-
+    np.save("data-parsed/possibilities-table-base-3.npy", table)

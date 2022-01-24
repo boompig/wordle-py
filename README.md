@@ -93,3 +93,7 @@ On any given puzzle, the solver takes about a second to run.
 
 This took about 4 minutes to run over 219 past solutions on my laptop.
 While I waited, I loaded the laundry machine.
+
+## Running
+
+Please see `RUNNING.md` for instructions on how to run.
