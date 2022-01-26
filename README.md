@@ -127,7 +127,9 @@ word  | avg # guesses
 blush | 4.23
 crane | 4.32
 fresh | 4.36
+naval | 4.48
 quiet | 4.48
+paper | 4.49
 stout | 4.41
 
 </details>

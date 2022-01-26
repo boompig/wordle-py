@@ -4,3 +4,5 @@ out/decision-trees/answers/stout.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/answers/crane.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/answers/fresh.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/answers/quiet.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/answers/naval.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/answers/paper.json filter=lfs diff=lfs merge=lfs -text
