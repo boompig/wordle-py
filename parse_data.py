@@ -67,7 +67,7 @@ def read_past_answers(fname: Optional[str] = None) -> List[str]:
 
 def read_all_answers(fname: Optional[str] = None) -> List[str]:
     all_answers = read_parsed_answers(fname)
-    return all_answers["answer"].tolist()
+    return [w.lower() for w in all_answers["answer"].tolist()]
 
 
 def read_wordle_words_raw(fname: str) -> List[str]:

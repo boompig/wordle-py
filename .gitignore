@@ -1,6 +1,20 @@
+# editor
 *.code-workspace
 .vscode
+
+# various python caches
 __pycache__/
 .ipynb_checkpoints
+
+# do not commit numpy matrixes directly
 *.npy
+
+# do not commit profiling files
+profile.txt
+
+# Mac
 .DS_Store
+.mypy_cache
+
+# directories not meant to be committed
+cache
