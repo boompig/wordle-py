@@ -1,7 +1,8 @@
 import json
 import logging
 import os.path
-from typing import Dict, Iterable, List, Optional, Set, Tuple
+import time
+from typing import Dict, Iterable, List, Set, Tuple
 
 import coloredlogs
 import numpy as np
@@ -9,23 +10,45 @@ import pandas as pd
 from tqdm import tqdm
 
 from parse_data import read_all_answers, read_parsed_words
-from play import LETTER_ABSENT, UNSAFE_eval_guess, eval_guess
-from possibilities_table import TABLE_PATH, array_to_integer, integer_to_arr
+from play import LETTER_ABSENT
+from possibilities_table import TABLE_PATH, integer_to_arr
 
 ALL_LETTERS_CORRECT = (3 ** 5) - 1
-IS_DEBUG = False
-USE_TQDM_HIGH_LEVELS = False
+
+# set this to true to enable debug printing
+IS_DEBUG = True
+
+# set this to logging.debug to hide it
+PROGRESS_LOG_LEVEL = logging.INFO
+# at what level to print. 3 is very verbose and 1 is too infrequent
+MAX_PROGRESS_DEPTH = 3
+
+# whether to use tqdm (progress bar) at a low depth
+# this will mess up the output if debugging is enabled
+# and obviously will slow down the solver a little
+USE_TQDM_LOW_DEPTHS = True
+# at which depth to enable the progress bar
+# I do not recommend setting lower than 1 or 2
+TQDM_DEPTH = 2
 
 # whether to use optimization #3
 # doesn't usually make sense to turn this on
 # if we use a smaller dictionary, the solver is much faster without it
-USE_OPT_3 = False
+USE_OPT_3 = True
+OPT_3_LOG_LEVEL = logging.DEBUG
 
 # whether to use optimization #4
 # doesn't always make sense to turn this on
 # if we use a smaller dictionary, the solver is much faster without it
-USE_OPT_4 = False
+USE_OPT_4 = True
+# at what level to output these messages
+# note that logging.DEBUG will *hide* the messages. This is on purpose.
+OPT_4_LOG_LEVEL = logging.DEBUG
 
+# whether to time how quickly we're solving stuff
+IS_TIMING_ENABLED = False
+# at what depth to time
+TIMING_DEPTH = 2
 
 SORTED_GUESSES = []  # type: List[int]
 WORDS = []  # type: List[str]
@@ -36,6 +59,7 @@ def get_black_letters(guesses: List[int], results: List[int], words: List[str]) 
     Once a letter is turned black from a guess, that letter cannot be used in any subsequent word.
     Return all the unusable letters
     NOTE: This is the only method that relies on words being strings rather than integers
+    NOTE: This method is on the hot path so long as pick_next_guesses_it is on the hot path
     """
     black_letters = set([])
     for (guess, result) in zip(guesses, results):
@@ -51,11 +75,12 @@ def get_chain(prev_guesses: List[int], prev_guess_results: List[int], depth: int
     """
     Used for debugging.
     Print the entire chain of the decision tree so far.
+    NOTE: accesses WORDS in global scope
     """
     chain = []
     for i in range(depth):
         guess = prev_guesses[i]
-        guess_word = words[guess]
+        guess_word = WORDS[guess]
         chain.append(guess_word)
         if i < len(prev_guess_results):
             chain.append(str(prev_guess_results[i]))
@@ -77,33 +102,44 @@ def get_mean_partition(row: np.ndarray) -> float:
     return np.mean(counts)
 
 
+def get_worst_partition_bincount(row: np.ndarray) -> float:
+    """An optimized version of get_worst_partition"""
+    return np.bincount(row).max()
+
+
 def get_mean_partition_arr(table: np.ndarray, possible_answers: Set[int]) -> np.ndarray:
     # select the columns of the table with the possible answers
-    possible_answers_arr = np.array([answer for answer in possible_answers])
+    possible_answers_arr = np.array(list(possible_answers))
     m = table[:, possible_answers_arr]
     # compute the mean partition size for each row
-    mean_partitions = np.apply_along_axis(get_mean_partition, axis=1, arr=m)
-    return mean_partitions
+    return np.apply_along_axis(get_mean_partition, axis=1, arr=m)
+
+
+def get_worst_partition_arr(table: np.ndarray, possible_answers: Set[int]) -> np.ndarray:
+    # select the columns of the table with the possible answers
+    possible_answers_arr = np.array(list(possible_answers))
+    m = table[:, possible_answers_arr]
+    # compute the mean partition size for each row
+    return np.apply_along_axis(get_worst_partition_bincount, axis=1, arr=m)
 
 
 def NEW_pick_next_guesses_it(guesses: List[int], guess_results: List[int], table: np.ndarray, possible_answers: Set[int]) -> Iterable[int]:
     """Return an iterator over possible next guesses in order of our heuristic
-    This method is about 50 times slower than `pick_next_guesses_it`
-    Hopefully it returns values that are 50x better
+    This method is about 40 times slower than `pick_next_guesses_it`
+    Hopefully it returns values that are 40x better
     """
-    # black_letters = get_black_letters(guesses, guess_results, words)
-
-    possible_answers_arr = np.array([answer for answer in possible_answers])
+    possible_answers_arr = np.array(list(possible_answers))
     # select the columns of the table with the possible answers
     m = table[:, possible_answers_arr]
 
+    # compute the largest partition size for each row
+    # sort_arr = np.apply_along_axis(get_worst_partition_bincount, axis=1, arr=m)
     # compute the mean partition size for each row
-    mean_partitions = np.apply_along_axis(get_mean_partition, axis=1, arr=m)
+    sort_arr = np.apply_along_axis(get_mean_partition, axis=1, arr=m)
 
-    si = np.argsort(mean_partitions)
+    si = np.argsort(sort_arr)
 
     # assume that all guesses are valid for now
-    # TODO this does not take into account black letters
     valid_guesses = np.arange(table.shape[0])
 
     # use si to sort the valid guesses in order of the heuristic
@@ -113,10 +149,6 @@ def NEW_pick_next_guesses_it(guesses: List[int], guess_results: List[int], table
     for next_guess in sg:
         if next_guess in guesses:
             continue
-
-        # w = words[next_guess]
-        # if any([letter in black_letters for letter in w]):
-        #     continue
 
         # logging.info(f"{next_guess} {words[next_guess]} {mean_partitions[next_guess]}")
         yield next_guess
@@ -217,7 +249,12 @@ def construct_tree(guesses: List[int], guess_results: List[int], table: np.ndarr
     latest_guess = guesses[-1]
 
     # ---- this is all debug code
-    # if depth < 2:
+    # if len(possible_answers) > 50:
+    #     path = get_chain(guesses, guess_results, depth)
+    #     logging.info("%d possible answers at depth %d. path: %s", len(possible_answers), depth, path)
+    # if depth <= 2:
+    #     path = get_chain(guesses, guess_results, depth)
+    #     logging.info("[d=%d] Path: %s", depth, path)
     #     w = words[latest_guess]
     #     print_debug(f"Creating a subtree with root {w} at depth {depth}...")
     #     print_chain_debug(guesses, guess_results, depth)
@@ -240,13 +277,20 @@ def construct_tree(guesses: List[int], guess_results: List[int], table: np.ndarr
     if depth >= 6:
         return tree, tree_found_words, num_states_opened
 
-    r = np.unique(table[latest_guess])
-    r.sort()
-    if USE_TQDM_HIGH_LEVELS and depth == 1:
-        it_r = tqdm(r)
-    else:
-        it_r = r
+    possible_results, counts = np.unique(table[latest_guess], return_counts=True)
+    # a further optimization: we should try the partitions with the *most* possible answers *first*
+    si = np.argsort(-1 * counts)
+    possible_results = np.take_along_axis(possible_results, si, axis=0)
 
+    if USE_TQDM_LOW_DEPTHS and depth == TQDM_DEPTH:
+        it_r = tqdm(possible_results)
+    else:
+        it_r = possible_results
+
+    if IS_TIMING_ENABLED and TIMING_DEPTH == depth:
+        start = time.time()
+
+    is_early_exit = False
     for guess_result in it_r:
         if guess_result == ALL_LETTERS_CORRECT and latest_guess in possible_answers:
             # we've guessed the word. we're good.
@@ -279,13 +323,16 @@ def construct_tree(guesses: List[int], guess_results: List[int], table: np.ndarr
         #     print_debug("")
         # ---- this is all debug code
 
-        # next_guesses_it = NEW_pick_next_guesses_it(guesses, guess_results + [guess_result], table, new_possible_answers)
         # TODO: uses globals and violates scope
         next_guesses_it = pick_next_guesses_it(guesses, guess_results + [guess_result], SORTED_GUESSES, WORDS)
         best = 0
         best_subtree_found_words = set([])
 
         num_guesses_tried = 0
+
+        # true iff we found a guess that solves this subtree (works with this guess result)
+        is_subtree_solved = False
+
         is_opt_3_enabled = False
         is_opt_4_enabled = False
 
@@ -300,70 +347,44 @@ def construct_tree(guesses: List[int], guess_results: List[int], table: np.ndarr
             # then we can just guess any of those words
             # it doesn't matter, we will only be able to reach one of them anyway
             # save time on not trying more possibilities
-            answer = list(new_possible_answers)[0]
-            next_guesses_it = [answer]
-            # logging.info("Applying optimization #2 at depth 5")
+            logging.debug("Applying optimization #2 at depth 5 - early exit")
+            is_early_exit = True
+            break
         elif USE_OPT_3 and depth == 4:
             # optimization #3: we have only 2 guesses left
             # we need to pick the guess that divides the space such that, for all possible remaining answers, we can solve the puzzle using the last guess
             # i.e. we want all partitions to have size 1
-
-            mean_partition_arr = get_mean_partition_arr(table, new_possible_answers)
-            si = np.argsort(mean_partition_arr)
-            valid_guesses = np.arange(table.shape[0])
-            sg = np.take_along_axis(valid_guesses, si, axis=0)
-            opt_guess = sg[0]
-            if mean_partition_arr[opt_guess] == 1.0:
-                # then this is the optimal guess
-                next_guesses_it = [opt_guess]
-            elif mean_partition_arr[opt_guess] > 1.0:
-                # this means that *no* guess partitions the space perfectly
-                # so there exists one level 5 word which will fail to solve the subtree
-                # so it doesn't matter, just use this word
-                next_guesses_it = [opt_guess]
-            logging.info("Optimization #3 enabled at depth %d", depth)
+            worst_partition_arr = get_worst_partition_arr(table, new_possible_answers)
+            # is there any guess that has a worst partition of 1?
+            good_guesses = np.where(worst_partition_arr == 1)[0]
+            if good_guesses.size == 0:
+                logging.log(OPT_3_LOG_LEVEL,
+                            "Optimization #3 enabled: there is *no* good partition at depth 4. Exiting early.")
+                is_early_exit = True
+                break
+                # # there are no good guesses
+                # # just pick a random word
+                # rw = list(new_possible_answers)[0]
+                # next_guesses_it = [rw]
+            else:
+                # this is our optimal partition
+                opt = good_guesses[0]
+                next_guesses_it = [opt]
+                logging.log(OPT_3_LOG_LEVEL,
+                            "Optimization #3 enabled: Found the optimal partition at depth 4")
             is_opt_3_enabled = True
-
-            # ---- this is all debug code
-            # next_guesses_it_old = next_guesses_it
-            # ls = []
-            # for i in range(5):
-            #     try:
-            #         ls.append(next(next_guesses_it_old))
-            #     except StopIteration:
-            #         pass
-            # logging.info("Applying optimization #3 at depth 4. Next 5 guesses would have been %s" % str(ls))
-            # logging.info("Applying optimization #3 at depth 4")
-            # m = get_mean_partition_arr(table, new_possible_answers)
-            # si = np.argsort(m)
-            # valid_guesses = np.arange(table.shape[0])
-            # sg = np.take_along_axis(valid_guesses, si, axis=0)
-            # k = next(next_guesses_it)
-            # opt = sg[0]
-            # if m[k] > 1.0 and m[opt] == 1.0:
-            #     # logging.info("Next guess %d has mean partition size of %.2f", k, m[k])
-            #     # logging.info("Likely optimal guess %d has mean partition size of %.2f", opt, m[opt])
-            #     next_guesses_it = [opt]
-            # elif m[k] == 1.0:
-            #     next_guesses_it = [k]
-            # ---- this is all debug code
-
-            # next_guesses_it = NEW_pick_next_guesses_it(guesses, guess_results, table, new_possible_answers)
-            # is_opt_3_enabled = True
-        elif USE_OPT_4 and depth < 3:
-            logging.info("Optimization #4 enabled at depth %d", depth)
+        elif USE_OPT_4 and depth <= 2:
+            # instead of using our weak heuristic, use a slower but better heuristic to select guesses
+            logging.log(OPT_4_LOG_LEVEL, "Optimization #4 enabled at depth %d", depth)
             next_guesses_it = NEW_pick_next_guesses_it(guesses, guess_results, table, new_possible_answers)
             is_opt_4_enabled = True
 
-
-        is_subtree_solved = False
         for next_guess in next_guesses_it:
             # ---- this is all debug code
-            if is_opt_3_enabled:
-                logging.info("Optimization #3 enabled.", next_guess)
-            if is_opt_4_enabled:
-                logging.info("[d=%d] Optimization #4 enabled. Trying guess %d instead for guess_result %d",
-                             depth, next_guess, guess_result)
+            if USE_OPT_4 and is_opt_4_enabled:
+                logging.log(OPT_4_LOG_LEVEL,
+                            "[d=%d] Optimization #4 enabled. Trying guess %d instead for guess_result %d",
+                            depth, next_guess, guess_result)
             # ---- this is all debug code
 
             subtree, subtree_found_words, subtree_states_opened = construct_tree(
@@ -384,75 +405,46 @@ def construct_tree(guesses: List[int], guess_results: List[int], table: np.ndarr
                 best_subtree_found_words = subtree_found_words
                 best = len(subtree_found_words)
 
-                # ---- this is all debug code
-                # s = possible_answers.union(best_subtree_found_words)
-                # print_debug("Added/improved subtree:")
-                # print_chain_debug(guesses, guess_results, depth)
-                # w = words[next_guess]
-                # print_debug(f"~+ {guess_result} -> {w}")
-                # n1 = best
-                # n2 = len(new_possible_answers)
-                # print_debug("Can reach %d/%d words in subtree" % (n1, n2))
-                # if n1 > n2:
-                #     logging.error("can reach more words than are possible???")
-                #     logging.error("guesses:")
-                #     gr = guess_results + [guess_result]
-                #     for i, guess in enumerate(guesses + [next_guess]):
-                #         w = words[guess]
-                #         if i < len(gr):
-                #             r = gr[i]
-                #             arr = integer_to_arr(r)
-                #             logging.error(f"{i + 1}. {w} ({r} -> {arr})")
-                #         else:
-                #             logging.error(f"{i + 1}. {w}")
-
-                #     # logging.error("results:")
-                #     # for i, r in enumerate(guess_results + [guess_result]):
-                #     #     logging.error(f"{i + 1}. {r}")
-
-                #     logging.error("theoretically reachable words:")
-                #     for i, rw in enumerate(new_possible_answers):
-                #         w = words[rw]
-                #         logging.error(f"{i + 1}. {w}")
-
-                #     logging.error("excess words:")
-                #     for ew in best_subtree_found_words.difference(new_possible_answers):
-                #         w = words[ew]
-                #         logging.error(w)
-
-                #         print("")
-                #         check_is_reachable(guesses, gr, table, ew)
-                # print_debug(f"# states opened: {num_states_opened} (+{subtree_states_opened})")
-
-
-                # num_reachable_now = len(s)
-                # num_reachable_ideal = len(possible_answers)
-                # print_debug("# words we can now reach of possible: %d / %d" % (num_reachable_now, num_reachable_ideal))
-                # print_debug("")
-                # ---- this is all debug code
-
-
             num_guesses_tried += 1
 
             if len(subtree_found_words) == len(new_possible_answers):
-                # ---- this is all debug code
-                # print_debug("This is the max. We're good")
-                # print_debug("")
-                # logging.info("Tried %d guesses before we found the ideal one", num_guesses_tried)
-                # ---- this is all debug code
                 is_subtree_solved = True
                 break
 
         tree_found_words.update(best_subtree_found_words)
         # ---- this is all debug code
-        # if is_opt_3_enabled:
-        #     logging.info("Optimization #3 enabled. # guesses tried for subtree with guess_result %d: %d", guess_result, num_guesses_tried)
-        if is_opt_4_enabled:
-            logging.info("[d=%d] Optimization #4 enabled. # guesses tried for subtree with guess_result %d: %d (is subtree solved? %d)", 
+        # if USE_OPT_3 and is_opt_3_enabled:
+        #     logging.log(OPT_3_LOG_LEVEL,
+        #                  "Optimization #3 enabled. # guesses tried for subtree with guess_result %d: %d. (is subtree solved? %d)",
+        #                  guess_result, num_guesses_tried, is_subtree_solved)
+        if USE_OPT_4 and is_opt_4_enabled:
+            logging.log(OPT_4_LOG_LEVEL,
+                        "[d=%d] Optimization #4 enabled. # guesses tried for subtree with guess_result %d: %d (is subtree solved? %d)",
                          depth, guess_result, num_guesses_tried, is_subtree_solved)
+        if depth < 4 and not is_subtree_solved:
+            # we don't want to print all the lower failures since that would be annoying
+            path = get_chain(guesses, guess_results + [guess_result], depth)
+            logging.error("[d=%d] subtree not solved: %s", depth, path)
         # if not is_opt_3_enabled and depth == 4:
-        #     logging.info("Optimization 3 disabled at level 4. # guesses tried for subtree with guess_result %d: %d", guess_result, num_guesses_tried)
+        #     logging.info("Optimization #3 disabled at level 4. # guesses tried for subtree with guess_result %d: %d", guess_result, num_guesses_tried)
         # ---- this is all debug code
+
+        if not is_subtree_solved:
+            # early exit. don't even bother trying the other answers
+            # ---- this is all debug code
+            # if depth <= 3:
+            #     path = get_chain(guesses, guess_results + [guess_result], depth)
+            #     logging.error("path %s is a dead end. early stopping for word %s.", path, WORDS[latest_guess])
+            # ---- this is all debug code
+            is_early_exit = True
+            break
+
+    # ---- this is all debug code
+    if not is_early_exit and depth <= MAX_PROGRESS_DEPTH:
+        path = get_chain(guesses[:-1], guess_results, depth - 1)
+        logging.log(PROGRESS_LOG_LEVEL,
+                    "Guess %s solves subtree: %s", WORDS[latest_guess], path)
+    # ---- this is all debug code
 
     # ----- this is all debug code ----
     # if depth < 2:
@@ -461,6 +453,13 @@ def construct_tree(guesses: List[int], guess_results: List[int], table: np.ndarr
     #     num_reachable_ideal = len(possible_answers)
     #     print_debug(f"SUMMARY: finished subtree at depth {depth} and root {w}. Can reach {num_reachable_now}/{num_reachable_ideal} words in subtree")
     # ----- this is all debug code ----
+
+
+    if IS_TIMING_ENABLED and TIMING_DEPTH == depth:
+        stop = time.time()
+        path = get_chain(guesses, guess_results, depth)
+        logging.info("Expanded %d states at depth %d. Took %.2f seconds. Path: %s", num_states_opened, depth, stop - start, path)
+
 
     return tree, tree_found_words, num_states_opened
 
@@ -519,13 +518,11 @@ def solve(dictionary: str, first_word: str):
         print("Loaded mean partition DF from cache")
 
     # lower score is better
-    score_dict = mean_part_df.set_index('word_index').to_dict()['mean_partition']  # type: Dict[int, int]
-
     # sort word indexes based on their score in above score dict
     # sorted in ascending order (lowest score first)
     # NOTE: this is bad practice but it is accessed in the global scope
     global SORTED_GUESSES
-    SORTED_GUESSES = sorted(np.arange(len(words)), key=lambda i: score_dict[i])
+    SORTED_GUESSES = mean_part_df.sort_values('mean_partition')['word_index'].values
 
     possible_words = set([i for i in range(len(words))])
 
