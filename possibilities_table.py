@@ -1,3 +1,7 @@
+"""
+This file will build the possibilities matrix
+"""
+
 from typing import List, Optional
 import os.path
 import numpy as np
@@ -11,10 +15,52 @@ TABLE_PATH = os.path.join(BASE_DIR, "data-parsed/possibilities-table-base-3.npy"
 TABLE_DF_PATH = os.path.join(
     BASE_DIR, "data-parsed/possibilities-table-base-3.parquet.gzip"
 )
+TABLE_PATH_ASYMMETRIC = os.path.join(BASE_DIR, "data-parsed/possibilities-table-asymmetric-base-3.npy")
+TABLE_PATH_CHEATING = "./data-parsed/possibilities-table-cheating-base-3.npy"
 
 
-from play import UNSAFE_eval_guess
-from parse_data import read_parsed_words
+from play import LETTER_ABSENT, RIGHT_PLACE, WRONG_PLACE, UNSAFE_eval_guess
+from parse_data import read_all_answers, read_parsed_words
+
+
+def integer_to_arr(rval: int):
+    arr = [0] * 5
+    for i in range(5, -1, -1):
+        # the number at position i
+        # should be a value between 0-3
+        if rval >= (3 ** i):
+            rem = rval % (3 ** i)
+            pos_value = int((rval - rem) / (3 ** i))
+            arr[i] = pos_value
+            rval -= arr[i] * (3 ** i)
+    return arr
+
+
+def guess_response_from_string(guess_response: str) -> int:
+    assert len(guess_response) == 5
+    def char_to_base_3(s: str) -> int:
+        if s == "G":
+            return RIGHT_PLACE
+        elif s == "Y":
+            return WRONG_PLACE
+        elif s == "B":
+            return LETTER_ABSENT
+    arr = [char_to_base_3(c) for c in guess_response]
+    return array_to_integer(arr)
+
+
+def guess_response_to_string(rval: int) -> str:
+    def base_3_to_char(val: int) -> str:
+        if val == RIGHT_PLACE:
+            return "G"
+        elif val == WRONG_PLACE:
+            return "Y"
+        elif val == LETTER_ABSENT:
+            return "B"
+
+    arr = integer_to_arr(rval)
+    chars = map(base_3_to_char, arr)
+    return "".join(chars)
 
 
 def array_to_integer(array: List[int]) -> int:
@@ -33,20 +79,6 @@ def array_to_integer(array: List[int]) -> int:
         v += (3 ** i) * pos_value
     assert v < 255
     return v
-
-
-def integer_to_arr(rval: int):
-    arr = [0] * 5
-    for i in range(5, -1, -1):
-        # the number at position i
-        # should be a value between 0-3
-        if rval >= (3 ** i):
-            rem = rval % (3 ** i)
-            pos_value = int((rval - rem) / (3 ** i))
-            arr[i] = pos_value
-            rval -= arr[i] * (3 ** i)
-    return arr
-
 
 def load_possibilities_table(words: List[str]) -> pd.DataFrame:
     """
@@ -89,8 +121,51 @@ def compute_possibilities_table(words: List[str]) -> np.ndarray:
     return table
 
 
+def compute_possibilities_table_asymmetric(guesses: List[str], answers: List[str]) -> np.ndarray:
+    num_guesses = len(guesses)
+    num_answers = len(answers)
+    print(f"computing {num_guesses}x{num_answers} possibilities matrix...")
+    table = np.empty(shape=(num_guesses, num_answers), dtype="uint8")
+
+    def f_eval_guess(guess_i: int, answer_i: int) -> int:
+        """Return an integer"""
+        guess = words[guess_i]
+        answer = words[answer_i]
+        rval = UNSAFE_eval_guess(guess=guess, answer=answer)
+        # the numbers are guaranteed to be 0, 1, 2
+        return array_to_integer(rval)
+
+    guess_range = np.arange(num_guesses)
+    answer_range = np.arange(num_answers)
+    combos = itertools.product(guess_range, answer_range)
+    for guess_i, answer_i in tqdm(combos):
+        table[guess_i, answer_i] = f_eval_guess(guess_i, answer_i)
+
+    return table
+
+
 if __name__ == "__main__":
-    words = read_parsed_words()
-    print("computing possibilities...")
-    table = compute_possibilities_table(words)
-    np.save("data-parsed/possibilities-table-base-3.npy", table)
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument("-t", "--type", required=True,
+                        choices=["full", "asymmetric", "cheating"],
+                        default="full",
+                        help="What kind of matrix to generate")
+    args = parser.parse_args()
+
+    if args.type == "full":
+        words = read_parsed_words()
+        print("computing possibilities...")
+        table = compute_possibilities_table(words)
+        np.save(TABLE_PATH, table)
+    elif args.type == "asymmetric":
+        words = read_parsed_words()
+        answers = read_all_answers()
+        print("computing possibilities...")
+        table = compute_possibilities_table_asymmetric(words, answers)
+        np.save(TABLE_PATH_ASYMMETRIC, table)
+    elif args.type == "cheating":
+        answers = read_all_answers()
+        print("computing possibilities...")
+        table = compute_possibilities_table(answers)
+        np.save(TABLE_PATH_CHEATING, table)
