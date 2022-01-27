@@ -124,12 +124,15 @@ You can see the mean depth (average number of guesses to find a solution) in the
 
 word  | avg # guesses
 :----:|:-------------:
-blush | 4.23
 crane | 4.32
+crate | 4.34
 fresh | 4.36
 naval | 4.48
 quiet | 4.48
 paper | 4.49
+raise | 4.35
+slate | 4.29
 stout | 4.41
+trace | 4.33
 
 </details>

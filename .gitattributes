@@ -6,3 +6,7 @@ out/decision-trees/answers/fresh.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/answers/quiet.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/answers/naval.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/answers/paper.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/answers/trace.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/answers/raise.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/answers/slate.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/answers/crate.json filter=lfs diff=lfs merge=lfs -text
