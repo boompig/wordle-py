@@ -173,5 +173,7 @@ if __name__ == "__main__":
     files.sort()
 
     for file in files:
+        if "hr" in file:
+            continue
         print("Checking file %s" % file)
         check_file(file, dictionary)
