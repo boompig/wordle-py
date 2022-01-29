@@ -42,15 +42,14 @@ USE_TQDM_LOW_DEPTHS = True
 # I do not recommend setting lower than 1 or 2
 TQDM_DEPTH = 1
 
-# whether to use optimization #3
-# doesn't usually make sense to turn this on
-# if we use a smaller dictionary, the solver is much faster without it
-USE_OPT_3 = True
+# at what level to print debug messages from Optimization #3
+# logging.DEBUG hides the messages
 OPT_3_LOG_LEVEL = logging.DEBUG
 
 # whether to use optimization #4
 # doesn't always make sense to turn this on
 # if we use a smaller dictionary, the solver is much faster without it
+# this makes the solver use a better heuristic at shallower depths to better direct the search
 USE_OPT_4 = True
 # at what level to output these messages
 # note that logging.DEBUG will *hide* the messages. This is on purpose.
@@ -71,7 +70,7 @@ CHECKPOINT_DEPTH = 2
 
 # if we don't care about optimality and want to just find some decision tree
 # then we can just exit when we find a solution
-EXIT_ON_FIRST_SOLUTION = False
+EXIT_ON_FIRST_SOLUTION = True
 
 
 def get_black_letters(
@@ -411,6 +410,10 @@ def construct_tree(
         )
         # has to be -1 to match size_cutoff argument
         best_subtree_size = -1
+        if size_cutoff > -1:
+            # we only have the budget of whatever is remaining from our top-level cutoff
+            best_subtree_size = size_cutoff - tree_size
+            # logging.warning("Changed best_subtree_size to %d", best_subtree_size)
         best_subtree_found_words = set([])
 
         # number of guesses tried to find the optimal subtree
@@ -419,15 +422,14 @@ def construct_tree(
         # true iff we found a guess that solves this subtree (works with this guess result)
         is_subtree_solved = False
 
-        is_opt_3_enabled = False
         is_opt_4_enabled = False
 
         if len(new_possible_answers) == 1:
-            # optimization #1: if there is only 1 possible word
+            # Optimization #1: if there is only one possible answer, then we guess only that answer
             # then we guess that word
             answer = list(new_possible_answers)[0]
             next_guesses_it = [answer]
-            # logging.info("Applying optimization #1 at depth 5")
+            # logging.info("Applying optimization #1 at depth %d", depth)
         elif depth == (MAX_DEPTH - 1) and len(new_possible_answers) > 1:
             # optimization #2: if we have 1 guess remaining and there are many (>1) possible words
             # then we can just guess any of those words
@@ -436,7 +438,7 @@ def construct_tree(
             logging.debug("Applying optimization #2 at depth 5 - early exit")
             is_early_exit = True
             break
-        elif USE_OPT_3 and depth == (MAX_DEPTH - 2):
+        elif depth == (MAX_DEPTH - 2):
             # optimization #3: we have only 2 guesses left
             # we need to pick the guess that divides the space such that, for all possible remaining answers, we can solve the puzzle using the last guess
             # i.e. we want all partitions to have size 1
@@ -462,7 +464,6 @@ def construct_tree(
                     OPT_3_LOG_LEVEL,
                     "Optimization #3 enabled: Found the optimal partition at depth 4",
                 )
-            is_opt_3_enabled = True
         elif USE_OPT_4 and depth <= 2:
             # instead of using our weak heuristic, use a slower but better heuristic to select guesses
             logging.log(OPT_4_LOG_LEVEL, "Optimization #4 enabled at depth %d", depth)
@@ -505,14 +506,14 @@ def construct_tree(
 
                     is_subtree_solved = True
                     # ---- this is all debug code
-                    if depth <= 2:
+                    if not EXIT_ON_FIRST_SOLUTION and depth <= 2:
                         path = get_chain(guesses, guess_results + [guess_result], depth)
                         logging.info("Word %s solves subtree %s with size %d. Looking for better solution.",
                                     GUESS_WORDS[next_guess], path, subtree_size)
                     # ---- this is all debug code
                 else:
                     # ---- this is all debug code
-                    if depth <= 1:
+                    if not EXIT_ON_FIRST_SOLUTION and depth <= 1:
                         path = get_chain(guesses, guess_results + [guess_result], depth)
                         logging.warning("Word %s solves subtree %s with size %d, but best is %d. Looking for better solution.",
                                     GUESS_WORDS[next_guess], path, subtree_size, best_subtree_size)
@@ -541,10 +542,6 @@ def construct_tree(
             break
 
         # ---- this is all debug code
-        # if USE_OPT_3 and is_opt_3_enabled:
-        #     logging.log(OPT_3_LOG_LEVEL,
-        #                  "Optimization #3 enabled. # guesses tried for subtree with guess_result %d: %d. (is subtree solved? %d)",
-        #                  guess_result, num_guesses_tried, is_subtree_solved)
         if USE_OPT_4 and is_opt_4_enabled:
             logging.log(
                 OPT_4_LOG_LEVEL,
@@ -554,20 +551,14 @@ def construct_tree(
                 num_guesses_tried,
                 is_subtree_solved,
             )
-        if depth < 4 and not is_subtree_solved:
-            # we don't want to print all the lower failures since that would be annoying
-            path = get_chain(guesses, guess_results + [guess_result], depth)
-            logging.error("[d=%d] subtree not solved: %s", depth, path)
-        # if not is_opt_3_enabled and depth == 4:
-        #     logging.info("Optimization #3 disabled at level 4. # guesses tried for subtree with guess_result %d: %d", guess_result, num_guesses_tried)
         # ---- this is all debug code
 
         if not is_subtree_solved:
-            # early exit. don't even bother trying the other answers
+            # early exit. don't bother trying the other guess results
             # ---- this is all debug code
-            # if depth <= 3:
-            #     path = get_chain(guesses, guess_results + [guess_result], depth)
-            #     logging.error("path %s is a dead end. early stopping for word %s.", path, WORDS[latest_guess])
+            if depth <= 3:
+                path = get_chain(guesses, guess_results + [guess_result], depth)
+                logging.warning("[d=%d] path %s is a dead end. Backtracking.", depth, path)
             # ---- this is all debug code
             is_early_exit = True
             break
@@ -584,14 +575,6 @@ def construct_tree(
     if USE_CHECKPOINTS and not is_early_exit and depth <= CHECKPOINT_DEPTH:
         checkpoint_tree(guesses, guess_results, depth, tree, GUESS_WORDS, table)
     # ---- this is all debug code
-
-    # ----- this is all debug code ----
-    # if depth < 2:
-    #     w = words[latest_guess]
-    #     num_reachable_now = len(tree_found_words)
-    #     num_reachable_ideal = len(possible_answers)
-    #     print_debug(f"SUMMARY: finished subtree at depth {depth} and root {w}. Can reach {num_reachable_now}/{num_reachable_ideal} words in subtree")
-    # ----- this is all debug code ----
 
     if IS_TIMING_ENABLED and TIMING_DEPTH == depth:
         stop = time.time()
@@ -632,6 +615,10 @@ def solve(dictionary: str, first_word: str, max_depth: int):
     assert first_word is not None
     logging.info("Using dictionary '%s'", dictionary)
     logging.info("Building decision tree using root word %s", first_word)
+    logging.info("Max depth is set to %d", max_depth)
+    if not EXIT_ON_FIRST_SOLUTION:
+        logging.warning("Looking for optimal decision tree rather than the first one we find")
+        logging.warning("This takes a while...")
 
     words = []  # type: List[str]
     if dictionary == "full" or dictionary == "asymmetric":
@@ -711,13 +698,11 @@ def solve(dictionary: str, first_word: str, max_depth: int):
         PROGRESS_LOG_LEVEL = logging.DEBUG
         global USE_TQDM_LOW_DEPTHS
         USE_TQDM_LOW_DEPTHS = False
-        if MAX_DEPTH == 6:
-            global USE_OPT_3
-            USE_OPT_3 = False
-            logging.info("OPT_3 is disabled")
+        if MAX_DEPTH == 6 and EXIT_ON_FIRST_SOLUTION:
             global USE_OPT_4
             USE_OPT_4 = False
             logging.info("OPT_4 is disabled")
+            pass
         global IS_TIMING_ENABLED
         IS_TIMING_ENABLED = False
         global USE_CHECKPOINTS
