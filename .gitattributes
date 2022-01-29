@@ -10,3 +10,8 @@ out/decision-trees/answers/trace.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/answers/raise.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/answers/slate.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/answers/crate.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/asymmetric/crate.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/asymmetric/salet.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/asymmetric/serai-hr.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/asymmetric/serai.json filter=lfs diff=lfs merge=lfs -text
+out/decision-trees/asymmetric/tares.json filter=lfs diff=lfs merge=lfs -text

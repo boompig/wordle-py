@@ -1,34 +1,62 @@
 # Wordle
 
 This project provides datasets from the word game Wordle, a command-line implementation of Wordle, and a Wordle solver assistant.
-It also computes the optimal first word to use.
+It also computes decision trees based on a given first word.
 
 ## Datasets
 
 1. [Owen Yin](https://medium.com/@owenyin/here-lies-wordle-2021-2027-full-answer-list-52017ee99e86) reverse-engineered the Wordle JavaScript app and found it contains all the solutions directly in the code.
-I provide them as a machine-readable dataset in `data-raw/wordle-answers-future.txt`.
+I provide them as a machine-readable dataset in `data-raw/wordle-answers-future.txt`. There are 2315 words.
 
 2. [Bert Fan](https://bert.org/2021/11/24/the-best-starting-word-in-wordle/) also reverse-engineered Wordle and found the complete dictionary it uses for 5-letter words (this is a combination of the `herrings` and `solutions` in his original dataset).
 I provide them as a machine-readable dataset in `data-raw/wordle-words.txt`.
 There are 12,972 words.
 
-## First Word Analysis
+## Decision Trees
 
-I've seen a few posts, for example by [Spencer Churchill](https://slc.is/#About) and Bert Fan, which suggest the optimal first word.
-I don't think their method is quite right, so I try here to make my own contribution.
+I generated decision trees are for a few different starter words. They can be found in `out/decision_trees`.
+These decision trees will solve Wordle 100% of the time using the root word in the decision tree.
+Many decision trees are possible.
+Some of these decision trees solve every Wordle in 5 guesses or fewer rather than 6.
+A partial table of the decision trees' performance can be found below:
 
-Spencer's solution doesn't use all the information in a guess - he only considers whether a word's letters are present/absent and doesn't consider the positional information. He therefore creates a static list of 3 words to try before attempting a guess.
+starting word | dataset | average # of guesses to find a solution | max # of guesses to find any solution | tree size
+:------------:|:-------:|:---------------------------------------:|:-------------------------------------:|:----------:
+crane         | answers | 3.63                                    | 5                                     | 8405
+crate         | answers | 3.62                                    | 5                                     | 8386
+fresh         | answers | 3.78                                    | 5                                     | 8748
+naval         | answers | 3.96                                    | 6                                     | 9177
+paper         | answers | 3.86                                    | 5                                     | 8934
+quiet         | answers | 3.94                                    | 6                                     | 9116
+raise         | answers | 3.66                                    | 5                                     | 8476
+slate         | answers | 3.63                                    | 5                                     | 8408
+stout         | answers | 3.86                                    | 5                                     | 8927
+trace         | answers | 3.62                                    | 5                                     | 8372
+:------------:|:-------:|:---------------------------------------:|:-------------------------------------:|:----------:
+crate         | asymmetric | 3.59                                    | 5                                     | 8317
+salet         | asymmetric | 3.59                                    | 5                                     | 8322
+serai         | asymmetric | 3.68                                    | 5                                     | 8524
+tares         | asymmetric | 3.62                                    | 5                                     | 8389
 
-Bert trains his solution directly on the list of solutions. I think this is a little unfair. Also Bert's metric for "best word" is "the most right spots" and has a scoring function for his best word accordingly. However this is a heuristic rather than an empirically best word.
+The tree size is the sum of the depths to find all answers. The lower this number, the better the tree.
 
-In my analysis, I consider the optimal first word to be the word that maximizes the probability that we can guess the solution in 6 guesses or fewer.
-To do this, we are looking for the word which best partitions the space of solutions.
+
+These trees are **not** optimal, they're just pretty good.
+It takes about 30 seconds to generate each tree for the `answers` dataset and about 3-4 minutes for each tree for the `asymmetric` dataset.
+
+Based on this matrix, the best first word to use is "crate". I know [others](https://freshman.dev/wordle/#/leaderboard) have used more compute power to find slightly more optimal words, but those solutions are not much better (SALET with an average of 3.4212 guesses and a tree size of 7920).
+
+## Choosing the Next Word - Heuristic
+
+I wanted to use all the information from my guesses when choosing the next word. I thought that even if the heuristic is a little slow, it would be helpful to choose the best word at shallower depths earlier in the search process.
+
+I considered the best candidate word to be the word that best partitions the space of solutions.
 Specifically, once we guess a word, we can potentially get 3^5 (243) possible responses from Wordle: for each letter and position, is the letter absent from the solution, present in the solution at a different position, or present at this position.
 We can then use this *entire* information to partition the solution space.
 
 For this reason, the words "arise" and "aesir" are not equally good - while they may have the same letters, they give different information about the positions of those letters, and partition the space differently.
 
-We can use 2 metrics to determine the optimal word:
+We can use 2 metrics to determine the best candidate word:
 
 1. Best "worst" partition - the word which, in the worst case, partitions the space into the smallest number of possibilities.
 2. Best "mean" partition - the word which, in the average case, partitions the space into the smallest number of possibilities.
@@ -47,92 +75,50 @@ Best Worst Partitions | Best Mean Partitions
 
 Don't. It has a worst partition of 1709 (2.45x worse than "serai") and a mean partition of 107.21 (1.75x worse than "tares").
 
-## Solver
+## Implementation
 
-To test my approach above, I implemented a solver based on the "worst" and "mean" partition methods.
-I evaluated the solver on the *known* solutions to see its hypothetical historical performance.
-I tried several first words with both strategies and include some results below. More can be found in the `data-parsed/solver_eval` directory.
-
-first word & strategy | serai (worst partition)  | tares (worst partition) | tares (mean partition) | adieu (worst partition)
-:--------------------:|:-----------------------:|:-----------------------:|:-----------------------:|:-----------------------:
-successful solves | 212 | 213 | 208 | 204
-missed words | <img alt="serai failed" src="./assets/serai_failed.png" height="223px" /> | <img alt="tares worst partition failed" src="./assets/tares_failed.png" height="195px" /> | <img alt="tares mean partition failed" src="./assets/tares_mean_failed.png" height="322px" /> | <img alt="adieu worst partition failed" src="./assets/adieu_worst_failed.png" height="431px" />
-average # of guesses (when successful) | 4.20 | 4.25 | 4.02 | 4.26
-
-The fact that "tares" does slightly better than "serai" under the "worst_partition" strategy can likely be explained by differences between the set of all words and the smaller set of solutions.
-
-### Implementation
-
-To get both the best first word and to implement the solver, I pre-computed a static nxn matrix of possibilities that I call the **possibilities matrix**.
+To implement the solver, I pre-computed a static matrix of possibilities that I call the **possibilities matrix**.
 
 #### Computing the Possibilities Matrix
 
-The possibilities matrix will be a 12,972x12,972 matrix.
-The rows of the possibilities matrix are guesses (indexes into `words`), the columns are answers (indexes into `words`), and the element (i, j) is the response from Wordle if we were to input that guess `i` with answer `j`, encoded as an integer.
+The possibilities matrix will be a `number_of_guess_words`x`number_of_solution_words` matrix.
+The rows of the possibilities matrix are guesses (indexes into `guess_words`), the columns are answers (indexes into `answer_words`), and the element (i, j) is the response from Wordle if we were to input that guess `i` with answer `j`, encoded as an integer.
 To avoid running out of memory (since we know we're computing a dense matrix with approximately 168 million elements), I made each element as small as possible - specifically an 8-bit unsigned integer.
-Since there are 3^5 possible responses from Wordle, we can encode this response as a number between 0 and 3^5-1, which is conveniently just under 255, the maximum for the `uint8` type.
-The matrix itself is implemented as a numpy matrix, which is extremely space-efficient (and allows for very fast computation).
+Since there are 3^5=243 possible responses from Wordle, we can encode this response as a number between 0 and 3^5-1, which is conveniently just under 255, the maximum for the `uint8` type.
+The matrix itself is implemented as a numpy matrix, which is extremely space-efficient (and allows for very fast computation) and only takes up 160MB of memory.
 
 It took about 7 minutes to compute the possibilities matrix on my old Macbook.
 While I waited, I loaded the dishwasher.
 It took up 160MB on disk uncompressed, or 90MB compressed using `gzip`.
 You can download it from Github LFS under `data-parsed/possibilities-table-base-3.parquet.gzip`.
 
+As an optimization, since we know the full list of solutions which is smaller than the number of possible words, we can instead compute a matrix of size 12,972 x 2315 (which I call the "asymmetric" dataset).
+
+To further simplify our solution, we can compute a 2315 x 2315 matrix, which we can call our "answers" matrix. Note that this restricts us to only guessing words that are allowed answers, so this will potentially lead to larger trees. However, it also significantly narrows down the search space.
+
 #### Solver
 
-The solver does the following at each step (5 times after the first guess):
+I implemented a recursive solver.
 
-1. Get the Wordle response (integer 0 - 3^5-1)
+Because all this is implemented in Python, we have to be extra careful about performance. We use a number of optimizations when computing our decision tree:
 
-2. Based on the previous guess, use the possibilities matrix to eliminate words that are not consistent with the results.
-Specifically, we drop all columns representing impossible answers.
-We then drop the rows corresponding to those words as guesses.
-Therefore, the matrix quickly shrinks down to 697x697 after the first guess.
+1. We are always maintaining the set of possible answers for every recursion call. If this ever drops to a single answer, guess that answer.
 
-3. Choose a remaining guess with the best worst partition.
+2. If we have one guess remaining and the number of possible answers is more than one, then the decision tree is not valid and we can exit early.
 
-4. Repeat this process until we're down to a single guess (or we're out of guesses).
+3. Given #2, we can do some work at one depth higher. If we have two guesses remaining and our penultimate guess partitions the space such that not all partitions are of size 1, then we can early exit.
 
-On any given puzzle, the solver takes about a second to run.
+4. We can set a maximum depth of 5, since we know that our ideal tree has depth 5.
+
+5. One further optimization which greatly speeds up our solver but leads us to pick suboptimal trees: if we find a guess that completely solves a subtree, we don't try other guesses. We therefore return the first solution. This means that the size of our generated decision tree depends on how good our heuristic is.
+
+Wherever possible, I used numpy operations to speed up computation. When I profiled the solver, the vast majority of time was spent on heuristic computation using our matrix methods. It is possible that a worse but more efficiently-computable heuristic would work better.
 
 #### Solver Evaluation
 
-This took about 4 minutes to run over 219 past solutions on my laptop.
-While I waited, I loaded the laundry machine.
+For each root word (first guess), it takes about 30 seconds to compute the decision tree using the "answers" dataset and matrix, and 3:30 using the "asymmetric" dataset and matrix.
 
 ## Running
 
 Please see `RUNNING.md` for instructions on how to run.
 
-## Cheating
-
-Because we have a complete list of all solutions into the future, we can instead find the optimal word (and strategy) to use based on this dataset.
-This is definitely cheating and goes against the spirit of the game, so I put this section at the end.
-
-Since this dictionary is very small (2315 answers), you can use any nearly any starting word in the dataset and train a complete and optimal solver.
-Specifically, given a starting word, it's possible to create a decision tree which will with 100% success solve all puzzles.
-I include some of these trees in the `out` directory and the code in `decision_tree.py`.
-
-It takes about 6-9 seconds per root word to generate a decision tree, so the code is relatively fast.
-
-The generated decision trees are probably not of optimal depth, but they definitely will solve the puzzle in 6 guesses or fewer.
-
-You can see the mean depth (average number of guesses to find a solution) in the table below:
-
-<details>
-    <summary>SPOILERS</summary>
-
-word  | avg # guesses
-:----:|:-------------:
-crane | 4.32
-crate | 4.34
-fresh | 4.36
-naval | 4.48
-quiet | 4.48
-paper | 4.49
-raise | 4.35
-slate | 4.29
-stout | 4.41
-trace | 4.33
-
-</details>

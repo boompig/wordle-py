@@ -5,7 +5,9 @@ Verifies that all generated decision trees are valid
 import json
 import logging
 import pickle
+from typing import Dict
 
+import coloredlogs
 import numpy as np
 import pandas as pd
 
@@ -65,7 +67,7 @@ def find_answer_in_tree(
         )
 
 
-def check_file(path: str, dictionary: str) -> pd.DataFrame:
+def check_file(path: str, dictionary: str) -> tuple[dict, Dict[str, int]]:
     tree = {}
     root_word = path.split("/")[-1].split(".")[0]
     with open(path) as fp:
@@ -76,7 +78,9 @@ def check_file(path: str, dictionary: str) -> pd.DataFrame:
 
     guess_words, answer_words = get_words_for_dictionary(dictionary)
 
-    d = {}
+    print(f"Verifying tree {path} rooted at {root_word}...")
+
+    depths = {}
     for answer in answer_words:
         depth, _ = find_answer_in_tree(
             answer=answer,
@@ -85,13 +89,9 @@ def check_file(path: str, dictionary: str) -> pd.DataFrame:
             guess_words=guess_words,
             answer_words=answer_words,
         )
-        d[answer] = depth
-
-    df = pd.DataFrame({"answer": d.keys(), "depth": d.values()})
-    # print(df)
-    mean_depth = np.mean(df["depth"])
-    print(f"mean depth for tree rooted at {root_word} is {mean_depth:.2f}")
-    return df
+        depths[answer] = depth
+    print("Decision tree is complete")
+    return tree, depths
 
 
 def convert_tree_to_human_readable(
@@ -163,23 +163,10 @@ def get_words_for_dictionary(dictionary: str) -> tuple[list[str], list[str]]:
         raise Exception(dictionary)
 
 
-def print_tree_stats(path: str, dictionary: str):
-    guess_words, answer_words = get_words_for_dictionary(dictionary)
-    d = {}
-    tree = {}
+def print_tree_stats(tree: dict, depths: Dict[str, int], dictionary: str):
     root_word = path.split("/")[-1].split(".")[0]
-    with open(path) as fp:
-        tree = json.load(fp)
-    for answer in answer_words:
-        depth, _ = find_answer_in_tree(
-            answer=answer,
-            tree=tree,
-            depth=1,
-            guess_words=guess_words,
-            answer_words=answer_words,
-        )
-        d[answer] = depth
-    df = pd.DataFrame({"answer": d.keys(), "depth": d.values()})
+    # guess_words, answer_words = get_words_for_dictionary(dictionary)
+    df = pd.DataFrame({"answer": depths.keys(), "depth": depths.values()})
     # print(df)
     mean_depth = np.mean(df["depth"])
     print(f"mean depth for tree rooted at {root_word} is {mean_depth:.2f}")
@@ -187,13 +174,25 @@ def print_tree_stats(path: str, dictionary: str):
     print(f"max depth for tree rooted at {root_word} is {max_depth}")
     total_size = np.sum(df["depth"])
     print(f"Total size of tree is {total_size}")
-    return df
+    return {
+        "root_word": root_word,
+        "dataset": dictionary,
+        "mean_depth": mean_depth,
+        "max_depth": max_depth,
+        "total_size": total_size,
+    }
+
+
+def print_tree_file_stats(path: str, dictionary: str):
+    tree, depths = check_file(path, dictionary)
+    print_tree_stats(tree, depths, dictionary)
 
 
 if __name__ == "__main__":
     from argparse import ArgumentParser
     parser = ArgumentParser()
-    parser.add_argument("-f", "--file",
+    parser.add_argument("-f", "--files",
+                        nargs="+",
                         help="Tree file (in the same format spit out by decision_tree.py)")
     parser.add_argument("-c", "--convert",
                         action="store_true",
@@ -201,11 +200,22 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # silence logging in find_answer_in_tree
+    coloredlogs.install(level=logging.WARNING)
     logging.basicConfig(level=logging.WARNING)
 
-    dictionary = get_dictionary_from_filename(args.file)
-    check_file(args.file, dictionary)
-    print_tree_stats(args.file, dictionary)
+    rows = []
+    for path in args.files:
+        dictionary = get_dictionary_from_filename(path)
+        try:
+            tree, depths = check_file(path, dictionary)
+            # print_tree_file_stats(path, dictionary)
+            stats = print_tree_stats(tree, depths, dictionary)
+            rows.append(stats)
 
-    if args.convert:
-        convert_file_to_human_readable(args.file, dictionary)
+            if args.convert:
+                convert_file_to_human_readable(path, dictionary)
+        except ValueError:
+            logging.error("Failed to parse file %s", path)
+
+    summary = pd.DataFrame(rows)
+    print(summary)

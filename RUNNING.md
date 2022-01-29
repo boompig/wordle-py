@@ -5,7 +5,7 @@ This project contains a variety of scripts that you can run:
 - `parse_data.py` -> parse the raw data contained in `data-raw` and put it into `data-parsed`
 - `possibilities_table.py` -> compute the possibilities matrix
 - `play.py` -> play Wordle on the command line with today's word
-- `solver.py` -> assists you in solving
+- `decision_tree.py` -> assists you in solving
 
 ## Solver
 
