@@ -2,7 +2,6 @@
 Verifies that all generated decision trees are valid
 """
 
-import glob
 import json
 import logging
 import pickle
@@ -10,7 +9,7 @@ import pickle
 import numpy as np
 import pandas as pd
 
-from parse_data import read_all_answers, read_parsed_words
+from parse_data import read_all_answers
 from play import eval_guess
 from possibilities_table import array_to_integer, guess_response_to_string
 
@@ -75,19 +74,7 @@ def check_file(path: str, dictionary: str) -> pd.DataFrame:
     guess_words = []
     answer_words = []
 
-    if dictionary == "answers":
-        guess_words = read_all_answers()
-        answer_words = read_all_answers()
-    elif dictionary == "asymmetric":
-        # actually need to use another set of files
-        with open("./data-parsed/possibilities-keys-asymmetric.pickle", "rb") as fp:
-            guess_words, answer_words = pickle.load(fp)
-
-        # now verify that they are loaded correctly
-        for i in range(len(answer_words)):
-            assert answer_words[i] == guess_words[i]
-    else:
-        raise Exception(dictionary)
+    guess_words, answer_words = get_words_for_dictionary(dictionary)
 
     d = {}
     for answer in answer_words:
@@ -134,16 +121,35 @@ def convert_tree_to_human_readable(
     return hr_tree
 
 
-def convert_file_to_human_readable(path: str, dictionary: str):
+def convert_file_to_human_readable(in_path: str, dictionary: str) -> str:
+    """Returns the output path"""
     tree = {}
-    root_word = path.split("/")[-1].split(".")[0]
-    print(f"Converting tree {path} to human readable format")
-    with open(path) as fp:
+    root_word = in_path.split("/")[-1].split(".")[0]
+    print(f"Converting tree {in_path} to human readable format...")
+    with open(in_path) as fp:
         tree = json.load(fp)
 
+    guess_words, answer_words = get_words_for_dictionary(dictionary)
+
+    out_tree = convert_tree_to_human_readable(tree, guess_words, answer_words)
+    print("Converted.")
+    out_path = f"./out/decision-trees/{dictionary}/{root_word}-hr.json"
+    with open(out_path, "w") as fp:
+        json.dump(out_tree, fp, sort_keys=True, indent=4)
+    print(f"Wrote to {out_path}")
+    return out_path
+
+
+def get_dictionary_from_filename(path: str):
+    # it's the second to last item
+    return path.split("/")[-2]
+
+
+def get_words_for_dictionary(dictionary: str) -> tuple[list[str], list[str]]:
     if dictionary == "answers":
         guess_words = read_all_answers()
         answer_words = read_all_answers()
+        return guess_words, answer_words
     elif dictionary == "asymmetric":
         # actually need to use another set of files
         with open("./data-parsed/possibilities-keys-asymmetric.pickle", "rb") as fp:
@@ -152,28 +158,54 @@ def convert_file_to_human_readable(path: str, dictionary: str):
         # now verify that they are loaded correctly
         for i in range(len(answer_words)):
             assert answer_words[i] == guess_words[i]
+        return guess_words, answer_words
     else:
         raise Exception(dictionary)
 
-    out_tree = convert_tree_to_human_readable(tree, guess_words, answer_words)
-    out_path = f"./out/decision-trees/{dictionary}/{root_word}-hr.json"
-    with open(out_path, "w") as fp:
-        json.dump(out_tree, fp, sort_keys=True, indent=4)
-    print(f"Wrote to {out_path}")
+
+def print_tree_stats(path: str, dictionary: str):
+    guess_words, answer_words = get_words_for_dictionary(dictionary)
+    d = {}
+    tree = {}
+    root_word = path.split("/")[-1].split(".")[0]
+    with open(path) as fp:
+        tree = json.load(fp)
+    for answer in answer_words:
+        depth, _ = find_answer_in_tree(
+            answer=answer,
+            tree=tree,
+            depth=1,
+            guess_words=guess_words,
+            answer_words=answer_words,
+        )
+        d[answer] = depth
+    df = pd.DataFrame({"answer": d.keys(), "depth": d.values()})
+    # print(df)
+    mean_depth = np.mean(df["depth"])
+    print(f"mean depth for tree rooted at {root_word} is {mean_depth:.2f}")
+    max_depth = np.max(df["depth"])
+    print(f"max depth for tree rooted at {root_word} is {max_depth}")
+    total_size = np.sum(df["depth"])
+    print(f"Total size of tree is {total_size}")
+    return df
 
 
 if __name__ == "__main__":
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument("-f", "--file",
+                        help="Tree file (in the same format spit out by decision_tree.py)")
+    parser.add_argument("-c", "--convert",
+                        action="store_true",
+                        help="By default this program only checks the tree. With this option we also convert the tree into a human-readable form")
+    args = parser.parse_args()
+
     # silence logging in find_answer_in_tree
     logging.basicConfig(level=logging.WARNING)
 
-    # convert_file_to_human_readable("out/decision-trees/asymmetric/serai.json", "asymmetric")
+    dictionary = get_dictionary_from_filename(args.file)
+    check_file(args.file, dictionary)
+    print_tree_stats(args.file, dictionary)
 
-    dictionary = "asymmetric"
-    files = list(glob.iglob(f"out/decision-trees/{dictionary}/*.json"))
-    files.sort()
-
-    for file in files:
-        if "hr" in file:
-            continue
-        print("Checking file %s" % file)
-        check_file(file, dictionary)
+    if args.convert:
+        convert_file_to_human_readable(args.file, dictionary)
