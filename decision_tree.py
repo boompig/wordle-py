@@ -215,7 +215,11 @@ def pick_next_guesses_it(
     Guesses that contain known non-existant letters are not returned.
 
     NOTE: This is on the hot path. This method will be called hundreds of thousands, if not millions, of times.
+    NOTE: This method is unsound - it may not return some valid guesses, leading to suboptimal results
     """
+    if not EXIT_ON_FIRST_SOLUTION:
+        raise Exception("Error: Using unsound method pick_next_guesses_it when trying to find optimal solution")
+
     black_letters = get_black_letters(guesses, guess_results, guess_words)
 
     for next_guess in sorted_guesses:
@@ -234,6 +238,7 @@ def NEW_find_possible_answers(
 ) -> Set[int]:
     """
     NOTE: this is much slower than `find_possible_answers`, maybe 20x
+    Do not use this
     """
     # each guess must have a corresponding result
     assert len(guesses) == len(guess_results)
@@ -431,7 +436,7 @@ def construct_tree(
             next_guesses_it = [answer]
             # logging.info("Applying optimization #1 at depth %d", depth)
         elif depth == (MAX_DEPTH - 1) and len(new_possible_answers) > 1:
-            # optimization #2: if we have 1 guess remaining and there are many (>1) possible words
+            # Optimization #2: if we have 1 guess remaining and there are many (>1) possible words
             # then we can just guess any of those words
             # it doesn't matter, we will only be able to reach one of them anyway
             # save time on not trying more possibilities
@@ -439,7 +444,7 @@ def construct_tree(
             is_early_exit = True
             break
         elif depth == (MAX_DEPTH - 2):
-            # optimization #3: we have only 2 guesses left
+            # Optimization #3: we have only 2 guesses left
             # we need to pick the guess that divides the space such that, for all possible remaining answers, we can solve the puzzle using the last guess
             # i.e. we want all partitions to have size 1
             worst_partition_arr = get_worst_partition_arr(table, new_possible_answers)
@@ -464,7 +469,8 @@ def construct_tree(
                     OPT_3_LOG_LEVEL,
                     "Optimization #3 enabled: Found the optimal partition at depth 4",
                 )
-        elif USE_OPT_4 and depth <= 2:
+        elif USE_OPT_4 and depth <= (MAX_DEPTH - 3):
+            # Optimization #4
             # instead of using our weak heuristic, use a slower but better heuristic to select guesses
             logging.log(OPT_4_LOG_LEVEL, "Optimization #4 enabled at depth %d", depth)
             next_guesses_it = NEW_pick_next_guesses_it(
@@ -558,7 +564,7 @@ def construct_tree(
             # ---- this is all debug code
             if depth <= 3:
                 path = get_chain(guesses, guess_results + [guess_result], depth)
-                logging.warning("[d=%d] path %s is a dead end. Backtracking.", depth, path)
+                # logging.warning("[d=%d] path %s is a dead end or suboptimal. Backtracking.", depth, path)
             # ---- this is all debug code
             is_early_exit = True
             break
@@ -611,14 +617,14 @@ def check_is_reachable(
     return is_reachable
 
 
-def solve(dictionary: str, first_word: str, max_depth: int):
+def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool = False):
+    """
+    :param find_optimal:     Whether to solve the decision tree optimally or just find some solution
+    """
     assert first_word is not None
     logging.info("Using dictionary '%s'", dictionary)
     logging.info("Building decision tree using root word %s", first_word)
     logging.info("Max depth is set to %d", max_depth)
-    if not EXIT_ON_FIRST_SOLUTION:
-        logging.warning("Looking for optimal decision tree rather than the first one we find")
-        logging.warning("This takes a while...")
 
     words = []  # type: List[str]
     if dictionary == "full" or dictionary == "asymmetric":
@@ -639,6 +645,14 @@ def solve(dictionary: str, first_word: str, max_depth: int):
 
     global MAX_DEPTH
     MAX_DEPTH = max_depth
+    global EXIT_ON_FIRST_SOLUTION
+    EXIT_ON_FIRST_SOLUTION = not find_optimal
+
+    if not EXIT_ON_FIRST_SOLUTION:
+        logging.warning("Looking for optimal decision tree rather than the first one we find")
+        logging.warning("This takes a while...")
+    else:
+        logging.warning("Not looking for an optimal solution, just *a* solution")
 
     print(f"Loaded {len(words)} words")
     # NOTE: this is bad practice but it is accessed in the global scope
@@ -767,6 +781,11 @@ if __name__ == "__main__":
         default=6,
         help="Maximum depth of the tree (number of guesses)"
     )
+    parser.add_argument(
+        "--find-optimal",
+        action="store_true",
+        help="By default we look for any decision tree that solves in under max_depth. With this flag instead we are looking for the optimal decision tree."
+    )
     args = parser.parse_args()
 
     first_word = DEFAULT_ROOT_WORD
@@ -778,5 +797,6 @@ if __name__ == "__main__":
     else:
         first_word = args.first_word
 
-    solve(dictionary=args.dictionary, first_word=first_word, max_depth=args.max_depth)
+    solve(dictionary=args.dictionary, first_word=first_word, max_depth=args.max_depth,
+          find_optimal=args.find_optimal)
     # solve_all_cheating()
