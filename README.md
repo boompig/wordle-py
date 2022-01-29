@@ -32,7 +32,7 @@ raise         | answers | 3.66                                    | 5           
 slate         | answers | 3.63                                    | 5                                     | 8408
 stout         | answers | 3.86                                    | 5                                     | 8927
 trace         | answers | 3.62                                    | 5                                     | 8372
-:------------:|:-------:|:---------------------------------------:|:-------------------------------------:|:----------:
+-------|-------|---------------|-----------------|----------
 crate         | asymmetric | 3.59                                    | 5                                     | 8317
 salet         | asymmetric | 3.59                                    | 5                                     | 8322
 serai         | asymmetric | 3.68                                    | 5                                     | 8524
@@ -42,7 +42,7 @@ The tree size is the sum of the depths to find all answers. The lower this numbe
 
 
 These trees are **not** optimal, they're just pretty good.
-It takes about 30 seconds to generate each tree for the `answers` dataset and about 3-4 minutes for each tree for the `asymmetric` dataset.
+It takes about 30 seconds to generate each tree for the `answers` dataset and about 3-5 minutes for each tree for the `asymmetric` dataset.
 
 Based on this matrix, the best first word to use is "crate". I know [others](https://freshman.dev/wordle/#/leaderboard) have used more compute power to find slightly more optimal words, but those solutions are not much better (SALET with an average of 3.4212 guesses and a tree size of 7920).
 
@@ -110,7 +110,9 @@ Because all this is implemented in Python, we have to be extra careful about per
 
 4. We can set a maximum depth of 5, since we know that our ideal tree has depth 5.
 
-5. One further optimization which greatly speeds up our solver but leads us to pick suboptimal trees: if we find a guess that completely solves a subtree, we don't try other guesses. We therefore return the first solution. This means that the size of our generated decision tree depends on how good our heuristic is.
+5. If we do not find a guess word that can solve a specific guess result in a subtree, we can exit early with a negative result.
+
+6. One further optimization which greatly speeds up our solver but leads us to pick suboptimal trees: if we find a guess that completely solves a subtree, we don't try other guesses. We therefore return the first solution. This means that the size of our generated decision tree depends on how good our heuristic is.
 
 Wherever possible, I used numpy operations to speed up computation. When I profiled the solver, the vast majority of time was spent on heuristic computation using our matrix methods. It is possible that a worse but more efficiently-computable heuristic would work better.
 

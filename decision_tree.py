@@ -11,7 +11,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from parse_data import read_all_answers, read_parsed_words
-from play import LETTER_ABSENT
+from play import LETTER_ABSENT, RIGHT_PLACE, WRONG_PLACE
 from possibilities_table import (
     TABLE_PATH,
     TABLE_PATH_ASYMMETRIC,
@@ -71,6 +71,10 @@ CHECKPOINT_DEPTH = 2
 # if we don't care about optimality and want to just find some decision tree
 # then we can just exit when we find a solution
 EXIT_ON_FIRST_SOLUTION = True
+
+# if set to true, we output how well our heuristic does
+# we generally want to leave this off
+DEBUG_HEURISTIC = False
 
 
 def get_black_letters(
@@ -166,6 +170,52 @@ def get_worst_partition_arr(
     m = table[:, possible_answers_arr]
     # compute the mean partition size for each row
     return np.apply_along_axis(get_worst_partition_bincount, axis=1, arr=m)
+
+
+def compute_letter_scores(guesses: list[int], guess_results: list[int], guess_words: list[str]) -> Dict[str, int]:
+    """This is used by the heuristic pick_next_guesses_it_2"""
+    # compute the letter scores
+    letter_scores = {}
+    for guess, result in zip(guesses, guess_results):
+        word = guess_words[guess]
+        result_arr = integer_to_arr(result)
+        for letter, val in zip(word, result_arr):
+            if letter not in letter_scores:
+                if val == LETTER_ABSENT:
+                    letter_scores[letter] = -1
+                elif val == WRONG_PLACE:
+                    letter_scores[letter] = 1
+                elif val == RIGHT_PLACE:
+                    letter_scores[letter] = 2
+    return letter_scores
+
+
+def pick_next_guesses_it_2(
+        guesses: list[int],
+        guess_results: list[int],
+        table: np.ndarray,
+        guess_words: list[str],
+    ) -> Iterable[int]:
+    """This is another heuristic for picking the next guess
+    It is not good, I just leave it here for completeness.
+    It is not used anywhere in the code"""
+
+    letter_scores = compute_letter_scores(guesses, guess_results, guess_words)
+    def score_word(word: str) -> int:
+        if word in guesses:
+            # very low scores for words that have already been guessed
+            return -1000
+        return sum([letter_scores.get(letter, 0) for letter in word])
+    v_score_word = np.vectorize(score_word)
+    word_scores = v_score_word(guess_words)
+    # we want words with higher scores to be at the front of the array
+    si = np.argsort(-1 * word_scores)
+    # sort all the guess word indexes
+    valid_guesses = np.arange(table.shape[0])
+    np.take_along_axis(valid_guesses, si, axis=0)
+
+    for guess_word_i in valid_guesses:
+        yield guess_word_i
 
 
 def NEW_pick_next_guesses_it(
@@ -413,6 +463,7 @@ def construct_tree(
         next_guesses_it = pick_next_guesses_it(
             guesses, guess_results + [guess_result], SORTED_GUESSES, GUESS_WORDS
         )
+
         # has to be -1 to match size_cutoff argument
         best_subtree_size = -1
         if size_cutoff > -1:
@@ -422,6 +473,7 @@ def construct_tree(
         best_subtree_found_words = set([])
 
         # number of guesses tried to find the optimal subtree
+        # keep track of this for DEBUG_HEURISTIC
         num_guesses_tried = 0
 
         # true iff we found a guess that solves this subtree (works with this guess result)
@@ -557,6 +609,9 @@ def construct_tree(
                 num_guesses_tried,
                 is_subtree_solved,
             )
+        if DEBUG_HEURISTIC and depth <= 2:
+            logging.info("[d=%d] Tried %d guesses before we found the optimal one for guess result %d (is subtree solved? %d)",
+                         depth, num_guesses_tried, guess_result, is_subtree_solved)
         # ---- this is all debug code
 
         if not is_subtree_solved:
@@ -663,11 +718,11 @@ def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool =
 
     table = np.zeros(shape=(1, 1), dtype='uint8')  # type: np.ndarray
     if dictionary == "full":
-        table = np.load(TABLE_PATH)  # type: np.ndarray
+        table = np.load(TABLE_PATH)
     elif dictionary == "asymmetric":
-        table = np.load(TABLE_PATH_ASYMMETRIC)  # type: np.ndarray
+        table = np.load(TABLE_PATH_ASYMMETRIC)
     else:
-        table = np.load(TABLE_PATH_CHEATING)  # type: np.ndarray
+        table = np.load(TABLE_PATH_CHEATING)
     print(f"Loaded {table.shape} table")
 
     mean_part_df = None
@@ -715,12 +770,14 @@ def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool =
         if MAX_DEPTH == 6 and EXIT_ON_FIRST_SOLUTION:
             global USE_OPT_4
             USE_OPT_4 = False
-            logging.info("OPT_4 is disabled")
             pass
         global IS_TIMING_ENABLED
         IS_TIMING_ENABLED = False
         global USE_CHECKPOINTS
         USE_CHECKPOINTS = False
+
+    if not USE_OPT_4:
+        logging.info("OPT_4 is disabled")
 
     print("Building tree...")
     tree, found_words, tree_size, num_states_opened = construct_tree(
@@ -739,8 +796,8 @@ def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool =
         print("Success! Decision tree is full!")
 
     out_path = f"out/decision-trees/{dictionary}/{first_word}.json"
-    with open(out_path, "w") as fp:
-        json.dump(tree, fp, indent=4, sort_keys=True)
+    with open(out_path, "w") as out_fp:
+        json.dump(tree, out_fp, indent=4, sort_keys=True)
     print(f"Wrote tree to {out_path}")
 
 
