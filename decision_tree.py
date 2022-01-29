@@ -22,6 +22,9 @@ from possibilities_table import (
 
 
 ALL_LETTERS_CORRECT = (3 ** 5) - 1
+# maximum number of guesses
+# by default 6 but can be helpful to lower it to look for smaller decision trees
+MAX_DEPTH = 6
 
 # set this to true to enable debug printing
 IS_DEBUG = True
@@ -65,6 +68,10 @@ ANSWER_WORDS = []  # type: List[str]
 # every time we have a solution for a subtree at depth n, save the entire tree
 USE_CHECKPOINTS = False
 CHECKPOINT_DEPTH = 2
+
+# if we don't care about optimality and want to just find some decision tree
+# then we can just exit when we find a solution
+EXIT_ON_FIRST_SOLUTION = False
 
 
 def get_black_letters(
@@ -279,7 +286,7 @@ def print_chain_debug(*args) -> None:
 
 def checkpoint_tree(
     guesses: List[int],
-    guess_results: List[str],
+    guess_results: List[int],
     depth: int,
     tree: dict,
     guess_words: List[str],
@@ -314,7 +321,8 @@ def construct_tree(
     table: np.ndarray,
     depth: int,
     possible_answers: Set[int],
-) -> Tuple[dict, Set[int], int]:
+    size_cutoff: int = -1
+) -> Tuple[dict, Set[int], int, int]:
     """
     Try to construct the best tree starting from an initial guess.
     *best* is defined here as a tree that reaches the maximum number of possible answers
@@ -323,12 +331,16 @@ def construct_tree(
     :param guess_results:       The results of the those guesses, in order. Will be one fewer than guesses
     :param depth:               The depth of the tree. Should be the same as # of guesses
     :param possible_answers:    The set of possible answers remaining
+    :param size_cutoff:         If the size of the current tree gets larger than size_cutoff, just return early.
+                                -1 for no size cutoff
 
     Return a tuple of 3 items:
         - tree ->               Map from a root word to possible results for that root word. Each action maps to another guess and so forth
                                 The tree is guaranteed to have only one top-level element: the last guess
         - found_words ->        A set of all words that are reachable from this subtree.
                                 Reachable means that, if this word is the answer, we can find a unique path to that word
+        - tree_size ->          The number of nodes in the tree (total number of guesses to reach all words)
+                                This is a measure of optimality
         - num_states_opened ->  The number of states that we tried when creating this tree
                                 This is a measure of how good our heuristic / search is
                                 Does not necessarily translate to a shorter search in wall-clock time
@@ -344,14 +356,16 @@ def construct_tree(
     tree[int(latest_guess)] = action_map
     tree_found_words = set([])
     num_states_opened = 1  # we tried the root
+    tree_size = 0
 
     if latest_guess in possible_answers:
         # include the root if it's a viable answer
         # note that we can guess words which are not viable to narrow down possibilities
         tree_found_words.add(latest_guess)
+        tree_size += depth
 
-    if depth >= 6:
-        return tree, tree_found_words, num_states_opened
+    if depth >= MAX_DEPTH:
+        return tree, tree_found_words, tree_size, num_states_opened
 
     possible_results, counts = np.unique(table[latest_guess], return_counts=True)
     # a further optimization: we should try the partitions with the *most* possible answers *first*
@@ -371,7 +385,8 @@ def construct_tree(
         if guess_result == ALL_LETTERS_CORRECT and latest_guess in possible_answers:
             # we've guessed the word. we're good.
             # no need to add it to the decision tree
-            tree_found_words.add(latest_guess)
+            # tree_found_words.add(latest_guess)
+            assert latest_guess in tree_found_words
             continue
         elif (
             guess_result == ALL_LETTERS_CORRECT and latest_guess not in possible_answers
@@ -394,9 +409,11 @@ def construct_tree(
         next_guesses_it = pick_next_guesses_it(
             guesses, guess_results + [guess_result], SORTED_GUESSES, GUESS_WORDS
         )
-        best = 0
+        # has to be -1 to match size_cutoff argument
+        best_subtree_size = -1
         best_subtree_found_words = set([])
 
+        # number of guesses tried to find the optimal subtree
         num_guesses_tried = 0
 
         # true iff we found a guess that solves this subtree (works with this guess result)
@@ -411,7 +428,7 @@ def construct_tree(
             answer = list(new_possible_answers)[0]
             next_guesses_it = [answer]
             # logging.info("Applying optimization #1 at depth 5")
-        elif depth == 5 and len(new_possible_answers) > 1:
+        elif depth == (MAX_DEPTH - 1) and len(new_possible_answers) > 1:
             # optimization #2: if we have 1 guess remaining and there are many (>1) possible words
             # then we can just guess any of those words
             # it doesn't matter, we will only be able to reach one of them anyway
@@ -419,7 +436,7 @@ def construct_tree(
             logging.debug("Applying optimization #2 at depth 5 - early exit")
             is_early_exit = True
             break
-        elif USE_OPT_3 and depth == 4:
+        elif USE_OPT_3 and depth == (MAX_DEPTH - 2):
             # optimization #3: we have only 2 guesses left
             # we need to pick the guess that divides the space such that, for all possible remaining answers, we can solve the puzzle using the last guess
             # i.e. we want all partitions to have size 1
@@ -466,31 +483,63 @@ def construct_tree(
                 )
             # ---- this is all debug code
 
-            subtree, subtree_found_words, subtree_states_opened = construct_tree(
+            subtree, subtree_found_words, subtree_size, subtree_states_opened = construct_tree(
                 guesses=guesses + [next_guess],
                 guess_results=guess_results + [guess_result],
                 table=table,
                 possible_answers=new_possible_answers,
                 depth=depth + 1,
+                size_cutoff=best_subtree_size,
             )
 
             num_states_opened += subtree_states_opened
-
-            if len(subtree_found_words) > best:
-                # need to convert numpy type into python-native type for later serialization
-                action_map[int(guess_result)] = subtree
-
-                # update best
-                best_subtree_found_words = subtree_found_words
-                best = len(subtree_found_words)
-
             num_guesses_tried += 1
 
             if len(subtree_found_words) == len(new_possible_answers):
-                is_subtree_solved = True
-                break
+                if best_subtree_size == -1 or subtree_size < best_subtree_size:
+                    # need to convert numpy type into python-native type for later serialization
+                    action_map[int(guess_result)] = subtree
+                    # update best subtree size
+                    best_subtree_found_words = subtree_found_words
+                    best_subtree_size = subtree_size
+
+                    is_subtree_solved = True
+                    # ---- this is all debug code
+                    if depth <= 2:
+                        path = get_chain(guesses, guess_results + [guess_result], depth)
+                        logging.info("Word %s solves subtree %s with size %d. Looking for better solution.",
+                                    GUESS_WORDS[next_guess], path, subtree_size)
+                    # ---- this is all debug code
+                else:
+                    # ---- this is all debug code
+                    if depth <= 1:
+                        path = get_chain(guesses, guess_results + [guess_result], depth)
+                        logging.warning("Word %s solves subtree %s with size %d, but best is %d. Looking for better solution.",
+                                    GUESS_WORDS[next_guess], path, subtree_size, best_subtree_size)
+                    # ---- this is all debug code
+                    pass
+
+                # NOTE: if we don't care about optimality and just want to find *some* subtree that solves
+                # then we can early-exit here
+                if EXIT_ON_FIRST_SOLUTION:
+                    break
+            else:
+                # subtree is not solved
+                # therefore this word should not be considered as a valid guess
+                pass
 
         tree_found_words.update(best_subtree_found_words)
+        tree_size += best_subtree_size
+
+        if size_cutoff > 0 and tree_size > size_cutoff:
+            # ---- this is all debug code
+            if depth <= 2:
+                path = get_chain(guesses, guess_results + [guess_result], depth)
+                logging.warning("Exceeded size cutoff of %d in subtree. Path: %s", size_cutoff, path)
+            # ---- this is all debug code
+            is_early_exit = True
+            break
+
         # ---- this is all debug code
         # if USE_OPT_3 and is_opt_3_enabled:
         #     logging.log(OPT_3_LOG_LEVEL,
@@ -555,7 +604,7 @@ def construct_tree(
             path,
         )
 
-    return tree, tree_found_words, num_states_opened
+    return tree, tree_found_words, tree_size, num_states_opened
 
 
 def check_is_reachable(
@@ -579,7 +628,7 @@ def check_is_reachable(
     return is_reachable
 
 
-def solve(dictionary: str, first_word: str):
+def solve(dictionary: str, first_word: str, max_depth: int):
     assert first_word is not None
     logging.info("Using dictionary '%s'", dictionary)
     logging.info("Building decision tree using root word %s", first_word)
@@ -601,6 +650,9 @@ def solve(dictionary: str, first_word: str):
         for i in range(len(answer_words)):
             assert answer_words[i] == guess_words[i]
 
+    global MAX_DEPTH
+    MAX_DEPTH = max_depth
+
     print(f"Loaded {len(words)} words")
     # NOTE: this is bad practice but it is accessed in the global scope
     global GUESS_WORDS
@@ -608,7 +660,7 @@ def solve(dictionary: str, first_word: str):
     global ANSWER_WORDS
     ANSWER_WORDS = answer_words
 
-    table = np.zeros(shape=(1, 1))
+    table = np.zeros(shape=(1, 1), dtype='uint8')  # type: np.ndarray
     if dictionary == "full":
         table = np.load(TABLE_PATH)  # type: np.ndarray
     elif dictionary == "asymmetric":
@@ -659,17 +711,20 @@ def solve(dictionary: str, first_word: str):
         PROGRESS_LOG_LEVEL = logging.DEBUG
         global USE_TQDM_LOW_DEPTHS
         USE_TQDM_LOW_DEPTHS = False
-        global USE_OPT_3
-        USE_OPT_3 = False
-        global USE_OPT_4
-        USE_OPT_4 = False
+        if MAX_DEPTH == 6:
+            global USE_OPT_3
+            USE_OPT_3 = False
+            logging.info("OPT_3 is disabled")
+            global USE_OPT_4
+            USE_OPT_4 = False
+            logging.info("OPT_4 is disabled")
         global IS_TIMING_ENABLED
         IS_TIMING_ENABLED = False
         global USE_CHECKPOINTS
         USE_CHECKPOINTS = False
 
     print("Building tree...")
-    tree, found_words, num_states_opened = construct_tree(
+    tree, found_words, tree_size, num_states_opened = construct_tree(
         guesses=[root_word_index],
         guess_results=[],
         table=table,
@@ -678,6 +733,7 @@ def solve(dictionary: str, first_word: str):
     )
 
     print("Decision tree has been built")
+    print(f"Tree size: {tree_size}")
     print(f"# states opened: {num_states_opened:,}")
     print("Found %d / %d words" % (len(found_words), len(answer_words)))
     if len(found_words) == len(answer_words):
@@ -719,6 +775,13 @@ if __name__ == "__main__":
         default="answers",
         help="The dictionary to use. Can either use the full dictionary (~13k words) or the cheating answers dictionary (~2300 words, default)",
     )
+    parser.add_argument(
+        "-m",
+        "--max-depth",
+        type=int,
+        default=6,
+        help="Maximum depth of the tree (number of guesses)"
+    )
     args = parser.parse_args()
 
     first_word = DEFAULT_ROOT_WORD
@@ -730,5 +793,5 @@ if __name__ == "__main__":
     else:
         first_word = args.first_word
 
-    solve(dictionary=args.dictionary, first_word=first_word)
+    solve(dictionary=args.dictionary, first_word=first_word, max_depth=args.max_depth)
     # solve_all_cheating()
