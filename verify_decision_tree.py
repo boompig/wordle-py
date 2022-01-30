@@ -250,5 +250,5 @@ if __name__ == "__main__":
         except ValueError:
             logging.error("Failed to parse file %s", path)
 
-    summary = pd.DataFrame(rows)
+    summary = pd.DataFrame(rows).sort_values("total_size")
     print(summary)

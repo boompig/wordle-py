@@ -33,10 +33,18 @@ slate         | answers | 3.63                                    | 5           
 stout         | answers | 3.86                                    | 5                                     | 8927
 trace         | answers | 3.62                                    | 5                                     | 8372
 -------|---------|-----|---|----
+trace         | asymmetric | 3.58                                    | 5                                     | 8296
+slate         | asymmetric | 3.59                                    | 5                                     | 8312
+reast         | asymmetric | 3.59                                    | 5                                     | 8315
 crate         | asymmetric | 3.59                                    | 5                                     | 8317
 salet         | asymmetric | 3.59                                    | 5                                     | 8322
-serai         | asymmetric | 3.68                                    | 5                                     | 8524
+crane         | asymmetric | 3.60                                    | 5                                     | 8327
+least         | asymmetric | 3.60                                    | 5                                     | 8342
+train         | asymmetric | 3.60                                    | 5                                     | 8345
+prate         | asymmetric | 3.61                                    | 5                                     | 8349
 tares         | asymmetric | 3.62                                    | 5                                     | 8389
+aesir         | asymmetric | 3.66                                    | 5                                     | 8471
+serai         | asymmetric | 3.68                                    | 5                                     | 8524
 
 The tree size is the sum of the depths to find all answers. The lower this number, the better the tree.
 
@@ -44,7 +52,7 @@ The tree size is the sum of the depths to find all answers. The lower this numbe
 These trees are **not** optimal, they're just pretty good.
 It takes about 30 seconds to generate each tree for the `answers` dataset and about 3-5 minutes for each tree for the `asymmetric` dataset.
 
-Based on this matrix, the best first word to use is "crate". I know [others](https://freshman.dev/wordle/#/leaderboard) have used more compute power to find slightly more optimal words, but those solutions are not much better (SALET with an average of 3.4212 guesses and a tree size of 7920).
+Based on this matrix, the best first word to use is "trace". I know [others](https://freshman.dev/wordle/#/leaderboard) have used more compute power to find slightly more optimal words, but those solutions are not much better (SALET with an average of 3.4212 guesses and a tree size of 7920).
 
 ## Choosing the Next Word - Heuristic
 
