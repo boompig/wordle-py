@@ -19,3 +19,4 @@ profile.txt
 # directories not meant to be committed
 cache
 data-parsed/*.pickle
+out/**/*-leaderboard.txt

@@ -67,15 +67,16 @@ def find_answer_in_tree(
         )
 
 
-def check_file(path: str, dictionary: str) -> tuple[dict, Dict[str, int]]:
+def load_tree(path: str) -> dict:
     tree = {}
-    root_word = path.split("/")[-1].split(".")[0]
     with open(path) as fp:
         tree = json.load(fp)
+    return tree
 
-    guess_words = []
-    answer_words = []
 
+def check_file(path: str, dictionary: str) -> tuple[dict, Dict[str, int]]:
+    tree = load_tree(path)
+    root_word = path.split("/")[-1].split(".")[0]
     guess_words, answer_words = get_words_for_dictionary(dictionary)
 
     print(f"Verifying tree {path} rooted at {root_word}...")
@@ -126,8 +127,7 @@ def convert_file_to_human_readable(in_path: str, dictionary: str) -> str:
     tree = {}
     root_word = in_path.split("/")[-1].split(".")[0]
     print(f"Converting tree {in_path} to human readable format...")
-    with open(in_path) as fp:
-        tree = json.load(fp)
+    tree = load_tree(in_path)
 
     guess_words, answer_words = get_words_for_dictionary(dictionary)
 
@@ -188,15 +188,46 @@ def print_tree_file_stats(path: str, dictionary: str):
     print_tree_stats(tree, depths, dictionary)
 
 
+def convert_to_leaderboard_format(in_path: str, dictionary: str):
+    """
+    Convert the decision tree to the format used by https://freshman.dev/wordle/#/leaderboard
+    It needs to be a .txt file with one line per answer
+    Each line must be a comma-separated list of guesses for that answer"""
+    answers = read_all_answers()
+    tree = load_tree(path)
+    guess_words, answer_words = get_words_for_dictionary(dictionary)
+    root_word = in_path.split("/")[-1].split(".")[0]
+
+    rows = []
+    for answer in answers:
+        _, guesses = find_answer_in_tree(
+            answer,
+            tree,
+            depth=1,
+            guess_words=guess_words,
+            answer_words=answer_words,
+        )
+        rows.append(",".join(guesses))
+    out_path = f"./out/decision-trees/{dictionary}/{root_word}-leaderboard.txt"
+    with open(out_path, "w") as fp:
+        for row in rows:
+            fp.write(row + "\n")
+    print(f"Wrote to {out_path}")
+    return out_path
+
+
 if __name__ == "__main__":
     from argparse import ArgumentParser
     parser = ArgumentParser()
     parser.add_argument("-f", "--files",
                         nargs="+",
                         help="Tree file (in the same format spit out by decision_tree.py)")
-    parser.add_argument("-c", "--convert",
+    parser.add_argument("-C", "--convert-to-human-readable",
                         action="store_true",
                         help="By default this program only checks the tree. With this option we also convert the tree into a human-readable form")
+    parser.add_argument("-L", "--convert-to-leaderboard-format",
+                        action="store_true",
+                        help="By default this program only checks the tree. With this option we also convert the tree into a leaderboard-readable form")
     args = parser.parse_args()
 
     # silence logging in find_answer_in_tree
@@ -212,8 +243,10 @@ if __name__ == "__main__":
             stats = print_tree_stats(tree, depths, dictionary)
             rows.append(stats)
 
-            if args.convert:
+            if args.convert_to_human_readable:
                 convert_file_to_human_readable(path, dictionary)
+            if args.convert_to_leaderboard_format:
+                convert_to_leaderboard_format(path, dictionary)
         except ValueError:
             logging.error("Failed to parse file %s", path)
 

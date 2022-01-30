@@ -385,7 +385,7 @@ def construct_tree(
     :param guess_results:       The results of the those guesses, in order. Will be one fewer than guesses
     :param depth:               The depth of the tree. Should be the same as # of guesses
     :param possible_answers:    The set of possible answers remaining
-    :param size_cutoff:         If the size of the current tree gets larger than size_cutoff, just return early.
+    :param size_cutoff:         If the size of the current tree is greater than *or equal to* the size_cutoff, then return early.
                                 -1 for no size cutoff
 
     Return a tuple of 3 items:
@@ -419,6 +419,9 @@ def construct_tree(
         tree_size += depth
 
     if depth >= MAX_DEPTH:
+        return tree, tree_found_words, tree_size, num_states_opened
+
+    if size_cutoff > -1 and tree_size >= size_cutoff:
         return tree, tree_found_words, tree_size, num_states_opened
 
     possible_results, counts = np.unique(table[latest_guess], return_counts=True)
@@ -558,6 +561,7 @@ def construct_tree(
                 if best_subtree_size == -1 or subtree_size < best_subtree_size:
                     # need to convert numpy type into python-native type for later serialization
                     action_map[int(guess_result)] = subtree
+                    is_improvement = best_subtree_size > -1
                     # update best subtree size
                     best_subtree_found_words = subtree_found_words
                     best_subtree_size = subtree_size
@@ -566,8 +570,12 @@ def construct_tree(
                     # ---- this is all debug code
                     if not EXIT_ON_FIRST_SOLUTION and depth <= 2:
                         path = get_chain(guesses, guess_results + [guess_result], depth)
-                        logging.info("Word %s solves subtree %s with size %d. Looking for better solution.",
-                                    GUESS_WORDS[next_guess], path, subtree_size)
+                        if is_improvement:
+                            logging.info("IMPROVEMENT! Word %s solves subtree %s with size %d. Looking for better solution.",
+                                        GUESS_WORDS[next_guess], path, subtree_size)
+                        else:
+                            logging.info("Word %s solves subtree %s with size %d. Looking for better solution.",
+                                        GUESS_WORDS[next_guess], path, subtree_size)
                     # ---- this is all debug code
                 else:
                     # ---- this is all debug code
@@ -590,7 +598,7 @@ def construct_tree(
         tree_found_words.update(best_subtree_found_words)
         tree_size += best_subtree_size
 
-        if size_cutoff > 0 and tree_size > size_cutoff:
+        if size_cutoff > -1 and tree_size >= size_cutoff:
             # ---- this is all debug code
             if depth <= 2:
                 path = get_chain(guesses, guess_results + [guess_result], depth)
@@ -765,8 +773,9 @@ def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool =
         IS_DEBUG = False
         global PROGRESS_LOG_LEVEL
         PROGRESS_LOG_LEVEL = logging.DEBUG
-        global USE_TQDM_LOW_DEPTHS
-        USE_TQDM_LOW_DEPTHS = False
+        if EXIT_ON_FIRST_SOLUTION:
+            global USE_TQDM_LOW_DEPTHS
+            USE_TQDM_LOW_DEPTHS = False
         if MAX_DEPTH == 6 and EXIT_ON_FIRST_SOLUTION:
             global USE_OPT_4
             USE_OPT_4 = False
@@ -854,6 +863,10 @@ if __name__ == "__main__":
     else:
         first_word = args.first_word
 
-    solve(dictionary=args.dictionary, first_word=first_word, max_depth=args.max_depth,
-          find_optimal=args.find_optimal)
+    solve(
+        dictionary=args.dictionary,
+        first_word=first_word,
+        max_depth=args.max_depth,
+        find_optimal=args.find_optimal
+    )
     # solve_all_cheating()

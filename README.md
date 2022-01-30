@@ -32,7 +32,7 @@ raise         | answers | 3.66                                    | 5           
 slate         | answers | 3.63                                    | 5                                     | 8408
 stout         | answers | 3.86                                    | 5                                     | 8927
 trace         | answers | 3.62                                    | 5                                     | 8372
--------|-------|---------------|-----------------|----------
+-------|---------|-----|---|----
 crate         | asymmetric | 3.59                                    | 5                                     | 8317
 salet         | asymmetric | 3.59                                    | 5                                     | 8322
 serai         | asymmetric | 3.68                                    | 5                                     | 8524
