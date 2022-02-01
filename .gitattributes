@@ -15,3 +15,4 @@ out/decision-trees/asymmetric/salet.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/asymmetric/serai-hr.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/asymmetric/serai.json filter=lfs diff=lfs merge=lfs -text
 out/decision-trees/asymmetric/tares.json filter=lfs diff=lfs merge=lfs -text
+data-parsed/possibilities-table-asymmetric-base-3.parquet.gzip filter=lfs diff=lfs merge=lfs -text

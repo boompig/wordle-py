@@ -1,38 +1,20 @@
-# Wordle
+# Wordle Solver In Python
 
-This project provides datasets from the word game Wordle, a command-line implementation of Wordle, and a Wordle solver assistant.
-It also computes decision trees based on a given first word.
+This project provides a solver for the word game Wordle. It also includes datasets, a command-line implementation of Wordle, and a Wordle solver assistant.
 
-## Datasets
-
-1. [Owen Yin](https://medium.com/@owenyin/here-lies-wordle-2021-2027-full-answer-list-52017ee99e86) reverse-engineered the Wordle JavaScript app and found it contains all the solutions directly in the code.
-I provide them as a machine-readable dataset in `data-raw/wordle-answers-future.txt`. There are 2315 words.
-
-2. [Bert Fan](https://bert.org/2021/11/24/the-best-starting-word-in-wordle/) also reverse-engineered Wordle and found the complete dictionary it uses for 5-letter words (this is a combination of the `herrings` and `solutions` in his original dataset).
-I provide them as a machine-readable dataset in `data-raw/wordle-words.txt`.
-There are 12,972 words.
+The solver will create a decision tree for a given starting word, which is guaranteed to solve the game in 6 guesses or fewer.
+It can also generate a decision tree with 5 guesses or fewer if that option is specified.
 
 ## Decision Trees
 
 I generated decision trees are for a few different starter words. They can be found in `out/decision_trees`.
 These decision trees will solve Wordle 100% of the time using the root word in the decision tree.
-Many decision trees are possible.
+Many decision trees are possible (i.e. you can use many different words to completely solve Wordle in 6 guesses or fewer).
 Some of these decision trees solve every Wordle in 5 guesses or fewer rather than 6.
 A partial table of the decision trees' performance can be found below:
 
 starting word | dataset | average # of guesses to find a solution | max # of guesses to find any solution | tree size
 :------------:|:-------:|:---------------------------------------:|:-------------------------------------:|:----------:
-crane         | answers | 3.63                                    | 5                                     | 8405
-crate         | answers | 3.62                                    | 5                                     | 8386
-fresh         | answers | 3.78                                    | 5                                     | 8748
-naval         | answers | 3.96                                    | 6                                     | 9177
-paper         | answers | 3.86                                    | 5                                     | 8934
-quiet         | answers | 3.94                                    | 6                                     | 9116
-raise         | answers | 3.66                                    | 5                                     | 8476
-slate         | answers | 3.63                                    | 5                                     | 8408
-stout         | answers | 3.86                                    | 5                                     | 8927
-trace         | answers | 3.62                                    | 5                                     | 8372
--------|---------|-----|---|----
 trace         | asymmetric | 3.58                                    | 5                                     | 8296
 slate         | asymmetric | 3.59                                    | 5                                     | 8312
 reast         | asymmetric | 3.59                                    | 5                                     | 8315
@@ -45,14 +27,34 @@ prate         | asymmetric | 3.61                                    | 5        
 tares         | asymmetric | 3.62                                    | 5                                     | 8389
 aesir         | asymmetric | 3.66                                    | 5                                     | 8471
 serai         | asymmetric | 3.68                                    | 5                                     | 8524
+-------|---------|-----|---|----
+crane         | answers-only | 3.63                                    | 5                                     | 8405
+crate         | answers-only | 3.62                                    | 5                                     | 8386
+fresh         | answers-only | 3.78                                    | 5                                     | 8748
+naval         | answers-only | 3.96                                    | 6                                     | 9177
+paper         | answers-only | 3.86                                    | 5                                     | 8934
+quiet         | answers-only | 3.94                                    | 6                                     | 9116
+raise         | answers-only | 3.66                                    | 5                                     | 8476
+slate         | answers-only | 3.63                                    | 5                                     | 8408
+stout         | answers-only | 3.86                                    | 5                                     | 8927
+trace         | answers-only | 3.62                                    | 5                                     | 8372
 
 The tree size is the sum of the depths to find all answers. The lower this number, the better the tree.
 
-
 These trees are **not** optimal, they're just pretty good.
-It takes about 30 seconds to generate each tree for the `answers` dataset and about 3-5 minutes for each tree for the `asymmetric` dataset.
+It takes about 30 seconds to generate each tree for the `answers-only` dataset and about 3-5 minutes for each tree for the `asymmetric` dataset.
+The `answers-only` dataset only uses words that are possible solutions (2315 possible words), whereas the `asymmetric` dataset allows guesses to be any valid 5-letter word (12,972 valid words).
 
-Based on this matrix, the best first word to use is "trace". I know [others](https://freshman.dev/wordle/#/leaderboard) have used more compute power to find slightly more optimal words, but those solutions are not much better (SALET with an average of 3.4212 guesses and a tree size of 7920).
+Based on this table, the ideal first word to use is "trace". I know [others](https://freshman.dev/wordle/#/leaderboard) have used more compute power to find slightly more optimal words, but those solutions are not much better ("salet" with an average of 3.4212 guesses and a tree size of 7920).
+
+## Datasets
+
+1. [Owen Yin](https://medium.com/@owenyin/here-lies-wordle-2021-2027-full-answer-list-52017ee99e86) reverse-engineered the Wordle JavaScript app and found it contains all the solutions directly in the code.
+I provide them as a machine-readable dataset in `data-raw/wordle-answers-future.txt`. There are 2315 words.
+
+2. [Bert Fan](https://bert.org/2021/11/24/the-best-starting-word-in-wordle/) also reverse-engineered Wordle and found the complete dictionary it uses for 5-letter words (this is a combination of the `herrings` and `solutions` in his original dataset).
+I provide them as a machine-readable dataset in `data-raw/wordle-words.txt`.
+There are 12,972 words.
 
 ## Choosing the Next Word - Heuristic
 
@@ -62,26 +64,26 @@ I considered the best candidate word to be the word that best partitions the spa
 Specifically, once we guess a word, we can potentially get 3^5 (243) possible responses from Wordle: for each letter and position, is the letter absent from the solution, present in the solution at a different position, or present at this position.
 We can then use this *entire* information to partition the solution space.
 
-For this reason, the words "arise" and "aesir" are not equally good - while they may have the same letters, they give different information about the positions of those letters, and partition the space differently.
+For this reason, the words "slate" and "salet" are not equally good - while they may have the same letters, they give different information about the positions of those letters, and partition the space differently.
 
 We can use 2 metrics to determine the best candidate word:
 
 1. Best "worst" partition - the word which, in the worst case, partitions the space into the smallest number of possibilities.
 2. Best "mean" partition - the word which, in the average case, partitions the space into the smallest number of possibilities.
 
-If we want to solve the most number of problems, then we should probably use metric #1, where our optimal word is "serai", which has a worst-case partition of 697.
+If we want to solve the most number of problems, then we should probably use metric #1, where our optimal word is "arise", which has a worst-case partition of 168.
 
-If we want to have the smallest expected number of guesses, then we would use metric #2, where our optimal word is "tares", which has a mean partition of 61.19.
+If we want to have the smallest expected number of guesses, then we would use metric #2, where our optimal word is "trace", which has a mean partition of 15.43.
 
 ### Partitions
 
 Best Worst Partitions | Best Mean Partitions
 :--------------------:|:---------------------:
-<img alt="best worst partitions" src="./assets/worst_partition.png" height="500px" /> | <img alt="best mean partitions" src="./assets/mean_partition.png" height="500px" />
+<img alt="best worst partitions" src="./assets/asymmetric_matrix_worst_partition.png" height="432px" /> | <img alt="best mean partitions" src="./assets/asymmetric_matrix_mean_partition.png" height="432px" />
 
 ### Using Adieu as a First Word
 
-Don't. It has a worst partition of 1709 (2.45x worse than "serai") and a mean partition of 107.21 (1.75x worse than "tares").
+Don't. It has a worst partition of 284 (1.69x worse than "arise") and a mean partition of 28.94 (1.88x worse than "trace").
 
 ## Implementation
 
@@ -100,13 +102,11 @@ While I waited, I loaded the dishwasher.
 It took up 160MB on disk uncompressed, or 90MB compressed using `gzip`.
 You can download it from Github LFS under `data-parsed/possibilities-table-base-3.parquet.gzip`.
 
-As an optimization, since we know the full list of solutions which is smaller than the number of possible words, we can instead compute a matrix of size 12,972 x 2315 (which I call the "asymmetric" dataset).
-
-To further simplify our solution, we can compute a 2315 x 2315 matrix, which we can call our "answers" matrix. Note that this restricts us to only guessing words that are allowed answers, so this will potentially lead to larger trees. However, it also significantly narrows down the search space.
+As an optimization, since we know the number of solutions is smaller than the number of possible words, we can instead compute a matrix of size 12,972 x 2315 (which I call the "asymmetric" dataset). However we have to be clever here in ordering the words: we want the words to line up for all guess words that might also be solution words. This matrix takes about 2 minutes to compute and takes up only 29MB on disk and in memory (about 30 million entries). You can download it from Github LFS under `data-parsed/possibilities-table-asymmetric-base-3.parquet.gzip`.
 
 #### Solver
 
-I implemented a recursive solver.
+The solver is a simplified recursive DFS with a branch-and-prune strategy guided by our mean partition heuristic.
 
 Because all this is implemented in Python, we have to be extra careful about performance. We use a number of optimizations when computing our decision tree:
 

@@ -5,7 +5,7 @@ This file will build the possibilities matrix
 import itertools
 import os.path
 import pickle
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -133,7 +133,7 @@ def compute_possibilities_table(words: List[str]) -> np.ndarray:
 
 def compute_possibilities_table_asymmetric(
     guesses: List[str], answers: List[str]
-) -> tuple[np.ndarray, list[str], list[str]]:
+) -> Tuple[np.ndarray, List[str], List[str]]:
     num_guesses = len(guesses)
     num_answers = len(answers)
     print(f"computing {num_guesses}x{num_answers} possibilities matrix...")
