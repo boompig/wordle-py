@@ -102,7 +102,7 @@ def convert_tree_to_human_readable(
     Convert a decision tree to one that is human-readable
     """
     hr_tree = {}
-    hr_action_map = {}
+    hr_action_map = {}  # type: Dict[str, dict]
 
     root_words = list(tree.keys())
     assert len(root_words) == 1

@@ -3,7 +3,8 @@ import logging
 import os.path
 import pickle
 import time
-from typing import Dict, Iterable, List, Set, Tuple
+import itertools
+from typing import Dict, Iterable, List, Set, Tuple, Optional
 
 import coloredlogs
 import numpy as np
@@ -75,6 +76,26 @@ EXIT_ON_FIRST_SOLUTION = True
 # if set to true, we output how well our heuristic does
 # we generally want to leave this off
 DEBUG_HEURISTIC = False
+
+# if we're improving a tree, then can exit on first improvement
+# this is just meant as a debug option.
+# we don't really want this
+EXIT_ON_FIRST_IMPROVEMENT = False
+# whether to print messages when we exit on first improvement
+EXIT_ON_FIRST_IMPROVEMENT_LOG_LEVEL = logging.WARNING
+
+# this is an unsound optimization
+# we only use it when optimizing an existing tree
+# it allows us to only check the top n next guesses for a guess result
+# set this to -1 to disable this optimization
+OPTIMIZE_MAX_GUESSES_PER_RESULT = 10
+# whether to print the previous work at this depth if a tree is given
+# logging.DEBUG will make sure it's not printed
+PREV_TREE_LOG_LEVEL = logging.DEBUG
+# whether to print out paths that improve on initial guesses
+FIND_OPTIMAL_PROGRESS_LOG_LEVEL = logging.DEBUG
+# at what depth to enable that logging
+FIND_OPTIMAL_PROGRESS_LOG_DEPTH = 1
 
 
 def get_black_letters(
@@ -375,7 +396,8 @@ def construct_tree(
     table: np.ndarray,
     depth: int,
     possible_answers: Set[int],
-    size_cutoff: int = -1
+    size_cutoff: int = -1,
+    tree: Optional[Dict[int, dict]] = None,
 ) -> Tuple[dict, Set[int], int, int]:
     """
     Try to construct the best tree starting from an initial guess.
@@ -387,6 +409,7 @@ def construct_tree(
     :param possible_answers:    The set of possible answers remaining
     :param size_cutoff:         If the size of the current tree is greater than *or equal to* the size_cutoff, then return early.
                                 -1 for no size cutoff
+    :param tree:                A previously constructed tree for this guess
 
     Return a tuple of 3 items:
         - tree ->               Map from a root word to possible results for that root word. Each action maps to another guess and so forth
@@ -406,8 +429,16 @@ def construct_tree(
     latest_guess = guesses[-1]
 
     action_map = {}  # type: Dict[int, dict]
-    tree = {}  # type: Dict[int, dict]
-    tree[int(latest_guess)] = action_map
+    # whether we have a guiding decision tree
+    has_prev_tree = False
+    if tree is None:
+        tree = {}
+        tree[int(latest_guess)] = action_map
+    else:
+        assert latest_guess in tree, "Guess must be the root of the tree"
+        action_map = tree[latest_guess]
+        has_prev_tree = True
+
     tree_found_words = set([])
     num_states_opened = 1  # we tried the root
     tree_size = 0
@@ -424,6 +455,11 @@ def construct_tree(
     if size_cutoff > -1 and tree_size >= size_cutoff:
         return tree, tree_found_words, tree_size, num_states_opened
 
+    # don't enumerate guess results if this is the last possible guess anyway
+    if len(possible_answers) == 1 and list(possible_answers)[0] == latest_guess:
+        return tree, tree_found_words, tree_size, num_states_opened
+
+    # NOTE: this may look at partitions that don't actually exist
     possible_results, counts = np.unique(table[latest_guess], return_counts=True)
     # a further optimization: we should try the partitions with the *most* possible answers *first*
     si = np.argsort(-1 * counts)
@@ -461,6 +497,9 @@ def construct_tree(
             # this is a combo of guesses that simply doesn't yield any valid words remaining
             # so there's no need to add it to the decision tree
             continue
+
+        if has_prev_tree and guess_result != ALL_LETTERS_CORRECT:
+            assert guess_result in action_map, f"Guess result must exist in action map {guess_result}"
 
         # TODO: uses globals and violates scope
         next_guesses_it = pick_next_guesses_it(
@@ -512,13 +551,9 @@ def construct_tree(
                 )
                 is_early_exit = True
                 break
-                # # there are no good guesses
-                # # just pick a random word
-                # rw = list(new_possible_answers)[0]
-                # next_guesses_it = [rw]
             else:
                 # this is our optimal partition
-                opt = good_guesses[0]
+                opt = int(good_guesses[0])
                 next_guesses_it = [opt]
                 logging.log(
                     OPT_3_LOG_LEVEL,
@@ -533,7 +568,33 @@ def construct_tree(
             )
             is_opt_4_enabled = True
 
-        for next_guess in next_guesses_it:
+        # if we have a previous tree, we may try the same next_guess for a given guess_result more than once
+        # this will prevent us from doing that
+        visited = set([])  # type: Set[int]
+        prev_tree_guess = -1
+
+        if has_prev_tree:
+            # the action map is a mapping from guess_result (converted to string) to dictionary
+            # the dictionary will be rooted at a single key (string)
+            # that key will correspond to an integer
+            prev_tree_guess = list(action_map[guess_result].keys())[0]
+            logging.log(
+                PREV_TREE_LOG_LEVEL,
+                "%s[d=%d] Previous guess at this spot was %s",
+                '\t' * depth, depth, GUESS_WORDS[prev_tree_guess]
+            )
+            # add our guess to the front of those that we try
+            next_guesses_it = itertools.chain([prev_tree_guess], next_guesses_it)
+
+        for ngi, next_guess in enumerate(next_guesses_it):
+            if next_guess in visited:
+                continue
+            if not EXIT_ON_FIRST_SOLUTION and OPTIMIZE_MAX_GUESSES_PER_RESULT > -1 and ngi >= OPTIMIZE_MAX_GUESSES_PER_RESULT:
+                if depth <= 1:
+                    logging.warning("[d=%d] Reached max # of guesses (%d) for guess result %s. Not looking for better guesses.",
+                                    depth, OPTIMIZE_MAX_GUESSES_PER_RESULT, guess_response_to_string(guess_result))
+                break
+
             # ---- this is all debug code
             if USE_OPT_4 and is_opt_4_enabled:
                 logging.log(
@@ -545,6 +606,11 @@ def construct_tree(
                 )
             # ---- this is all debug code
 
+            subtree = None  # type: Optional[dict]
+            if has_prev_tree:
+                if prev_tree_guess == next_guess:
+                    subtree = action_map[guess_result]
+
             subtree, subtree_found_words, subtree_size, subtree_states_opened = construct_tree(
                 guesses=guesses + [next_guess],
                 guess_results=guess_results + [guess_result],
@@ -552,6 +618,7 @@ def construct_tree(
                 possible_answers=new_possible_answers,
                 depth=depth + 1,
                 size_cutoff=best_subtree_size,
+                tree=subtree,
             )
 
             num_states_opened += subtree_states_opened
@@ -561,22 +628,62 @@ def construct_tree(
                 if best_subtree_size == -1 or subtree_size < best_subtree_size:
                     # need to convert numpy type into python-native type for later serialization
                     action_map[int(guess_result)] = subtree
-                    is_improvement = best_subtree_size > -1
+                    is_improvement = (best_subtree_size > -1) and not (has_prev_tree and latest_guess == prev_tree_guess)
+                    prev_best_subtree_size = best_subtree_size
                     # update best subtree size
                     best_subtree_found_words = subtree_found_words
                     best_subtree_size = subtree_size
 
                     is_subtree_solved = True
                     # ---- this is all debug code
-                    if not EXIT_ON_FIRST_SOLUTION and depth <= 2:
+                    if not EXIT_ON_FIRST_SOLUTION and depth <= FIND_OPTIMAL_PROGRESS_LOG_DEPTH:
                         path = get_chain(guesses, guess_results + [guess_result], depth)
                         if is_improvement:
-                            logging.info("IMPROVEMENT! Word %s solves subtree %s with size %d. Looking for better solution.",
-                                        GUESS_WORDS[next_guess], path, subtree_size)
+                            if has_prev_tree:
+                                logging.log(
+                                    FIND_OPTIMAL_PROGRESS_LOG_LEVEL,
+                                    "IMPROVEMENT! Word %s solves subtree %s with size %d (prev %d, tree %s). Looking for better solution.",
+                                    GUESS_WORDS[next_guess], path, subtree_size, prev_best_subtree_size, GUESS_WORDS[prev_tree_guess]
+                                )
+                            else:
+                                logging.log(
+                                    FIND_OPTIMAL_PROGRESS_LOG_LEVEL,
+                                    "IMPROVEMENT! Word %s solves subtree %s with size %d (prev %d, no prior tree). Looking for better solution.",
+                                    GUESS_WORDS[next_guess], path, subtree_size, prev_best_subtree_size
+                                )
                         else:
-                            logging.info("Word %s solves subtree %s with size %d. Looking for better solution.",
-                                        GUESS_WORDS[next_guess], path, subtree_size)
+                            if has_prev_tree:
+                                logging.log(
+                                    FIND_OPTIMAL_PROGRESS_LOG_LEVEL,
+                                    "Word %s solves subtree %s with size %d (is prior guess? %d). Looking for better solution.",
+                                            GUESS_WORDS[next_guess], path, subtree_size, next_guess == prev_tree_guess
+                                    )
+                            else:
+                                logging.log(
+                                    FIND_OPTIMAL_PROGRESS_LOG_LEVEL,
+                                    "Word %s solves subtree %s with size %d (no prior tree). Looking for better solution.",
+                                    GUESS_WORDS[next_guess], path, subtree_size
+                                )
                     # ---- this is all debug code
+
+                    # ------ code for EXIT_ON_FIRST_IMPROVEMENT option
+                    if not EXIT_ON_FIRST_SOLUTION and EXIT_ON_FIRST_IMPROVEMENT and has_prev_tree and is_improvement:
+                        # to make things faster when optimizing an input tree, we can exit on the very first improvement
+                        path = get_chain(guesses, guess_results + [guess_result], depth)
+                        prev_best_guess = GUESS_WORDS[prev_tree_guess]
+                        new_best_guess = GUESS_WORDS[next_guess]
+                        logging.log(
+                            EXIT_ON_FIRST_IMPROVEMENT_LOG_LEVEL,
+                            "[d=%d] Found an improvement. OK see you. Path: %s",
+                            depth, path)
+                        logging.log(
+                            EXIT_ON_FIRST_IMPROVEMENT_LOG_LEVEL,
+                            "Previous best guess was %s (%d). New best guess is %s (%d)",
+                            prev_best_guess, prev_best_subtree_size, new_best_guess, best_subtree_size
+                        )
+                        break
+                    # ------ code for EXIT_ON_FIRST_IMPROVEMENT option
+
                 else:
                     # ---- this is all debug code
                     if not EXIT_ON_FIRST_SOLUTION and depth <= 1:
@@ -594,6 +701,8 @@ def construct_tree(
                 # subtree is not solved
                 # therefore this word should not be considered as a valid guess
                 pass
+
+            visited.add(next_guess)
 
         tree_found_words.update(best_subtree_found_words)
         tree_size += best_subtree_size
@@ -637,9 +746,10 @@ def construct_tree(
         path = get_chain(guesses[:-1], guess_results, depth - 1)
         logging.log(
             PROGRESS_LOG_LEVEL,
-            "Guess %s solves subtree: %s",
+            "Guess %s solves subtree: %s (is subtree guess? %d)",
             GUESS_WORDS[latest_guess],
             path,
+            has_prev_tree
         )
     if USE_CHECKPOINTS and not is_early_exit and depth <= CHECKPOINT_DEPTH:
         checkpoint_tree(guesses, guess_results, depth, tree, GUESS_WORDS, table)
@@ -680,9 +790,10 @@ def check_is_reachable(
     return is_reachable
 
 
-def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool = False):
+def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool = False, tree_file: Optional[str] = None):
     """
     :param find_optimal:     Whether to solve the decision tree optimally or just find some solution
+    :param tree_file:        The path to a previously solved decision tree for this first word
     """
     assert first_word is not None
     logging.info("Using dictionary '%s'", dictionary)
@@ -706,6 +817,13 @@ def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool =
         for i in range(len(answer_words)):
             assert answer_words[i] == guess_words[i]
 
+    tree = None  # type: Optional[dict]
+    if tree_file:
+        if not find_optimal:
+            raise Exception("Should not supply tree file unless we're looking for an optimal result")
+        tree = load_tree(tree_file)
+        logging.info(f"Loaded tree from file {tree_file}")
+
     global MAX_DEPTH
     MAX_DEPTH = max_depth
     global EXIT_ON_FIRST_SOLUTION
@@ -716,6 +834,12 @@ def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool =
         logging.warning("This takes a while...")
     else:
         logging.warning("Not looking for an optimal solution, just *a* solution")
+
+    if not EXIT_ON_FIRST_SOLUTION and EXIT_ON_FIRST_IMPROVEMENT:
+        logging.warning("Not looking for optimal solution, just an improvement over the existing one")
+
+    if not EXIT_ON_FIRST_SOLUTION and OPTIMIZE_MAX_GUESSES_PER_RESULT > -1:
+        logging.warning("Limiting search to %d guesses per result", OPTIMIZE_MAX_GUESSES_PER_RESULT)
 
     print(f"Loaded {len(words)} words")
     # NOTE: this is bad practice but it is accessed in the global scope
@@ -764,9 +888,6 @@ def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool =
         logging.error("First word %s is not in the list of guess words", first_word)
         raise e
 
-    # do we have any solved subtrees saved for this starting word?
-    # tree = load_tree(dictionary, first_word)
-
     # set optimization options based on the dictionary
     if dictionary == "answers":
         global IS_DEBUG
@@ -795,6 +916,7 @@ def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool =
         table=table,
         depth=1,
         possible_answers=possible_answers,
+        tree=tree,
     )
 
     print("Decision tree has been built")
@@ -805,9 +927,42 @@ def solve(dictionary: str, first_word: str, max_depth: int, find_optimal: bool =
         print("Success! Decision tree is full!")
 
     out_path = f"out/decision-trees/{dictionary}/{first_word}.json"
+    # this will make sure we don't overwrite any existing files
+    i = 0
+    while os.path.exists(out_path):
+        i += 1
+        out_path = f"out/decision-trees/{dictionary}/{first_word}-{i}.json"
+
     with open(out_path, "w") as out_fp:
         json.dump(tree, out_fp, indent=4, sort_keys=True)
     print(f"Wrote tree to {out_path}")
+
+
+def normalize_tree(tree: dict) -> Dict[int, dict]:
+    """
+    JSON-dumping the tree will change how the keys are stored
+    Re-convert the keys back to integers
+    """
+    root_word = list(tree.keys())[0]
+    assert isinstance(root_word, str) and root_word.isdigit()
+    action_map = tree[root_word]
+    new_action_map = {}
+
+    for guess_result in action_map:
+        assert isinstance(guess_result, str) and guess_result.isdigit()
+        subtree = normalize_tree(action_map[guess_result])
+        new_action_map[int(guess_result)] = subtree
+
+    return {
+        int(root_word): new_action_map
+    }
+
+
+def load_tree(path: str) -> Dict[int, dict]:
+    tree = {}
+    with open(path) as fp:
+        tree = json.load(fp)
+    return normalize_tree(tree)
 
 
 def solve_all_cheating():
@@ -852,6 +1007,11 @@ if __name__ == "__main__":
         action="store_true",
         help="By default we look for any decision tree that solves in under max_depth. With this flag instead we are looking for the optimal decision tree."
     )
+    parser.add_argument(
+        "-t",
+        "--tree-file",
+        help="Optionally provide a previously computed tree file for this guess"
+    )
     args = parser.parse_args()
 
     first_word = DEFAULT_ROOT_WORD
@@ -867,6 +1027,7 @@ if __name__ == "__main__":
         dictionary=args.dictionary,
         first_word=first_word,
         max_depth=args.max_depth,
-        find_optimal=args.find_optimal
+        find_optimal=args.find_optimal,
+        tree_file=args.tree_file,
     )
     # solve_all_cheating()

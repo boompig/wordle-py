@@ -128,6 +128,10 @@ Wherever possible, I used numpy operations to speed up computation. When I profi
 
 For each root word (first guess), it takes about 30 seconds to compute the decision tree using the "answers" dataset and matrix, and 3:30 using the "asymmetric" dataset and matrix.
 
+## Optimizing the Decision Trees
+
+Once a decision tree is generated, we can further improve it by expanding the search space. The initial decision tree is helpful to direct the search. It can take upwards of an hour to optimize the decision tree depending on the parameters. We use [branch-and-bound](https://en.wikipedia.org/wiki/Branch_and_bound) techniques here to speed up the runtime.
+
 ## Running
 
 Please see `RUNNING.md` for instructions on how to run.
